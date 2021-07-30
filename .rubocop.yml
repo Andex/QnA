@@ -1,1 +1,42 @@
 require: rubocop-rails
+
+AllCops:
+  Exclude:
+    '/vendor/**/*'
+    'bin/**/*'
+    'db/**/*'
+    'config/**/*'
+    'node_modules/**/*'
+  RunRailsCops: true
+  DisplayCopNames: true
+  StyleGuideCopsOnly: true
+
+  Metrics/AbcSize:
+    Max: 120
+
+  Layout/LineLength:
+    Max: 120
+
+  Metrics/MethodLength:
+    Max: 30
+
+  Metrics/ClassLength:
+    Max: 500
+
+  Metrics/BlockLength:
+    Max: 100
+
+  Style/Documentation:
+    Enabled: false
+
+  Style/GlobalStdStream:
+    Enabled: false
+
+  Style/StringLiterals:
+    Enabled: false
+
+  Style/ClassVars:
+    Enabled: false
+
+  Style/FrozenStringLiteralComment:
+    Enabled: false
