@@ -26,8 +26,11 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params)
-    redirect_to @question
+    if @question.update(question_params)
+      redirect_to @question
+    else
+      render :edit
+    end
   end
 
   private
