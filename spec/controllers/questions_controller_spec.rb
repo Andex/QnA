@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:question) { create(:question) }
+
   describe 'Get #index' do
-    before { get :index }
     let(:questions) { create_list(:question, 3) }
+
+    before { get :index }
+
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -15,7 +19,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'Get #show' do
     before { get :show, params: { id: question } }
-    let(:question) { create(:question) }
+
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
@@ -37,8 +41,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get #edit' do
-    let(:question) { create(:question) }
     before { get :edit, params: { id: question } }
+
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
@@ -50,13 +54,10 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'Post #create' do
     context 'with valid attributes' do
       it 'saves a new question in the database' do
-        count = Question.count
-
-        post :create, params: { question: { title: '123', body: '123' } }
-        expect(Question.count).to eq count + 1
+        expect{ (post :create, params: { question: attributes_for(:question) }) }.to change(Question, :count).by(1)
       end
       it 'redirects to show view' do
-        post :create, params: { question: { title: '123', body: '123' } }
+        post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
     end
