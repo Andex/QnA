@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
-  let(:answer) { create(:answer) }
 
   describe 'Get #new' do
     before { get :new, params: { question_id: question } }
@@ -34,6 +33,15 @@ RSpec.describe AnswersController, type: :controller do
         post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'Get #show' do
+    let(:answer) { create(:answer) }
+
+    it 'renders show view' do
+      get :show, params: { id: answer, question_id: question }
+      expect(response).to render_template :show
     end
   end
 end

@@ -15,6 +15,9 @@ class AnswersController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
   def load_question
