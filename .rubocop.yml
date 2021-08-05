@@ -2,12 +2,11 @@ require: rubocop-rails
 
 AllCops:
   Exclude:
-    '/vendor/**/*'
-    'bin/**/*'
-    'db/**/*'
-    'config/**/*'
-    'node_modules/**/*'
-  RunRailsCops: true
+    - '/vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'node_modules/**/*'
   DisplayCopNames: true
   StyleGuideCopsOnly: true
 
