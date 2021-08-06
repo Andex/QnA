@@ -8,7 +8,6 @@ feature 'User can register', "
   background { visit new_user_registration_path }
 
   scenario 'Unregistered user tries to register' do
-
     fill_in 'Email', with: 'user@test.com'
     fill_in 'Password', with: '121212'
     fill_in 'Password confirmation', with: '121212'

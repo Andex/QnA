@@ -44,9 +44,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Get #edit' do
-  before { login(user) }
+    before { login(user) }
 
-  before { get :edit, params: { id: question } }
+    before { get :edit, params: { id: question } }
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -71,7 +71,8 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect{ (post :create, params: { question: attributes_for(:question, :invalid) }) }.to_not change(Question, :count)
+        expect do
+ (post :create, params: { question: attributes_for(:question, :invalid) }) end.to_not change(Question, :count)
       end
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }

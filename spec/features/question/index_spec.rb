@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User can view a list of questions', %q{
+feature 'User can view a list of questions', "
   As un user
   I'd like to be able to view a list of questions
-} do
+" do
   given!(:questions) { create_list(:question, 2) }
 
   scenario 'User view a list of questions' do

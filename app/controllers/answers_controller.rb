@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %w[index show]
+  before_action :authenticate_user!, except: %w[show]
   before_action :load_question, only: :create
 
   def new;  end
@@ -14,8 +14,7 @@ class AnswersController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   private
 
