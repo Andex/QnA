@@ -35,4 +35,11 @@ feature 'User can create question', %q{
     expect(page).to have_content "Title can't be blank"
     expect(page).to have_content "Body can't be blank"
   end
+
+  scenario 'Unauthenticated user tries to ask a question' do
+    visit questions_path
+    click_on 'Ask question'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
 end
