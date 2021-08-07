@@ -122,6 +122,7 @@ RSpec.describe QuestionsController, type: :controller do
         end
       end
     end
+  end
 
     describe 'Patch #update' do
       context 'Authenticated user' do
@@ -166,6 +167,48 @@ RSpec.describe QuestionsController, type: :controller do
           expect(response).to redirect_to new_user_session_path
         end
       end
+    end
+
+  describe 'Delete #destroy' do
+    context 'Authenticated user' do
+      before { login(user) }
+
+      context 'and author' do
+        let!(:question) { create(:question, user: user) }
+
+        it 'deletes the question' do
+          expect{ (delete :destroy, params: { id: question }) }.to change(Question, :count).by(-1)
+        end
+        it 'redirects to index view' do
+          delete :destroy, params: { id: question }
+          expect(response).to redirect_to questions_path
+        end
+      end
+
+      context 'and not an author' do
+        let!(:question) { create(:question) }
+
+        it 'does not save the question' do
+          expect do
+            (delete :destroy, params: { id: question }) end.to_not change(Question, :count)
+        end
+        it 're-renders to show view' do
+          delete :destroy, params: { id: question }
+          expect(response).to redirect_to :question
+        end
+      end
+    end
+
+    context 'Unauthenticated user' do
+        let!(:question) { create(:question) }
+
+        it 'not deletes the question' do
+          expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        end
+        it 'redirects to sign in' do
+          delete :destroy, params: { id: question }
+          expect(response).to redirect_to new_user_session_path
+        end
     end
   end
 end
