@@ -4,3 +4,6 @@ p= @question.body
 = render 'shared/errors', resource: @answer
 
 = render 'answers/form', resource: @answer
+
+h3= 'Answer the question'
+= render 'answers/answer', answers: @question.answers
