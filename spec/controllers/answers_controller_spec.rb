@@ -68,4 +68,46 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template :show
     end
   end
+
+  describe 'Delete #destroy' do
+    context 'Authenticated user' do
+      before { login(user) }
+
+      context 'and author' do
+        let!(:answer) { create(:answer, question: question, user: user) }
+
+        it 'deletes the answer' do
+          expect{ (delete :destroy, params: { id: answer }) }.to change(Answer, :count).by(-1)
+        end
+        it 'redirects to index view' do
+          delete :destroy, params: { id: answer }
+          expect(response).to redirect_to question_path(question)
+        end
+      end
+
+      context 'and not an author' do
+        let!(:answer) { create(:answer, question: question) }
+
+        it 'does not delete the answer' do
+          expect { (delete :destroy, params: { id: answer }) }.to_not change(Answer, :count)
+        end
+        it 're-renders to show view' do
+          delete :destroy, params: { id: answer }
+          expect(response).to redirect_to question_path(question)
+        end
+      end
+    end
+
+    context 'Unauthenticated user' do
+      let!(:answer) { create(:answer) }
+
+      it 'not deletes the answer' do
+        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+      end
+      it 'redirects to sign in' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
 end
