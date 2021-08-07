@@ -5,6 +5,7 @@ FactoryBot.define do
   factory :answer do
     body { generate(:body_answer) }
     question
+    user
 
     trait :invalid do
       body { nil }
