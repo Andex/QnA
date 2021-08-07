@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %w[show]
+  before_action :authenticate_user!, except: :show
   before_action :load_question, only: :create
   before_action :load_answer, only: :destroy
 
@@ -21,10 +21,11 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.is_author?(@answer)
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Your answer was successfully deleted.'
+      flash[:notice] = 'Your answer was successfully deleted.'
     else
-      redirect_to question_path(@answer.question), alert: "You cannot delete someone else's question."
+      flash[:alert] = "You cannot delete someone else's question."
     end
+    redirect_to question_path(@answer.question)
   end
 
   private
