@@ -33,6 +33,7 @@ RSpec.describe AnswersController, type: :controller do
    (post :create,
          params: { answer: attributes_for(:answer), question_id: question }) end.to change(question.answers, :count).by(1)
         end
+
         it 'redirects to show view' do
           post :create, params: { answer: attributes_for(:answer), question_id: question }
           expect(response).to redirect_to assigns(:answer)
@@ -45,6 +46,7 @@ RSpec.describe AnswersController, type: :controller do
    (post :create,
          params: { answer: attributes_for(:answer, :invalid), question_id: question }) end.to_not change(Answer, :count)
         end
+
         it 're-renders new view' do
           post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }
           expect(response).to render_template :new
@@ -79,6 +81,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'deletes the answer' do
           expect{ (delete :destroy, params: { id: answer }) }.to change(Answer, :count).by(-1)
         end
+
         it 'redirects to index view' do
           delete :destroy, params: { id: answer }
           expect(response).to redirect_to question_path(question)
@@ -91,6 +94,7 @@ RSpec.describe AnswersController, type: :controller do
         it 'does not delete the answer' do
           expect { (delete :destroy, params: { id: answer }) }.to_not change(Answer, :count)
         end
+
         it 're-renders to show view' do
           delete :destroy, params: { id: answer }
           expect(response).to redirect_to question_path(question)
@@ -104,6 +108,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'not deletes the answer' do
         expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
       end
+
       it 'redirects to sign in' do
         delete :destroy, params: { id: answer }
         expect(response).to redirect_to new_user_session_path

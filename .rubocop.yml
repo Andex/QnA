@@ -10,32 +10,32 @@ AllCops:
   DisplayCopNames: true
   StyleGuideCopsOnly: true
 
-  Metrics/AbcSize:
-    Max: 120
+Layout/LineLength:
+  Max: 122
 
-  Layout/LineLength:
-    Max: 120
+Metrics/MethodLength:
+  Max: 30
 
-  Metrics/MethodLength:
-    Max: 30
+Metrics/ClassLength:
+  Max: 500
 
-  Metrics/ClassLength:
-    Max: 500
+Metrics/AbcSize:
+  Max: 20
 
-  Metrics/BlockLength:
-    Max: 100
+Metrics/BlockLength:
+  Max: 250
 
-  Style/Documentation:
-    Enabled: false
+Style/Documentation:
+  Enabled: false
 
-  Style/GlobalStdStream:
-    Enabled: false
+Style/GlobalStdStream:
+  Enabled: false
 
-  Style/StringLiterals:
-    Enabled: false
+Style/StringLiterals:
+  Enabled: false
 
-  Style/ClassVars:
-    Enabled: false
+Style/ClassVars:
+  Enabled: false
 
-  Style/FrozenStringLiteralComment:
-    Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
