@@ -188,7 +188,7 @@ RSpec.describe QuestionsController, type: :controller do
       context 'and not an author' do
         let!(:question) { create(:question) }
 
-        it 'does not save the question' do
+        it 'does not deletes the question' do
           expect do
             (delete :destroy, params: { id: question }) end.to_not change(Question, :count)
         end
@@ -202,7 +202,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'Unauthenticated user' do
         let!(:question) { create(:question) }
 
-        it 'not deletes the question' do
+        it 'does not deletes the question' do
           expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
         end
         it 'redirects to sign in' do
