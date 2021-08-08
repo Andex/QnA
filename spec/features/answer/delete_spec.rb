@@ -13,6 +13,8 @@ feature 'Author can delete his answer', "
       login(answer.user)
       visit question_path(answer.question)
 
+      expect(page).to have_content answer.body
+
       click_on 'Delete answer'
 
       expect(page).to have_content 'Your answer was successfully deleted.'
