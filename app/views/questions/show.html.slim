@@ -9,4 +9,5 @@ p= @question.body
 = render 'answers/form', resource: @answer
 
 h3= 'Answers on question'
-= render 'answers/answer', answers: @question.answers
+.answers
+  = render 'answers/answer', answers: @question.answers

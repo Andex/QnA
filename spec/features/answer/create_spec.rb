@@ -19,7 +19,9 @@ feature 'User can answer the question', "
       click_on 'To answer'
 
       expect(page).to have_content 'Your answer successfully created.'
-      expect(page).to have_content 'Answer the question'
+      within '.answers' do
+        expect(page).to have_content 'Answer the question'
+      end
     end
 
     scenario 'answer the question with errors' do
