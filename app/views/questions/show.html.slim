@@ -4,10 +4,10 @@ p= @question.body
 - if current_user&.is_author?(@question)
   = link_to 'Delete question', question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
 
+h3= 'Answers on question'
+.answers
+  = render @question.answers
+
 = render 'shared/errors', resource: @answer
 
 = render 'answers/form', resource: @answer
-
-h3= 'Answers on question'
-.answers
-  = render 'answers/answer', answers: @question.answers
