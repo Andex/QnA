@@ -8,7 +8,7 @@ feature 'User can answer the question', "
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       login(user)
       visit question_path(question)
@@ -18,7 +18,7 @@ feature 'User can answer the question', "
       fill_in 'Body', with: 'Answer the question'
       click_on 'To answer'
 
-      expect(page).to have_content 'Your answer successfully created.'
+      # expect(page).to have_content 'Your answer successfully created.'
       within '.answers' do
         expect(page).to have_content 'Answer the question'
       end
