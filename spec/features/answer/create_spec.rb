@@ -15,7 +15,7 @@ feature 'User can answer the question', "
     end
 
     scenario 'answer the question' do
-      fill_in 'Body', with: 'Answer the question'
+      fill_in 'Your answer', with: 'Answer the question'
       click_on 'To answer'
 
       # expect(page).to have_content 'Your answer successfully created.'

@@ -16,7 +16,7 @@ feature 'User can create question', "
 
     scenario 'asks a question' do
       fill_in 'Title', with: 'Title question'
-      fill_in 'Body', with: 'Text text text'
+      fill_in 'Details', with: 'Text text text'
       click_on 'Ask'
 
       expect(page).to have_content 'Your question successfully created.'
