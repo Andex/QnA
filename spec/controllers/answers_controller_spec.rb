@@ -96,4 +96,41 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'Patch #update' do
+    let(:answer) { create(:answer, question: question) }
+
+    context 'Authenticated user is author' do
+      before { login(user) }
+
+      context 'with valid attributes' do
+        it 'changes answer attributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          answer.reload
+          expect(answer.body).to eq 'new body'
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'does not update the answer' do
+          expect do
+            patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          end.to_not change(answer, :body)
+        end
+
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context 'Authenticated user is not author' do
+    end
+  end
 end
