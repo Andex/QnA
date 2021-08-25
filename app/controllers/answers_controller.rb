@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :load_question, only: :create
-  before_action :load_answer, only: :destroy
+  before_action :load_answer, only: %w[update destroy]
+  before_action :load_question, only: %w[create update]
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
@@ -12,6 +12,11 @@ class AnswersController < ApplicationController
   end
 
   def show; end
+
+  def update
+    @answer.update(answer_params)
+    # @question = @answer.question
+  end
 
   def destroy
     if current_user.is_author?(@answer)
@@ -26,7 +31,8 @@ class AnswersController < ApplicationController
   private
 
   def load_question
-    @question = Question.find(params[:question_id])
+    # @question = Question.find(params[:question_id])
+    @question ||= params[:question_id] ? Question.find(params[:question_id]) : @answer.question
   end
 
   def load_answer

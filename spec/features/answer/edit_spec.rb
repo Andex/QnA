@@ -16,11 +16,11 @@ feature 'User can edit his answer', "
     expect(page).to_not have_link 'Edit'
   end
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     scenario 'edits his answer' do
       login(user)
       visit question_path(question)
-      # save_and_open_page
+
       click_on 'Edit'
 
       within '.answers' do
