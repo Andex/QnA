@@ -43,6 +43,7 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+
   describe 'Get #show' do
     let(:answer) { create(:answer) }
 
@@ -51,6 +52,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(response).to render_template :show
     end
   end
+
 
   describe 'Delete #destroy' do
     context 'Authenticated user' do
@@ -97,11 +99,12 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+
   describe 'Patch #update' do
     let(:answer) { create(:answer, question: question) }
 
     context 'Authenticated user is author' do
-      before { login(user) }
+      before { login(answer.user) }
 
       context 'with valid attributes' do
         it 'changes answer attributes' do
@@ -131,6 +134,25 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'Authenticated user is not author' do
+      before { login(user) }
+
+      it 'does not update the answer' do
+        expect do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        end.to_not change(answer, :body)
+      end
+
+      it 're-renders to show view' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'Unauthenticated user' do
+      it 'redirects to sign in' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
 end

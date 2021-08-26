@@ -14,8 +14,12 @@ class AnswersController < ApplicationController
   def show; end
 
   def update
-    @answer.update(answer_params)
-    # @question = @answer.question
+    if current_user.is_author?(@answer)
+      @answer.update(answer_params)
+      flash[:notice] = 'Your answer was successfully edited.'
+    else
+      flash[:alert] = "You cannot edit someone else's answer."
+    end
   end
 
   def destroy
