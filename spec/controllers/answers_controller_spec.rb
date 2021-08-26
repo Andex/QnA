@@ -142,7 +142,7 @@ RSpec.describe AnswersController, type: :controller do
         end.to_not change(answer, :body)
       end
 
-      it 're-renders to show view' do
+      it 're-renders to update view' do
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         expect(response).to render_template :update
       end
