@@ -27,7 +27,6 @@ class AnswersController < ApplicationController
     else
       flash[:alert] = "You cannot delete someone else's answer."
     end
-    redirect_to question_path(@answer.question)
   end
 
   private
