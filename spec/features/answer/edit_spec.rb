@@ -5,7 +5,6 @@ feature 'User can edit his answer', "
   As un author of answer
   I'd like to be able to edit my answer
 " do
-
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
@@ -23,7 +22,7 @@ feature 'User can edit his answer', "
     end
 
     scenario 'edits his answer' do
-     click_on 'Edit'
+      click_on 'Edit'
 
       within '.answers' do
         fill_in 'Your new answer', with: 'edited answer'

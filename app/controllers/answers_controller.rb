@@ -6,9 +6,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
 
-    if @answer.save
-      flash[:notice] = 'Your answer successfully created.'
-    end
+    flash[:notice] = 'Your answer successfully created.' if @answer.save
   end
 
   def show; end
@@ -35,7 +33,6 @@ class AnswersController < ApplicationController
   private
 
   def load_question
-    # @question = Question.find(params[:question_id])
     @question ||= params[:question_id] ? Question.find(params[:question_id]) : @answer.question
   end
 

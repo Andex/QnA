@@ -107,14 +107,14 @@ RSpec.describe AnswersController, type: :controller do
       before { login(answer.user) }
 
       context 'with valid attributes' do
+        before { patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js }
+
         it 'changes answer attributes' do
-          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
           answer.reload
           expect(answer.body).to eq 'new body'
         end
 
         it 'renders update view' do
-          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
           expect(response).to render_template :update
         end
       end
