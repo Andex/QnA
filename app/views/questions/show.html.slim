@@ -6,7 +6,8 @@ p= @question.body
 
 h3= 'Answers on question'
 .answers
-  = render @question.answers
+  table
+    = render @question.answers
 
 .answer-errors
   = render 'shared/errors', resource: @answer

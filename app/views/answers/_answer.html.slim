@@ -1,13 +1,11 @@
-table
-  - if answer.persisted?
-    tr
-      td= answer.body
-      - if current_user&.is_author?(answer)
-        td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-        td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
-        tr
-          td
-            = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
-              = f.label :body, 'Your new answer'
-              = f.text_area :body
-              = f.submit 'Save'
+- if answer.persisted?
+  tr class="answer-id-#{answer.id}"
+    td= answer.body
+    - if current_user&.is_author?(answer)
+      td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      td
+        = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
+          = f.label :body, 'Your new answer'
+          = f.text_area :body
+          = f.submit 'Save'
+      td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
