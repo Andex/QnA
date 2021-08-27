@@ -1,5 +1,4 @@
 $(document).on('turbolinks:load', function(){
-    console.log('here')
     $('.answers').on('click', '.edit-answer-link', editAnswer )
 })
 
