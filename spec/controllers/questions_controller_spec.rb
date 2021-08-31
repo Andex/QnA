@@ -183,11 +183,11 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Delete #destroy' do
-    context 'Authenticated user' do
-      before { login(user) }
+    let!(:question) { create(:question) }
 
+    context 'Authenticated user' do
       context 'and author' do
-        let!(:question) { create(:question, user: user) }
+        before { login(question.user) }
 
         it 'deletes the question' do
           expect{ (delete :destroy, params: { id: question }) }.to change(Question, :count).by(-1)
@@ -200,7 +200,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       context 'and not an author' do
-        let!(:question) { create(:question) }
+        before { login(user) }
 
         it 'does not deletes the question' do
           expect do
@@ -215,8 +215,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'Unauthenticated user' do
-      let!(:question) { create(:question) }
-
       it 'does not deletes the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
       end
