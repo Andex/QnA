@@ -135,31 +135,31 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'Patch #update' do
-    context 'Authenticated user' do
-      before { login(user) }
+    context 'Authenticated user is author' do
+      before { login(question.user) }
 
       context 'with valid attributes' do
         it 'assigned the requested question to @question' do
-          patch :update, params: { id: question, question: attributes_for(:question) }
+          patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
           expect(assigns(:question)).to eq question
         end
 
+        before { patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }, format: :js }
+
         it 'changes question attributes' do
-          patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
           question.reload
 
           expect(question.title).to eq 'new title'
           expect(question.body).to eq 'new body'
         end
 
-        it 'redirects to update view' do
-          patch :update, params: { id: question, question: attributes_for(:question) }
-          expect(response).to redirect_to :question
+        it 'render update view' do
+          expect(response).to render_template :update
         end
       end
 
       context 'with invalid attributes' do
-        before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+        before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
 
         it 'does not change question' do
           question.reload
@@ -168,15 +168,30 @@ RSpec.describe QuestionsController, type: :controller do
           expect(question.body).to eq question.body
         end
 
-        it 're-renders edit view' do
-          expect(response).to render_template :edit
+        it 're-renders update view' do
+          expect(response).to render_template :update
         end
+      end
+    end
+
+    context 'Authenticated user is not author' do
+      before { login(user) }
+
+      it 'does not update the question' do
+        expect do
+          patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        end.to_not change(question, :body)
+      end
+
+      it 're-renders to update view' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
+        expect(response).to render_template :update
       end
     end
 
     context 'Unauthenticated user' do
       it 'redirects to sign in' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
         expect(response).to redirect_to new_user_session_path
       end
     end
