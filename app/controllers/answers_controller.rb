@@ -9,8 +9,6 @@ class AnswersController < ApplicationController
     flash[:notice] = 'Your answer successfully created.' if @answer.save
   end
 
-  def show; end
-
   def update
     if current_user.is_author?(@answer)
       @answer.update(answer_params)

@@ -28,8 +28,8 @@ feature 'User can edit his question', "
 
       expect(page).to have_content 'edited question'
       expect(page).to have_content 'edited details'
-      save_and_open_page
-      within '.question-form-edit' do
+      # save_and_open_page
+      within '.edit-question-form' do
         expect(page).to_not have_content question.title
         expect(page).to_not have_content question.body
         expect(page).to_not have_selector 'text_field'

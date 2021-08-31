@@ -44,16 +44,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
 
-  describe 'Get #show' do
-    let(:answer) { create(:answer) }
-
-    it 'renders show view' do
-      get :show, params: { id: answer, question_id: question }
-      expect(response).to render_template :show
-    end
-  end
-
-
   describe 'Delete #destroy' do
     context 'Authenticated user' do
       before { login(user) }
