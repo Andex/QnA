@@ -191,7 +191,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'Unauthenticated user' do
       it 'redirects to sign in' do
-        patch :update, params: { id: question, question: attributes_for(:question), format: :js }
+        patch :update, params: { id: question, question: attributes_for(:question) }
         expect(response).to redirect_to new_user_session_path
       end
     end

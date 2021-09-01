@@ -27,10 +27,11 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if @question.update(question_params)
-      redirect_to @question
+    if current_user.is_author?(@question)
+      @question.update(question_params)
+      flash[:notice] = 'Your question was successfully updated.'
     else
-      render :edit
+      flash[:alert] = "You cannot update someone else's question."
     end
   end
 

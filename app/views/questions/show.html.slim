@@ -1,8 +1,5 @@
-h1= @question.title
-p= @question.body
-
-- if current_user&.is_author?(@question)
-  = link_to 'Delete question', question_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
+.question
+  = render @question
 
 h3= 'Answers on question'
 .answers

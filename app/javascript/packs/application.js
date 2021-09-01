@@ -17,3 +17,4 @@ global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;
 
 require("./answers.js")
+require("./question.js")

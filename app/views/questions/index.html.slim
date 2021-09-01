@@ -6,4 +6,8 @@ table
   tr
     th Title
     th Body
-  = render @questions
+  - @questions.each do |question|
+    tr
+      td= question.title
+      td= question.body
+      td= link_to 'Show answers', question
