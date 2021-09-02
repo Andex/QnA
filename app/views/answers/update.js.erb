@@ -1,5 +1,9 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
 
 <% if !@answer.errors.present? %>
-  $('.answer-id-<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+  <% if @answer == @question.best_answer %>
+    $('.answer-id-<%= @answer.id %>').replaceWith('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
+  <% else %>
+    $('.answer-id-<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+  <% end %>
 <% end %>
