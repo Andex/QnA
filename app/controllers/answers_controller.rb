@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :load_answer, only: %w[update destroy best]
-  before_action :load_question, only: %w[create update best]
+  before_action :load_question, only: %w[create update best destroy]
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))

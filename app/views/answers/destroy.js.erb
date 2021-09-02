@@ -1,3 +1,8 @@
 <% if !@answer.persisted? %>
-  $('.answers').html('<%= j render @answer.question.answers %>');
+  <% if @question.best_answer %>
+    $('.answers').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
+    $('.answers').append('<table><%= j render @question.other_answers %></table>');
+  <% else %>
+    $('.answers').html('<%= j render @answer.question.answers %>');
+  <% end %>
 <% end %>
