@@ -25,8 +25,8 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'assigns the requested answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
+    it 'assigns the requested answer to @new_answer' do
+      expect(assigns(:new_answer)).to be_a_new(Answer)
     end
 
     it 'renders show view' do

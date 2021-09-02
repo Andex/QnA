@@ -7,6 +7,6 @@ h3= 'Answers on question'
     = render @question.answers
 
 .answer-errors
-  = render 'shared/errors', resource: @answer
+  = render 'shared/errors', resource: @new_answer
 
-= render 'answers/form', resource: @answer
+= render 'answers/form', resource: @new_answer
