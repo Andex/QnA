@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
-  before_action :load_answer, only: %w[update destroy]
+  before_action :load_answer, only: %w[update destroy best]
   before_action :load_question, only: %w[create update]
 
   def create
@@ -24,6 +24,13 @@ class AnswersController < ApplicationController
       flash[:notice] = 'Your answer was successfully deleted.'
     else
       flash[:alert] = "You cannot delete someone else's answer."
+    end
+  end
+
+  def best
+    if current_user.is_author?(@answer.question)
+      @answer.mark_as_best
+      redirect_to @answer.question
     end
   end
 

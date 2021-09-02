@@ -3,8 +3,11 @@
 
 h3= 'Answers on question'
 .answers
-  table
-    = render @question.answers
+  - if @question.best_answer
+    .best-answer
+      = render 'answers/best_answer', resource: @best_answer
+  table class="other-answers"
+    = render @other_answers
 
 .answer-errors
   = render 'shared/errors', resource: @new_answer
