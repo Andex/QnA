@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :load_answer, only: %w[update destroy best]
-  before_action :load_question, only: %w[create update]
+  before_action :load_question, only: %w[create update best]
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
@@ -28,10 +28,7 @@ class AnswersController < ApplicationController
   end
 
   def best
-    if current_user.is_author?(@answer.question)
-      @answer.mark_as_best
-      redirect_to @answer.question
-    end
+    @answer.mark_as_best if current_user.is_author?(@question)
   end
 
   private

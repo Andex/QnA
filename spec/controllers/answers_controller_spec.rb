@@ -152,21 +152,22 @@ RSpec.describe AnswersController, type: :controller do
     context 'Authenticated user is author of question' do
       it 'saves answer as the best in db' do
         login(answer.question.user)
-        patch :best, params: { id: answer }
+        patch :best, params: { id: answer }, format: :js
 
         answer.question.reload
         expect(question.best_answer).to eq answer
+      end
 
-        # it 'renders best_answer view' do
-        #   expect(response).to render_template :best_answer
-        # end
+      it 'renders best view' do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to render_template :best
       end
     end
 
     context 'Authenticated user is not author of question' do
       it 'does not saves answer as the best in db' do
         login(user)
-        expect{( patch :best, params: { id: answer } )}.to_not change(answer.question, :best_answer_id)
+        expect{( patch :best, params: { id: answer }, format: :js )}.to_not change(answer.question, :best_answer_id)
       end
     end
 

@@ -4,9 +4,9 @@
 h3= 'Answers on question'
 .answers
   - if @question.best_answer
-    = render 'answers/best_answer', resource: @best_answer
+    = render 'answers/best_answer', resource: @question.best_answer
   table
-    = render @other_answers
+    = render @question.other_answers
 
 .answer-errors
   = render 'shared/errors', resource: @new_answer

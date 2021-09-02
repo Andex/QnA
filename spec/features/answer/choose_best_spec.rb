@@ -12,7 +12,7 @@ feature 'The author of the question can choose the best answer for his question'
   given!(:first_best_answer) { question_with_best_answer.best_answer }
   given!(:another_answer) { create(:answer, question: question_with_best_answer) }
 
-  describe 'Authenticated author of the question' do
+  describe 'Authenticated author of the question', js: true do
     scenario 'choose the best answer for his question' do
       login(question.user)
       visit question_path(question)
