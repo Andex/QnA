@@ -15,6 +15,5 @@ RSpec.describe Answer, type: :model do
 
       expect(question.best_answer).to eq answer
     end
-
   end
 end
