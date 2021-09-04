@@ -1,4 +1,5 @@
 <% if !@answer.persisted? %>
+  $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
   <% if @question.best_answer %>
     $('.answers').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
     $('.answers').append('<table><%= j render @question.other_answers %></table>');

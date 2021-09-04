@@ -29,9 +29,9 @@ class QuestionsController < ApplicationController
   def update
     if current_user.is_author?(@question)
       @question.update(question_params)
-      flash[:notice] = 'Your question was successfully updated.'
+      flash.now[:notice] = 'Your question was successfully updated.'
     else
-      flash[:alert] = "You cannot update someone else's question."
+      flash.now[:alert] = "You cannot update someone else's question."
     end
   end
 

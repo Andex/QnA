@@ -6,15 +6,15 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
 
-    flash[:notice] = 'Your answer successfully created.' if @answer.save
+    flash.now[:notice] = 'Your answer successfully created.' if @answer.save
   end
 
   def update
     if current_user.is_author?(@answer)
       @answer.update(answer_params)
-      flash[:notice] = 'Your answer was successfully edited.'
+      flash.now[:notice] = 'Your answer was successfully edited.'
     else
-      flash[:alert] = "You cannot edit someone else's answer."
+      flash.now[:alert] = "You cannot edit someone else's answer."
     end
   end
 
@@ -23,9 +23,9 @@ class AnswersController < ApplicationController
       @question.update(best_answer_id: nil) if @answer == @question.best_answer
 
       @answer.destroy
-      flash[:notice] = 'Your answer was successfully deleted.'
+      flash.now[:notice] = 'Your answer was successfully deleted.'
     else
-      flash[:alert] = "You cannot delete someone else's answer."
+      flash.now[:alert] = "You cannot delete someone else's answer."
     end
   end
 

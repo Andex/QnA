@@ -1,4 +1,5 @@
 $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
+$('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if !@answer.errors.present? %>
   <% if @answer == @question.best_answer %>
