@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: :show
+  before_action :authenticate_user!
   before_action :load_answer, only: %w[update destroy best]
   before_action :load_question, only: %w[create update best destroy]
 

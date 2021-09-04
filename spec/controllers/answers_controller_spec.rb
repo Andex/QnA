@@ -167,7 +167,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'Authenticated user is not author of question' do
       it 'does not saves answer as the best in db' do
         login(user)
-        expect{( patch :best, params: { id: answer }, format: :js )}.to_not change(answer.question, :best_answer_id)
+        expect{ (patch :best, params: { id: answer }, format: :js) }.to_not change(answer.question, :best_answer_id)
       end
     end
 
