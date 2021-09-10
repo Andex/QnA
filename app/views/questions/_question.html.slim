@@ -1,7 +1,7 @@
 h1= question.title
 p= question.body
 
-div class="attachments-#{question.id}"
+div class="attachments-question-#{question.id}"
   = render 'shared/attachments', resource: question
 
 - if current_user&.is_author?(question)

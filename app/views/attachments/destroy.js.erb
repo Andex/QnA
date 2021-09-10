@@ -1,4 +1,4 @@
 <% if !@file.persisted? %>
   $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
-  $('.attachments-<%= @file.record.id %> #<%= @file.id %>').remove()
+  $('.attachments-<%= @file.record.class.to_s.downcase %>-<%= @file.record.id %> #<%= @file.id %>').remove()
 <% end %>

@@ -6,6 +6,10 @@
     - if current_user&.is_author?(answer.question)
       td= link_to 'Choose the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
 
+    td
+      div class="attachments-answer-#{answer.id}"
+        = render 'shared/attachments', resource: answer
+
     - if current_user&.is_author?(answer)
       td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       td
@@ -14,13 +18,8 @@
             = f.label :body, 'Your new answer'
             = f.text_area :body
           p
-            - if answer.files.attached?
-              - answer.files.each do |file|
-                p
-                  = 'Download file: '
-                  = link_to file.filename.to_s, url_for(file)
-              = f.label :files, 'Attach files'
-              = f.file_field :files, multiple: true
+            = f.label :files, 'Attach files'
+            = f.file_field :files, multiple: true
           = f.submit 'Save'
           = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: answer.id }
       td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
