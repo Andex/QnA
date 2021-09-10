@@ -20,7 +20,7 @@ div class="attachments-question-#{question.id}"
           = f.text_area :body
         p
           = f.label :files, 'Attach files'
-          = f.file_field :files, multiple: true
+          = f.file_field :files, multiple: true, direct_upload: true
       = f.submit 'Save'
       = link_to 'Cancel', '#', class: 'cancel-question-link', remote: true
 
