@@ -150,8 +150,9 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create(:answer, question: question) }
 
     context 'Authenticated user is author of question' do
+      before { login(answer.question.user) }
+
       it 'saves answer as the best in db' do
-        login(answer.question.user)
         patch :best, params: { id: answer }, format: :js
 
         answer.question.reload
