@@ -2,10 +2,6 @@
   tr class="answer-id-#{answer.id}"
     td colspan=2
       = answer.body
-
-    - if current_user&.is_author?(answer.question)
-      td= link_to 'Choose the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
-
     td
       div class="attachments-answer-#{answer.id}"
         = render 'shared/attachments', resource: answer
@@ -22,4 +18,8 @@
             = f.file_field :files, multiple: true
           = f.submit 'Save'
           = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: answer.id }
+
       td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
+
+    - if current_user&.is_author?(answer.question)
+      td= link_to 'Choose the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
