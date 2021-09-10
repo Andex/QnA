@@ -7,10 +7,20 @@ p= question.body
     = render 'shared/errors', resource: question
   .edit-question-form
     p= form_with model: question, local: false, html: { id: 'edit-question' }, class: 'hidden' do |f|
-      = f.label :title, 'Your question'
-      = f.text_field :title
-      = f.label :body, 'Details'
-      = f.text_area :body
+      p
+        = f.label :title, 'Your question'
+        = f.text_field :title
+        p
+          = f.label :body, 'Details'
+          = f.text_area :body
+        p
+          - if question.files.attached?
+            - question.files.each do |file|
+              p
+                = 'Download file: '
+                = link_to file.filename.to_s, url_for(file)
+          = f.label :files, 'Attach files'
+          = f.file_field :files, multiple: true
       = f.submit 'Save'
 
   = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: 'Are you sure?' }

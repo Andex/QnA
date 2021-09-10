@@ -10,7 +10,16 @@
       td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       td
         = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
-          = f.label :body, 'Your new answer'
-          = f.text_area :body
+          p
+            = f.label :body, 'Your new answer'
+            = f.text_area :body
+          p
+            - if answer.files.attached?
+              - answer.files.each do |file|
+                p
+                  = 'Download file: '
+                  = link_to file.filename.to_s, url_for(file)
+              = f.label :files, 'Attach files'
+              = f.file_field :files, multiple: true
           = f.submit 'Save'
       td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }

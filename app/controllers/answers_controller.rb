@@ -11,7 +11,8 @@ class AnswersController < ApplicationController
 
   def update
     if current_user.is_author?(@answer)
-      @answer.update(answer_params)
+      @answer.update(answer_params.except(:files))
+      attach_files(@answer)
       flash.now[:notice] = 'Your answer was successfully edited.'
     else
       flash.now[:alert] = "You cannot edit someone else's answer."
@@ -45,5 +46,11 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, :question_id, files: [])
+  end
+
+  def attach_files(answer)
+    if params[:answer][:files].present?
+      answer.files.attach(params[:answer][:files])
+    end
   end
 end

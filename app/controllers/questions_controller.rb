@@ -28,7 +28,8 @@ class QuestionsController < ApplicationController
 
   def update
     if current_user.is_author?(@question)
-      @question.update(question_params)
+      @question.update(question_params.except(:files))
+      attach_files(@question)
       flash.now[:notice] = 'Your question was successfully updated.'
     else
       flash.now[:alert] = "You cannot update someone else's question."
@@ -54,5 +55,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, files: [])
+  end
+
+  def attach_files(question)
+    question.files.attach(params[:question][:files]) if params[:question][:files].present?
   end
 end
