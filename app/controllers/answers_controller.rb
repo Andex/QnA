@@ -36,11 +36,11 @@ class AnswersController < ApplicationController
   private
 
   def load_question
-    @question ||= params[:question_id] ? Question.find(params[:question_id]) : @answer.question
+    @question ||= params[:question_id] ? Question.with_attached_files.find(params[:question_id]) : @answer.question
   end
 
   def load_answer
-    @answer = Answer.find(params[:id])
+    @answer = Answer.with_attached_files.find(params[:id])
   end
 
   def answer_params
