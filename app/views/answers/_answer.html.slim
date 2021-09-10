@@ -22,4 +22,5 @@
               = f.label :files, 'Attach files'
               = f.file_field :files, multiple: true
           = f.submit 'Save'
+          = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: answer.id }
       td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }

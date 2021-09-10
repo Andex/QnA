@@ -22,5 +22,6 @@ p= question.body
           = f.label :files, 'Attach files'
           = f.file_field :files, multiple: true
       = f.submit 'Save'
+      = link_to 'Cancel', '#', class: 'cancel-question-link', remote: true
 
   = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: 'Are you sure?' }
