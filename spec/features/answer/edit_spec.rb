@@ -72,11 +72,13 @@ feature 'User can edit his answer', "
     end
   end
 
-  describe 'Authenticated user while editing his answer with attach files', js: true do
-    scenario 'tries to add files' do
+  describe 'Authenticated author while editing his answer with attach files', js: true do
+    background do
       login(answer_with_files.user)
       visit question_path(answer_with_files.question)
+    end
 
+    scenario 'tries to add files' do
       click_on 'Edit'
 
       within '.answers' do
@@ -89,6 +91,19 @@ feature 'User can edit his answer', "
         expect(page).to_not have_selector 'file_field'
       end
     end
+
+    scenario 'tries to delete files' do
+      click_on 'Edit'
+
+      accept_confirm do
+        click_link 'Delete file'
+      end
+
+      within '.answers' do
+        expect(page).to_not have_content answer_with_files.files.first.filename.to_s
+      end
+      expect(page).to have_content 'Your file was deleted.'
+    end
   end
 
   scenario "Authenticated user tries to edit other user's question" do
@@ -96,5 +111,6 @@ feature 'User can edit his answer', "
     visit question_path(question)
 
     expect(page).to_not have_link 'Edit'
+    expect(page).to_not have_link 'Delete answer'
   end
 end
