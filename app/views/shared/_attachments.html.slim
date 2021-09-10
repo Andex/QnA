@@ -1,0 +1,11 @@
+- if resource&.files.attached?
+  = 'Download attached files: '
+  - resource.files.each do |file|
+    p id=file.id
+      = link_to file.filename.to_s, url_for(file)
+      = link_to 'Delete file',
+              attachment_path(file),
+              method: :delete,
+              remote: true,
+              class: 'delete-file-link hidden',
+              data: { confirm: 'Are you sure?' }

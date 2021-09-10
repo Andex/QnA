@@ -7,6 +7,10 @@ function editQuestion(event){
     event.preventDefault()
 
     $(this).hide()
+
+    $('.question .delete-file-link').each(function(){
+        $(this).removeClass('hidden')
+    })
     $('form#edit-question').removeClass('hidden')
     $('.cancel-question-link').show()
 }
@@ -18,4 +22,7 @@ function cancelQuestion(event){
 
     $('form#edit-question').addClass('hidden')
     $('.edit-question-link').show()
+    $('.question .delete-file-link').each(function(){
+        $(this).addClass('hidden')
+    })
 }
