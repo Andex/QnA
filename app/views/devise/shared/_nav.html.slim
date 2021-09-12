@@ -1,1 +1,5 @@
-= link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'}
+- if user_signed_in?
+  = link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'}
+
+- if request.fullpath != questions_path
+  = link_to 'Back to the main page', questions_path
