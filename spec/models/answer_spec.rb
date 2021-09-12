@@ -15,6 +15,13 @@ RSpec.describe Answer, type: :model do
 
       expect(question.best_answer).to eq answer
     end
+
+    it 'the best answer is not chosen' do
+      answer.mark_as_best
+      answer.unmark_as_best
+
+      expect(question.best_answer).to_not eq answer
+    end
   end
 
   it 'have many attached files' do

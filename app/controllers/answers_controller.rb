@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
 
   def destroy
     if current_user.is_author?(@answer)
-      @question.update(best_answer_id: nil) if @answer == @question.best_answer
+      unmark_as_best if @answer == @question.best_answer
 
       @answer.destroy
       flash.now[:notice] = 'Your answer was successfully deleted.'
