@@ -12,7 +12,8 @@ RSpec.describe AttachmentsController, type: :controller do
           let!(:question) { create(:question, :with_files, user: user) }
 
           it 'deletes question files' do
-            expect{ (delete :destroy, params: { id: question.files.first.id }, format: :js) }.to change(question.files, :count).by(-1)
+            expect do
+ (delete :destroy, params: { id: question.files.first.id }, format: :js) end.to change(question.files, :count).by(-1)
           end
 
           it 're-renders template destroy' do
@@ -26,7 +27,8 @@ RSpec.describe AttachmentsController, type: :controller do
           let!(:answer) { create(:answer, :with_files, user: user) }
 
           it 'deletes question files' do
-            expect{ (delete :destroy, params: { id: answer.files.first.id }, format: :js) }.to change(answer.files, :count).by(-1)
+            expect do
+ (delete :destroy, params: { id: answer.files.first.id }, format: :js) end.to change(answer.files, :count).by(-1)
           end
 
           it 're-renders template destroy' do
@@ -41,7 +43,8 @@ RSpec.describe AttachmentsController, type: :controller do
         let!(:answer) { create(:answer, :with_files) }
 
         it 'does not delete question files' do
-          expect { (delete :destroy, params: { id: question.files.first.id }, format: :js) }.to_not change(question.files, :count)
+          expect do
+            (delete :destroy, params: { id: question.files.first.id }, format: :js) end.to_not change(question.files, :count)
         end
 
         it 're-renders to show view' do
@@ -50,7 +53,8 @@ RSpec.describe AttachmentsController, type: :controller do
         end
 
         it 'does not delete answer files' do
-          expect { (delete :destroy, params: { id: answer.files.first.id }, format: :js) }.to_not change(answer.files, :count)
+          expect do
+ (delete :destroy, params: { id: answer.files.first.id }, format: :js) end.to_not change(answer.files, :count)
         end
 
         it 're-renders to show view' do
@@ -65,7 +69,8 @@ RSpec.describe AttachmentsController, type: :controller do
       let!(:answer) { create(:answer, :with_files) }
 
       it 'not deletes question files' do
-        expect { delete :destroy, params: { id: question.files.first.id }, format: :js }.to_not change(question.files, :count)
+        expect do
+ delete :destroy, params: { id: question.files.first.id }, format: :js end.to_not change(question.files, :count)
       end
 
       it 'redirects to sign in' do
