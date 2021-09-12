@@ -21,7 +21,7 @@ feature 'User can edit his question', "
       visit question_path(question)
     end
 
-    scenario 'tries edit his question' do
+    scenario 'tries to edit his question' do
       click_on 'Edit question'
       fill_in 'Your question', with: 'edited question'
       fill_in 'Details', with: 'edited details'
@@ -51,7 +51,7 @@ feature 'User can edit his question', "
       end
     end
 
-    scenario 'opens and cancels edit his question' do
+    scenario 'opens and cancels the edit form for his question' do
       click_on 'Edit question'
 
       click_on 'Cancel'
@@ -64,7 +64,7 @@ feature 'User can edit his question', "
       end
     end
 
-    scenario 'tries edit his question with errors' do
+    scenario 'tries to edit his question with errors' do
       click_on 'Edit question'
       fill_in 'Your question', with: ''
       fill_in 'Details', with: ''
@@ -96,7 +96,7 @@ feature 'User can edit his question', "
       end
     end
 
-    scenario 'tries to delete files' do
+    scenario 'tries to delete attached files' do
       click_on 'Edit question'
 
       accept_confirm do

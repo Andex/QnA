@@ -8,7 +8,7 @@ feature 'User can view the question with answers of it', "
   given!(:question) { create(:question) }
   given!(:answers) { create_list(:answer, 3, question: question) }
 
-  scenario 'User view the question with answers of it' do
+  scenario 'User views the question with answers of it' do
     visit question_path(question)
 
     expect(page).to have_content question.title

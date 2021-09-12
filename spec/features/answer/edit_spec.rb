@@ -49,7 +49,7 @@ feature 'User can edit his answer', "
       end
     end
 
-    scenario 'open and cancel edit his answer' do
+    scenario 'opens and cancels the edit form for his answer' do
       click_on 'Edit'
 
       click_on 'Cancel'
@@ -92,7 +92,7 @@ feature 'User can edit his answer', "
       end
     end
 
-    scenario 'tries to delete files' do
+    scenario 'tries to delete attached files' do
       click_on 'Edit'
 
       accept_confirm do

@@ -6,7 +6,7 @@ feature 'User can view a list of questions', "
 " do
   given!(:questions) { create_list(:question, 2) }
 
-  scenario 'User view a list of questions' do
+  scenario 'User views a list of questions' do
     visit questions_path
 
     expect(page).to have_content 'All questions'
