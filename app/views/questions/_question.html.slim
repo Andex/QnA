@@ -1,6 +1,9 @@
 h1= question.title
 p= question.body
 
+.links
+  = render 'shared/links', resource: question
+
 div class="attachments-question-#{question.id}"
   = render 'shared/attachments', resource: question
 
