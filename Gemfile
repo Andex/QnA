@@ -31,7 +31,10 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'slim-rails'
 gem 'devise'
-gem "cocoon"
+gem 'cocoon'
+
+# validating URLs to ActiveRecord and ActiveModel
+gem 'validate_url'
 
 gem 'rubocop-rails', require: false
 
