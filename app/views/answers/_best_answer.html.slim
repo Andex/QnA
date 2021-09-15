@@ -3,7 +3,7 @@ div class="answer-id-#{@question.best_answer.id}"
     = '👍'
     = @question.best_answer.body
     .links
-      = render 'shared/links', resource: @question.best_answer
+      = render 'links/links', resource: @question.best_answer
 
     div class="attachments-answer-#{@question.best_answer.id}"
       = render 'shared/attachments', resource: @question.best_answer
@@ -17,6 +17,10 @@ div class="answer-id-#{@question.best_answer.id}"
         p
           = f.label :files, 'Attach files'
           = f.file_field :files, multiple: true, direct_upload: true
+        p id="links"
+          = f.fields_for :links do |link|
+          .add_link
+            = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
         = f.submit 'Save'
         = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: @question.best_answer.id }
 

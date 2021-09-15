@@ -4,7 +4,7 @@
       = answer.body
     td
       .links
-        = render 'shared/links', resource: answer
+        = render 'links/links', resource: answer
     td
       div class="attachments-answer-#{answer.id}"
         = render 'shared/attachments', resource: answer
@@ -19,6 +19,10 @@
           p
             = f.label :files, 'Attach files'
             = f.file_field :files, multiple: true, direct_upload: true
+          p id="links"
+            = f.fields_for :links do |link|
+            .add_link
+              = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
           = f.submit 'Save'
           = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: answer.id }
 

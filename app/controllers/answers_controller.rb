@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id, files: [], links_attributes: [:name, :url])
+    params.require(:answer).permit(:body, :question_id, files: [], links_attributes: [:name, :url, :id, :destroy])
   end
 
   def attach_files(answer)

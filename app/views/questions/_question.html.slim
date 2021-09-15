@@ -2,7 +2,7 @@ h1= question.title
 p= question.body
 
 .links
-  = render 'shared/links', resource: question
+  = render 'links/links', resource: question
 
 div class="attachments-question-#{question.id}"
   = render 'shared/attachments', resource: question
@@ -24,6 +24,10 @@ div class="attachments-question-#{question.id}"
         p
           = f.label :files, 'Attach files'
           = f.file_field :files, multiple: true, direct_upload: true
+        p id="links"
+          = f.fields_for :links do |link|
+        .add_link
+          = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
       = f.submit 'Save'
       = link_to 'Cancel', '#', class: 'cancel-question-link', remote: true
 
