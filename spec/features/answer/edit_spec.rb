@@ -9,6 +9,7 @@ feature 'User can edit his answer', "
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
   given!(:answer_with_files) { create(:answer, :with_files, question: question) }
+  given!(:link) { create(:link, linkable: answer) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
@@ -49,6 +50,22 @@ feature 'User can edit his answer', "
       end
     end
 
+    scenario 'tries to add links while editing his answer' do
+      click_on 'Edit'
+
+      within '.answers' do
+        click_on 'Add link'
+
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: link.url
+
+        click_on 'Save'
+
+        expect(page).to have_link link.name
+        expect(page).to_not have_selector 'text_field'
+      end
+    end
+
     scenario 'opens and cancels the edit form for his answer' do
       click_on 'Edit'
 
@@ -64,10 +81,17 @@ feature 'User can edit his answer', "
       within '.answers' do
         click_on 'Edit'
         fill_in 'Your new answer', with: ''
+
+        click_on 'Add link'
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: ''
+
         click_on 'Save'
       end
       within '.answer-errors' do
         expect(page).to have_content "Body can't be blank"
+        expect(page).to have_content "Links url can't be blank"
+        expect(page).to have_content "Links url is not a valid URL"
       end
     end
   end
