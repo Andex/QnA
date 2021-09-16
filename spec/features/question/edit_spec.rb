@@ -7,6 +7,7 @@ feature 'User can edit his question', "
 " do
   given!(:question) { create(:question) }
   given!(:question_with_files) { create(:question, :with_files) }
+  given!(:question_with_links) { create(:question, :with_links) }
   given!(:user) { create(:user) }
   given!(:link) { create(:link, linkable: question) }
 
@@ -16,12 +17,13 @@ feature 'User can edit his question', "
     expect(page).to_not have_link 'Edit question'
   end
 
-  scenario "Authenticated user tries to edit other user's question" do
+  scenario "Authenticated user tries to edit other user's question", js: true do
     login(user)
     visit question_path(question)
 
     expect(page).to_not have_link 'Edit question'
     expect(page).to_not have_link 'Delete file'
+    expect(page).to_not have_link 'Delete link'
   end
 
   describe 'Authenticated author', js: true do
@@ -57,22 +59,6 @@ feature 'User can edit his question', "
         expect(page).to have_link 'rails_helper.rb'
         expect(page).to have_link 'spec_helper.rb'
         expect(page).to_not have_selector 'file_field'
-      end
-    end
-
-    scenario 'tries to add links while editing his question' do
-      click_on 'Edit question'
-
-      within '.question' do
-        click_on 'Add link'
-
-        fill_in 'Link name', with: link.name
-        fill_in 'Url', with: link.url
-
-        click_on 'Save'
-
-        expect(page).to have_link link.name
-        expect(page).to_not have_selector 'text_field'
       end
     end
 
@@ -141,6 +127,40 @@ feature 'User can edit his question', "
         expect(page).to_not have_content question_with_files.files.first.filename.to_s
       end
       expect(page).to have_content 'Your file was deleted.'
+    end
+  end
+
+  describe 'Authenticated author while editing his question with added links', js: true do
+    background do
+      login(question_with_links.user)
+      visit question_path(question_with_links)
+
+      click_on 'Edit question'
+    end
+
+    scenario 'tries to add links' do
+      within '.question' do
+        click_on 'Add link'
+
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: link.url
+
+        click_on 'Save'
+
+        expect(page).to have_link link.name
+        expect(page).to_not have_selector 'text_field'
+      end
+    end
+
+    scenario 'tries to delete added links' do
+      accept_confirm do
+        click_link 'Delete link'
+      end
+
+      within '.question' do
+        expect(page).to_not have_link link.name
+      end
+      expect(page).to have_content 'Your link was deleted.'
     end
   end
 end
