@@ -3,7 +3,7 @@ div class="answer-id-#{@question.best_answer.id}"
     = '👍'
     = @question.best_answer.body
 
-    div class="attachments-answer-#{@question.best_answer.id}"
+    div class="answer-#{@question.best_answer.id}-attachments"
       = render 'shared/attachments', resource: @question.best_answer
 
     - if current_user&.is_author?(@question.best_answer)

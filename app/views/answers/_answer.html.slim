@@ -3,7 +3,7 @@
     td colspan=2
       = answer.body
     td
-      div class="attachments-answer-#{answer.id}"
+      div class="answer-#{answer.id}-attachments"
         = render 'shared/attachments', resource: answer
 
     - if current_user&.is_author?(answer)

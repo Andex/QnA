@@ -11,6 +11,9 @@ function editQuestion(event){
     $('.question .delete-file-link').each(function(){
         $(this).removeClass('hidden')
     })
+    $('.question .delete-link').each(function(){
+        $(this).removeClass('hidden')
+    })
     $('form#edit-question').removeClass('hidden')
     $('.cancel-question-link').show()
 }
@@ -23,6 +26,9 @@ function cancelQuestion(event){
     $('form#edit-question').addClass('hidden')
     $('.edit-question-link').show()
     $('.question .delete-file-link').each(function(){
+        $(this).addClass('hidden')
+    })
+    $('.question .delete-link').each(function(){
         $(this).addClass('hidden')
     })
     $('.question-errors').html('')
