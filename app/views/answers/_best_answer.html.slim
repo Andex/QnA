@@ -2,8 +2,6 @@ div class="answer-id-#{@question.best_answer.id}"
   p
     = '👍'
     = @question.best_answer.body
-    .links
-      = render 'links/links', resource: @question.best_answer
 
     div class="attachments-answer-#{@question.best_answer.id}"
       = render 'shared/attachments', resource: @question.best_answer

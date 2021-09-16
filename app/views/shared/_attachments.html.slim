@@ -1,11 +1,29 @@
-- if resource&.files.attached?
-  = 'Download attached files: '
-  - resource.files.each do |file|
-    p id=file.id
-      = link_to file.filename.to_s, url_for(file)
-      = link_to 'Delete file',
-              attachment_path(file),
-              method: :delete,
-              remote: true,
-              class: 'delete-file-link hidden',
-              data: { confirm: 'Are you sure?' }
+.files
+  - if resource&.files.attached?
+    = 'Download attached files: '
+    ul
+      - resource.files.each do |file|
+        li id=file.id
+          = link_to file.filename.to_s, url_for(file)
+          = link_to 'Delete file',
+                  attachment_path(file),
+                  method: :delete,
+                  remote: true,
+                  class: 'delete-file-link hidden',
+                  data: { confirm: 'Are you sure?' }
+
+.links
+  - if resource&.links.present?
+    p Links:
+    ul
+      - resource.links.each do |link|
+        li id=link.id
+          = link_to link.name, link.url
+          = link_to 'Delete link',
+                  link_path(link),
+                  method: :delete,
+                  remote: true,
+                  class: 'delete-link hidden',
+                  data: { confirm: 'Are you sure?' }
+          - if link.gist?
+            = javascript_include_tag link.url + ".js"
