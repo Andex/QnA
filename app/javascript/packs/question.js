@@ -25,4 +25,5 @@ function cancelQuestion(event){
     $('.question .delete-file-link').each(function(){
         $(this).addClass('hidden')
     })
+    $('.question-errors').html('')
 }

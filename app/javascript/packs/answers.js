@@ -27,4 +27,5 @@ function cancelAnswer(event){
     })
     $('form#edit-answer-' + answerId).addClass('hidden')
     $('.edit-answer-link').show()
+    $('.answer-errors').html('')
 }
