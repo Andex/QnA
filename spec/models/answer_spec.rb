@@ -9,17 +9,17 @@ RSpec.describe Answer, type: :model do
 
   it { should accept_nested_attributes_for :links }
 
-  describe '#mark_as_best' do
+  describe 'Best answer' do
     let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
 
-    it 'the best answer is chosen' do
+    it '#mark_as_best' do
       answer.mark_as_best
 
       expect(question.best_answer).to eq answer
     end
 
-    it 'the best answer is not chosen' do
+    it '#unmark_as_best' do
       answer.mark_as_best
       answer.unmark_as_best
 
