@@ -16,7 +16,7 @@ feature 'User can assign reward to question', %q{
   end
 
   scenario 'User assigns reward when asks question' do
-    fill_in 'Title', with: 'Reward'
+    fill_in 'Reward title', with: 'Reward'
     attach_file 'Image', "#{Rails.root}/spec/files/reward.png"
 
     click_on 'Ask'
