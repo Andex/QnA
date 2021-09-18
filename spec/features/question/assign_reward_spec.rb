@@ -6,7 +6,6 @@ feature 'User can assign reward to question', %q{
   I'd like to be able to assign reward
 } do
   given(:user) { create(:user) }
-  given(:reward_image) { create(:reward) }
 
   before do
     login(user)
@@ -18,7 +17,7 @@ feature 'User can assign reward to question', %q{
 
   scenario 'User assigns reward when asks question' do
     fill_in 'Title', with: 'Reward'
-    attach_file 'Image', "#{Rails.root}/public/reward.png"
+    attach_file 'Image', "#{Rails.root}/spec/files/reward.png"
 
     click_on 'Ask'
 
