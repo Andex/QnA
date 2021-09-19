@@ -31,9 +31,10 @@ class QuestionsController < ApplicationController
 
   def update
     if current_user.is_author?(@question)
-      @question.update(question_params.except(:files))
-      attach_files(@question)
-      flash.now[:notice] = 'Your question was successfully updated.'
+      if @question.update(question_params.except(:files))
+        attach_files(@question)
+        flash.now[:notice] = 'Your question was successfully updated.'
+      end
     else
       flash.now[:alert] = "You cannot update someone else's question."
     end
