@@ -10,6 +10,7 @@ FactoryBot.define do
     body
     user
     best_answer { nil }
+    reward { nil }
 
     trait :invalid do
       title { nil }
@@ -29,6 +30,10 @@ FactoryBot.define do
       after(:create) do |question|
         create(:link, linkable: question)
       end
+    end
+
+    trait :with_reward do
+      reward factory: :reward
     end
   end
 end
