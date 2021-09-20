@@ -1,0 +1,4 @@
+<% if !@reward.persisted? %>
+  $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
+  $('.question .reward').remove()
+<% end %>

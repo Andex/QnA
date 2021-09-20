@@ -14,6 +14,7 @@ function editQuestion(event){
     $('.question .delete-link').each(function(){
         $(this).removeClass('hidden')
     })
+    $('.reward a').removeClass('hidden')
     $('form#edit-question').removeClass('hidden')
     $('.cancel-question-link').show()
 }
@@ -31,5 +32,6 @@ function cancelQuestion(event){
     $('.question .delete-link').each(function(){
         $(this).addClass('hidden')
     })
+    $('.reward a').addClass('hidden')
     $('.question-errors').html('')
 }

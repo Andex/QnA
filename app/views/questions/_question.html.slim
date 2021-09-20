@@ -1,11 +1,15 @@
 h1= question.title
 p= question.body
 
-- if question.reward.present?
-  p class="reward"
+.reward
+  - if question.reward.present?
     h4= 'Reward:'
-    = question.reward.title
-    = image_tag question.reward.image, size: "50x50", alt: question.reward.title
+    p
+      = question.reward.title
+      = image_tag question.reward.image, size: "50x50", alt: question.reward.title
+      - if current_user&.is_author?(question)
+        = link_to 'Delete reward', reward_path(question.reward), method: :delete, class: 'hidden',
+                                    remote: true, data: { confirm: 'Are you sure?' }
 
 div class="question-#{question.id}-attachments"
   = render 'shared/attachments', resource: question
