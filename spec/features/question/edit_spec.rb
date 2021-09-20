@@ -8,6 +8,7 @@ feature 'User can edit his question', "
   given!(:question) { create(:question) }
   given!(:question_with_files) { create(:question, :with_files) }
   given!(:question_with_links) { create(:question, :with_links) }
+  given!(:question_with_reward) { create(:question, :with_reward) }
   given!(:user) { create(:user) }
   given!(:link) { create(:link, linkable: question) }
 
@@ -46,19 +47,6 @@ feature 'User can edit his question', "
         expect(page).to_not have_content question.body
         expect(page).to_not have_selector 'text_field'
         expect(page).to_not have_selector 'textarea'
-      end
-    end
-
-    scenario 'tries to attach files while editing his question' do
-      click_on 'Edit question'
-      attach_file 'Attach files', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
-
-      click_on 'Save'
-
-      within '.question' do
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'spec_helper.rb'
-        expect(page).to_not have_selector 'file_field'
       end
     end
 
@@ -161,6 +149,25 @@ feature 'User can edit his question', "
         expect(page).to_not have_link link.name
       end
       expect(page).to have_content 'Your link was deleted.'
+    end
+  end
+
+  describe 'Authenticated author while editing his question with assigned reward', js: true do
+
+    scenario 'tries to delete assigned reward' do
+      login(question_with_reward.user)
+      visit question_path(question_with_reward)
+
+      click_on 'Edit question'
+
+      accept_confirm do
+        click_link 'Delete reward'
+      end
+
+      within '.question .reward' do
+        expect(question_with_reward.reward).to eq nil
+      end
+      expect(page).to have_content 'Question reward was removed.'
     end
   end
 end
