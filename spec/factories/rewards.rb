@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :reward do
-    title { |n| "Reward #{n}" }
+    sequence(:title) { |n| "Reward #{n}" }
     question
     user { nil }
 
