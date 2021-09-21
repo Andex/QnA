@@ -1,9 +1,6 @@
 FactoryBot.define do
-  sequence :body_answer do |n|
-    "MyTextAnswer-#{n}"
-  end
   factory :answer do
-    body { generate(:body_answer) }
+    sequence(:body) { |n| "MyTextAnswer-#{n}" }
     question
     user
 
