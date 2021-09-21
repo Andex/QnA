@@ -6,4 +6,5 @@
   <% else %>
     $('.answers').html('<%= j render @answer.question.answers %>');
   <% end %>
+  $('.answer-errors').html('')
 <% end %>

@@ -6,8 +6,12 @@ table
   tr
     th Title
     th Body
+    th Reward
   - @questions.each do |question|
     tr
       td= question.title
       td= question.body
+      td
+        - if question.reward.present?
+          = image_tag question.reward.image, size: "50x50", alt: question.reward.title
       td= link_to 'Show answers', question

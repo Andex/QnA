@@ -12,6 +12,9 @@ function editAnswer(event){
     $('.answer-id-' + answerId + ' .delete-file-link').each(function(){
         $(this).removeClass('hidden')
     })
+    $('.answer-id-' + answerId + ' .delete-link').each(function(){
+        $(this).removeClass('hidden')
+    })
     $('form#edit-answer-' + answerId).removeClass('hidden')
     $('.cancel-answer-link').show()
 }
@@ -25,6 +28,10 @@ function cancelAnswer(event){
     $('.answer-id-' + answerId + ' .delete-file-link').each(function(){
         $(this).addClass('hidden')
     })
+    $('.answer-id-' + answerId + ' .delete-link').each(function(){
+        $(this).addClass('hidden')
+    })
     $('form#edit-answer-' + answerId).addClass('hidden')
     $('.edit-answer-link').show()
+    $('.answer-errors').html('')
 }

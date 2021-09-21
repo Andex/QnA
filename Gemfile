@@ -23,7 +23,9 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
+gem 'active_storage_validations'
 gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
 
 gem 'aws-sdk-s3', require: false
 
@@ -31,6 +33,10 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'slim-rails'
 gem 'devise'
+gem 'cocoon'
+
+# validating URLs to ActiveRecord and ActiveModel
+gem 'validate_url'
 
 gem 'rubocop-rails', require: false
 

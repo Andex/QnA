@@ -1,7 +1,17 @@
 h1= question.title
 p= question.body
 
-div class="attachments-question-#{question.id}"
+.reward
+  - if question.reward.present?
+    h4= 'Reward:'
+    p
+      = question.reward.title
+      = image_tag question.reward.image, size: "50x50", alt: question.reward.title
+      - if current_user&.is_author?(question)
+        = link_to 'Delete reward', reward_path(question.reward), method: :delete, class: 'hidden',
+                                    remote: true, data: { confirm: 'Are you sure?' }
+
+div class="question-#{question.id}-attachments"
   = render 'shared/attachments', resource: question
 
 - if current_user&.is_author?(question)
@@ -21,6 +31,21 @@ div class="attachments-question-#{question.id}"
         p
           = f.label :files, 'Attach files'
           = f.file_field :files, multiple: true, direct_upload: true
+        p id="links"
+          = f.fields_for :links do |link|
+        .add_link
+          = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+        p Assign reward:
+        - unless question.reward.present?
+          - question.build_reward
+        p
+          = f.fields_for :reward do |r|
+            p
+              = r.label :title, 'Reward title'
+              = r.text_field :title
+            p
+              = r.label :image, 'Image'
+              = r.file_field :image
       = f.submit 'Save'
       = link_to 'Cancel', '#', class: 'cancel-question-link', remote: true
 

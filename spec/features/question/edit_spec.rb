@@ -7,7 +7,10 @@ feature 'User can edit his question', "
 " do
   given!(:question) { create(:question) }
   given!(:question_with_files) { create(:question, :with_files) }
+  given!(:question_with_links) { create(:question, :with_links) }
+  given!(:question_with_reward) { create(:question, :with_reward) }
   given!(:user) { create(:user) }
+  given!(:link) { create(:link, linkable: question) }
 
   scenario 'Unauthenticated user can not edit question' do
     visit questions_path
@@ -15,7 +18,16 @@ feature 'User can edit his question', "
     expect(page).to_not have_link 'Edit question'
   end
 
-  describe 'Authenticated user', js: true do
+  scenario "Authenticated user tries to edit other user's question", js: true do
+    login(user)
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Edit question'
+    expect(page).to_not have_link 'Delete file'
+    expect(page).to_not have_link 'Delete link'
+  end
+
+  describe 'Authenticated author', js: true do
     background do
       login(question.user)
       visit question_path(question)
@@ -38,19 +50,6 @@ feature 'User can edit his question', "
       end
     end
 
-    scenario 'tries to attach files while editing his question' do
-      click_on 'Edit question'
-      attach_file 'Attach files', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
-
-      click_on 'Save'
-
-      within '.question' do
-        expect(page).to have_link 'rails_helper.rb'
-        expect(page).to have_link 'spec_helper.rb'
-        expect(page).to_not have_selector 'file_field'
-      end
-    end
-
     scenario 'opens and cancels the edit form for his question' do
       click_on 'Edit question'
 
@@ -68,16 +67,25 @@ feature 'User can edit his question', "
       click_on 'Edit question'
       fill_in 'Your question', with: ''
       fill_in 'Details', with: ''
-      click_on 'Save'
+
+      within '.question' do
+        click_on 'Add link'
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: ''
+
+        click_on 'Save'
+      end
 
       within '.question-errors' do
         expect(page).to have_content "Title can't be blank"
         expect(page).to have_content "Body can't be blank"
+        expect(page).to have_content "Links url can't be blank"
+        expect(page).to have_content "Links url is not a valid URL"
       end
     end
   end
 
-  describe 'Authenticated user while editing his question with attach files', js: true do
+  describe 'Authenticated author while editing his question with attach files', js: true do
     background do
       login(question_with_files.user)
       visit question_path(question_with_files)
@@ -110,11 +118,56 @@ feature 'User can edit his question', "
     end
   end
 
-  scenario "tries to edit other user's question" do
-    login(user)
-    visit question_path(question)
+  describe 'Authenticated author while editing his question with added links', js: true do
+    background do
+      login(question_with_links.user)
+      visit question_path(question_with_links)
 
-    expect(page).to_not have_link 'Edit question'
-    expect(page).to_not have_link 'Delete file'
+      click_on 'Edit question'
+    end
+
+    scenario 'tries to add links' do
+      within '.question' do
+        click_on 'Add link'
+
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: link.url
+
+        click_on 'Save'
+
+        expect(page).to have_link link.name
+        expect(page).to_not have_selector 'text_field'
+      end
+    end
+
+    scenario 'tries to delete added links' do
+      accept_confirm do
+        click_link 'Delete link'
+      end
+
+      within '.question' do
+        expect(page).to_not have_link link.name
+      end
+      expect(page).to have_content 'Your link was deleted.'
+    end
+  end
+
+  describe 'Authenticated author while editing his question with assigned reward', js: true do
+
+    scenario 'tries to delete assigned reward' do
+      login(question_with_reward.user)
+      visit question_path(question_with_reward)
+
+      click_on 'Edit question'
+
+      accept_confirm do
+        click_link 'Delete reward'
+      end
+
+      within '.question .reward' do
+        expect(question_with_reward.reward).to eq nil
+      end
+      expect(page).to have_content 'Question reward was removed.'
+    end
   end
 end

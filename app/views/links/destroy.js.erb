@@ -1,0 +1,4 @@
+<% if !@link.persisted? %>
+  $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
+  $('.<%= @link.linkable_type.downcase %>-<%= @link.linkable_id %>-attachments .links #<%= @link.id %>').remove()
+<% end %>

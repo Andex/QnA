@@ -9,11 +9,22 @@ feature 'User can edit his answer', "
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
   given!(:answer_with_files) { create(:answer, :with_files, question: question) }
+  given!(:answer_with_links) { create(:answer, :with_links, question: question) }
+  given!(:link) { create(:link, linkable: answer) }
 
   scenario 'Unauthenticated can not edit answer' do
     visit question_path(question)
 
     expect(page).to_not have_link 'Edit'
+  end
+
+  scenario "Authenticated user tries to edit other user's answer", js: true do
+    login(user)
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Edit'
+    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete link'
   end
 
   describe 'Authenticated author', js: true do
@@ -49,6 +60,22 @@ feature 'User can edit his answer', "
       end
     end
 
+    scenario 'tries to add links while editing his answer' do
+      click_on 'Edit'
+
+      within '.answers' do
+        click_on 'Add link'
+
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: link.url
+
+        click_on 'Save'
+
+        expect(page).to have_link link.name
+        expect(page).to_not have_selector 'text_field'
+      end
+    end
+
     scenario 'opens and cancels the edit form for his answer' do
       click_on 'Edit'
 
@@ -64,10 +91,17 @@ feature 'User can edit his answer', "
       within '.answers' do
         click_on 'Edit'
         fill_in 'Your new answer', with: ''
+
+        click_on 'Add link'
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: ''
+
         click_on 'Save'
       end
       within '.answer-errors' do
         expect(page).to have_content "Body can't be blank"
+        expect(page).to have_content "Links url can't be blank"
+        expect(page).to have_content "Links url is not a valid URL"
       end
     end
   end
@@ -106,11 +140,37 @@ feature 'User can edit his answer', "
     end
   end
 
-  scenario "Authenticated user tries to edit other user's question" do
-    login(user)
-    visit question_path(question)
+  describe 'Authenticated author while editing his answer with added links', js: true do
+    background do
+      login(answer_with_links.user)
+      visit question_path(answer_with_links.question)
 
-    expect(page).to_not have_link 'Edit'
-    expect(page).to_not have_link 'Delete answer'
+      click_on 'Edit'
+    end
+
+    scenario 'tries to add links' do
+      within '.answers' do
+        click_on 'Add link'
+
+        fill_in 'Link name', with: link.name
+        fill_in 'Url', with: link.url
+
+        click_on 'Save'
+
+        expect(page).to have_link link.name
+        expect(page).to_not have_selector 'text_field'
+      end
+    end
+
+    scenario 'tries to delete added links' do
+      accept_confirm do
+        click_link 'Delete link'
+      end
+      # save_and_open_page
+      within ".answer-id-#{answer_with_links.id}" do
+        expect(page).to_not have_link link.name
+      end
+      expect(page).to have_content 'Your link was deleted.'
+    end
   end
 end
