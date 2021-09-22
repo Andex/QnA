@@ -8,7 +8,6 @@ class RewardsController < ApplicationController
   def destroy
     @reward = Reward.find(params[:id])
     if current_user&.is_author?(@reward.question)
-      @reward.user.rewards.delete(@reward) if @reward.user.present?
       @reward.destroy
       flash.now.notice = 'Question reward was removed.'
     end

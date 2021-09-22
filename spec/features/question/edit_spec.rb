@@ -164,7 +164,10 @@ feature 'User can edit his question', "
         click_link 'Delete reward'
       end
 
-      within '.question .reward' do
+      question_with_reward.reload
+
+      within '.question' do
+        expect(page).to_not have_css '.reward'
         expect(question_with_reward.reward).to eq nil
       end
       expect(page).to have_content 'Question reward was removed.'

@@ -4,7 +4,6 @@ FactoryBot.define do
     sequence(:body) { |n| "MyText #{n}" }
     user
     best_answer { nil }
-    reward { nil }
 
     trait :invalid do
       title { nil }
