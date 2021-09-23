@@ -3,4 +3,5 @@ $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if !@question.errors.present? %>
   $('.question').html('<%= j render @question %>');
+  location.reload()
 <% end %>
