@@ -6,6 +6,7 @@ RSpec.describe Link, type: :model do
   it { should validate_presence_of :name}
   it { should validate_presence_of :url}
   it { should validate_url_of :url}
+  it { should validate_inclusion_of(:linkable_type).in_array(%w[Question Answer]) }
 
   describe '#gist?' do
     let(:gist_link) { create(:link, :gist) }

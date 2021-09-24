@@ -3,6 +3,7 @@ class Link < ApplicationRecord
 
   validates :name, :url, presence: true
   validates :url, url: true
+  validates :linkable_type, inclusion: %w[Question Answer]
 
   def gist?
     url.include?('gist.github.com')
