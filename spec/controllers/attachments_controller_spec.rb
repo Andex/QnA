@@ -44,7 +44,8 @@ RSpec.describe AttachmentsController, type: :controller do
 
         it 'does not delete question files' do
           expect do
-            (delete :destroy, params: { id: question.files.first.id }, format: :js) end.to_not change(question.files, :count)
+            (delete :destroy, params: { id: question.files.first.id },
+                              format: :js) end.to_not change(question.files, :count)
         end
 
         it 're-renders to show view' do

@@ -13,7 +13,8 @@ RSpec.describe LinksController, type: :controller do
 
           it 'deletes question links' do
             expect do
-              (delete :destroy, params: { id: question.links.first.id }, format: :js) end.to change(question.links, :count).by(-1)
+              (delete :destroy, params: { id: question.links.first.id },
+                                format: :js) end.to change(question.links, :count).by(-1)
           end
 
           it 're-renders template destroy' do
@@ -28,7 +29,8 @@ RSpec.describe LinksController, type: :controller do
 
           it 'deletes question links' do
             expect do
-              (delete :destroy, params: { id: answer.links.first.id }, format: :js) end.to change(answer.links, :count).by(-1)
+              (delete :destroy, params: { id: answer.links.first.id },
+                                format: :js) end.to change(answer.links, :count).by(-1)
           end
 
           it 're-renders template destroy' do
@@ -44,7 +46,8 @@ RSpec.describe LinksController, type: :controller do
 
         it 'does not delete question links' do
           expect do
-            (delete :destroy, params: { id: question.links.first.id }, format: :js) end.to_not change(question.links, :count)
+            (delete :destroy, params: { id: question.links.first.id },
+                              format: :js) end.to_not change(question.links, :count)
         end
 
         it 're-renders to show view' do

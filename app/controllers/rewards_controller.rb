@@ -1,5 +1,5 @@
 class RewardsController < ApplicationController
-  before_action :authenticate_user!, except: %w[index show]
+  before_action :authenticate_user!, except: :index
 
   def index
     @rewards = current_user&.rewards
@@ -7,10 +7,9 @@ class RewardsController < ApplicationController
 
   def destroy
     @reward = Reward.find(params[:id])
-    if current_user&.is_author?(@reward.question)
-      @reward.destroy
-      flash.now.notice = 'Question reward was removed.'
-    end
+    return unless current_user&.is_author?(@reward.question)
+
+    @reward.destroy
+    flash.now.notice = 'Question reward was removed.'
   end
 end
-

@@ -21,11 +21,9 @@ RSpec.describe RewardsController, type: :controller do
 
   describe 'Delete #destroy' do
     context 'Authenticated user' do
-
       context 'and author' do
         before { login(question_with_reward.user) }
         context 'of the question' do
-
           it 'deletes question reward' do
             delete :destroy, params: { id: question_with_reward.reward.id }, format: :js
             question_with_reward.reload

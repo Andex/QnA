@@ -153,7 +153,6 @@ feature 'User can edit his question', "
   end
 
   describe 'Authenticated author while editing his question with assigned reward', js: true do
-
     scenario 'tries to delete assigned reward' do
       login(question_with_reward.user)
       visit question_path(question_with_reward)
