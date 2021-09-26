@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def is_author?(obj)
     obj.user_id == id
   end
+
+  def voted?(obj)
+    votes.where(votable: obj).present?
+  end
 end

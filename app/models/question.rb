@@ -17,4 +17,8 @@ class Question < ApplicationRecord
   def other_answers
     best_answer ? answers.where.not(id: best_answer_id) : answers
   end
+
+  def rating_value
+    votes.sum(:value)
+  end
 end

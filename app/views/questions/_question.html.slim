@@ -10,6 +10,9 @@ p= question.body
     - if current_user&.is_author?(question)
       = link_to 'Delete reward', reward_path(question.reward), method: :delete, class: 'hidden',
                                  remote: true, data: { confirm: 'Are you sure?' }
+b= 'Rating: '
+div class="question-rating"
+  = render 'shared/rating', resource: question
 
 div class="question-#{question.id}-attachments"
   = render 'shared/attachments', resource: question
