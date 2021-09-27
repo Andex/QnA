@@ -1,7 +1,8 @@
 class Question < ApplicationRecord
+  include Votable
+
   has_many :answers, dependent: :destroy
   has_many :links, dependent: :destroy, as: :linkable
-  has_many :votes, dependent: :destroy, as: :votable
   has_one :reward, dependent: :destroy
 
   has_many_attached :files
@@ -16,9 +17,5 @@ class Question < ApplicationRecord
 
   def other_answers
     best_answer ? answers.where.not(id: best_answer_id) : answers
-  end
-
-  def rating_value
-    votes.sum(:value)
   end
 end
