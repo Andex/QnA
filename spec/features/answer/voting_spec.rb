@@ -23,9 +23,11 @@ feature 'User can change answer rating by voting', "
       login(answer.user)
       visit question_path(question)
 
-      expect(page).to_not have_link 'Cancel vote'
-      expect(page).to_not have_link 'UP'
-      expect(page).to_not have_link 'DOWN'
+      within ".answer-id-#{answer.id} .rating" do
+        expect(page).to_not have_link 'Cancel vote'
+        expect(page).to_not have_link 'UP'
+        expect(page).to_not have_link 'DOWN'
+      end
     end
   end
 
