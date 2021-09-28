@@ -11,7 +11,7 @@ p= question.body
       = link_to 'Delete reward', reward_path(question.reward), method: :delete, class: 'hidden',
                                  remote: true, data: { confirm: 'Are you sure?' }
 b= 'Rating: '
-div class="question-rating"
+div class='rating'
   = render 'shared/rating', resource: question
 
 div class="question-#{question.id}-attachments"

@@ -3,6 +3,10 @@ div class="answer-id-#{@question.best_answer.id}"
     = '👍'
     = @question.best_answer.body
 
+    div class='rating'
+      b= 'Rating: '
+      = render 'shared/rating', resource: @question.best_answer
+
     div class="answer-#{@question.best_answer.id}-attachments"
       = render 'shared/attachments', resource: @question.best_answer
 

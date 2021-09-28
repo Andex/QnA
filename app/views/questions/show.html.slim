@@ -9,6 +9,12 @@ h3= 'Answers on question'
   - if @question.best_answer
     = render 'answers/best_answer', resource: @question.best_answer
   table
+    tr
+      th= 'Rating'
+      th= 'Answer'
+      th= 'Links'
+      th colspan=4
+        = 'Actions'
     = render @question.other_answers
 
 .answer-errors

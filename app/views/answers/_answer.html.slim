@@ -1,6 +1,8 @@
 - if answer.persisted?
   tr class="answer-id-#{answer.id}"
-    td colspan=2
+    td class='rating'
+      = render 'shared/rating', resource: answer
+    td
       = answer.body
     td
       div class="answer-#{answer.id}-attachments"

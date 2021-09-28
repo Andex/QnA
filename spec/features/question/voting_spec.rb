@@ -36,7 +36,7 @@ feature 'User can change question rating by voting', "
     end
 
     scenario 'vote up a question' do
-      within '.question-rating' do
+      within '.question .rating' do
         click_on 'UP'
 
         expect(page).to have_content '1'
@@ -47,7 +47,7 @@ feature 'User can change question rating by voting', "
     end
 
     scenario 'vote down a question ' do
-      within '.question-rating' do
+      within '.question .rating' do
         click_on 'DOWN'
 
         expect(page).to have_content '-1'
@@ -58,7 +58,7 @@ feature 'User can change question rating by voting', "
     end
 
     scenario 'vote cancel a question ' do
-      within '.question-rating' do
+      within '.question .rating' do
         click_on 'UP'
 
         expect(page).to_not have_link 'UP'
