@@ -2,7 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :load_votable, only: %w[vote render_json]
+    before_action :load_votable, only: %w[vote_up vote_down cancel_vote render_json]
   end
 
   def vote_up

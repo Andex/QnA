@@ -11,9 +11,9 @@ module Votable
 
   def vote(value, user)
     unless user.voted?(self)
-      votes.create(value: value, user_id: user, votable: self)
+      votes.new(value: value, user_id: user.id)
     else
-      votes.where(user_id: user, votable: votable).delete_all
+      votes.where(user_id: user.id).delete_all
     end
   end
 end
