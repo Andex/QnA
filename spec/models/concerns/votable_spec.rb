@@ -24,7 +24,7 @@ shared_examples_for 'votable' do
       votable.vote(1, user)
       votable.vote(0, user)
 
-      expect(votable.votes.last.value).to eq 0
+      expect(votable.rating_value).to eq 0
     end
   end
 
@@ -34,12 +34,9 @@ shared_examples_for 'votable' do
     it '#rating_value' do
       users.each do |user|
         votable.vote(1, user)
-        votable.save
       end
       votable.vote(0, users.last)
-      votable.save
       votable.vote(-1, users.last)
-      votable.save
 
       expect(votable.rating_value).to eq 2
     end
