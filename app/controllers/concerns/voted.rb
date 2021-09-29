@@ -31,7 +31,7 @@ module Voted
       if @votable.save
         format.json do
           render json: { id: @votable.id, resource: @votable.class.name.underscore,
-                         rating: @votable.rating_value, voted: current_user&.voted?(@votable) }
+                         rating: @votable.rating_value }
         end
       else
         format.json do
