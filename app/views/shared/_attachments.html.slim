@@ -1,6 +1,5 @@
 .files
   - if resource&.files.attached?
-    = 'Download attached files: '
     ul
       - resource.files.each do |file|
         li id=file.id
@@ -14,7 +13,6 @@
 
 .links
   - if resource&.links.present?
-    / p Links:
     ul
       - resource.links.each do |link|
         li id=link.id
