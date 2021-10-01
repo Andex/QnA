@@ -171,39 +171,39 @@ feature 'User can edit his question', "
       end
       expect(page).to have_content 'Question reward was removed.'
     end
+  end
 
-    describe 'multiple sessions', js: true do
-      scenario "question changes on another user's page" do
-        Capybara.using_session('user') do
-          login(user)
-          visit question_path(question)
+  describe 'multiple sessions', js: true do
+    scenario "question changes on another user's page" do
+      Capybara.using_session('user') do
+        login(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Edit question'
+        fill_in 'Your question', with: 'edited question'
+        fill_in 'Details', with: 'edited details'
+        click_on 'Save'
+
+        expect(page).to have_content 'edited question'
+        expect(page).to have_content 'edited details'
+
+        within '.edit-question-form' do
+          expect(page).to_not have_content question.title
+          expect(page).to_not have_content question.body
+          expect(page).to_not have_selector 'text_field'
+          expect(page).to_not have_selector 'textarea'
         end
+      end
 
-        Capybara.using_session('guest') do
-          visit question_path(question)
-        end
-
-        Capybara.using_session('user') do
-          click_on 'Edit question'
-          fill_in 'Your question', with: 'edited question'
-          fill_in 'Details', with: 'edited details'
-          click_on 'Save'
-
-          expect(page).to have_content 'edited question'
-          expect(page).to have_content 'edited details'
-
-          within '.edit-question-form' do
-            expect(page).to_not have_content question.title
-            expect(page).to_not have_content question.body
-            expect(page).to_not have_selector 'text_field'
-            expect(page).to_not have_selector 'textarea'
-          end
-        end
-
-        Capybara.using_session('guest') do
-          expect(page).to have_content 'edited question'
-          expect(page).to have_content 'edited details'
-        end
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'edited question'
+        expect(page).to have_content 'edited details'
       end
     end
   end
