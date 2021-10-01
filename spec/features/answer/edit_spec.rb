@@ -172,5 +172,39 @@ feature 'User can edit his answer', "
       end
       expect(page).to have_content 'Your link was deleted.'
     end
+    end
+
+  describe 'multiple sessions', js: true do
+    scenario "answer changes on another user's page" do
+      Capybara.using_session('user') do
+        login(answer.user)
+        visit question_path(answer.question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(answer.question)
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Edit'
+
+        within '.answers' do
+          fill_in 'Your new answer', with: 'edited answer'
+          click_on 'Save'
+
+          expect(page).to_not have_content answer.body
+          expect(page).to have_content 'edited answer'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to_not have_content answer.body
+          expect(page).to have_content 'edited answer'
+          expect(page).to_not have_selector 'textarea'
+        end
+      end
+    end
   end
 end

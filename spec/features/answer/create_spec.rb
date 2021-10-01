@@ -47,4 +47,32 @@ feature 'User can answer the question', "
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
+
+  describe 'multiple sessions', js: true do
+    scenario "answer appears on another user's page" do
+      Capybara.using_session('user') do
+        login(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Your answer', with: 'Answer the question'
+        click_on 'To answer'
+
+        within '.answers' do
+          expect(page).to have_content 'Answer the question'
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'Answer the question'
+        end
+      end
+    end
+  end
 end

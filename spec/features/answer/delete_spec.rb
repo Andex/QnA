@@ -35,4 +35,31 @@ feature 'Author can delete his answer', "
 
     expect(page).not_to have_link 'Delete answer'
   end
+
+  describe 'multiple sessions', js: true do
+    scenario "answer disappears on another user's page" do
+      Capybara.using_session('user') do
+        login(answer.user)
+        visit question_path(answer.question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(answer.question)
+      end
+
+      Capybara.using_session('user') do
+        expect(page).to have_content answer.body
+
+        accept_confirm do
+          click_link 'Delete answer'
+        end
+
+        expect(page).to_not have_content answer.body
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to_not have_content answer.body
+      end
+    end
+  end
 end
