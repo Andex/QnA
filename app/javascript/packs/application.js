@@ -16,6 +16,9 @@ var jQuery = require("jquery");
 global.$ = global.jQuery = jQuery;
 window.$ = window.jQuery = jQuery;
 
+import { createConsumer } from "@rails/actioncable"
+export default createConsumer()
+
 require("@nathanvda/cocoon")
 
 require("./answers.js")
