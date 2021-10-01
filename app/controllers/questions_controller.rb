@@ -70,11 +70,12 @@ class QuestionsController < ApplicationController
 
   def publish_question
     return if @question.errors.any?
-    # gon.reward = @question.reward if @question.reward
 
     ActionCable.server.broadcast(
       'questions',
-      question: @question
+      question: @question,
+      reward: @question.reward.as_json,
+      url: @question.reward.image.url
     )
   end
 end
