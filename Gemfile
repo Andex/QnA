@@ -34,6 +34,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'slim-rails'
 gem 'devise'
 gem 'cocoon'
+gem 'gon'
 
 # validating URLs to ActiveRecord and ActiveModel
 gem 'validate_url'
