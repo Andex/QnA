@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: %w[update destroy best]
   before_action :load_question, only: %w[create update best destroy]
+  after_action :publish_question, only: :create
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
@@ -52,5 +53,15 @@ class AnswersController < ApplicationController
 
   def attach_files(answer)
     answer.files.attach(params[:answer][:files]) if params[:answer][:files].present?
+  end
+
+  def publish_question
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "questions/#{@answer.question_id}",
+      answer: @answer,
+      links: @answer.links
+    )
   end
 end

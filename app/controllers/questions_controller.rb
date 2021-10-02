@@ -7,11 +7,13 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
+    gon.current_user_id = current_user&.id
   end
 
   def show
     @new_answer = @question.answers.new
     @new_answer.links.new
+    gon.question_id = @question.id
   end
 
   def new
