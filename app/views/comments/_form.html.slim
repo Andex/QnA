@@ -1,0 +1,9 @@
+- if current_user && !current_user.is_author?(resource)
+  = link_to "Add comment to the #{resource.class.to_s.downcase}", '#', class: 'comment-link',
+                                        data: { form: "#{resource.class.to_s.downcase}-#{resource.id}-form-comment" }
+  div class="#{resource.class.to_s.downcase}-#{resource.id}-form-comment" style='display: none;'
+    = form_with model: [resource, Comment.new], local: false do |f|
+      p
+        = f.label :body, 'Your comment'
+        = f.text_area :body
+      = f.submit 'To publish'
