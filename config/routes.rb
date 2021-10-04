@@ -14,7 +14,9 @@ Rails.application.routes.draw do
       member do
         patch :best
       end
+      resources :comments, defaults: { commentable: 'answer' }
     end
+    resources :comments, defaults: { commentable: 'question' }
   end
 
   resources :attachments, only: :destroy

@@ -39,7 +39,7 @@ feature 'Author can delete his question', "
   describe 'multiple sessions', js: true do
     scenario "question disappears on another user's page" do
       Capybara.using_session('user') do
-        login(user)
+        login(question.user)
         visit question_path(question)
       end
 
