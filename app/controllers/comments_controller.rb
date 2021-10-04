@@ -1,37 +1,31 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_commentable, only: %w[create]
+  before_action :load_commentable, only: %w[create @commentable]
+  after_action :publish_comment, only: :create
 
   def new
     @comment = Comment.new
   end
 
   def create
-    @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
+    if current_user && !current_user.is_author?(@commentable)
+      @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
 
-    flash.now[:notice] = 'Your comment successfully created.' if @comment.save
-    # if current_user && !current_user.is_author?(@commentable)
-    #   @commentable.vote(value, current_user)
-    #   render_json
-    # end
+      flash.now[:notice] = 'Your comment successfully created.' if @comment.save
+    end
   end
 
   private
 
-  # def render_json
-  #   respond_to do |format|
-  #     if @commentable.save
-  #       format.json do
-  #         render json: { id: @commentable.id, resource: @commentable.class.name.underscore,
-  #                        rating: @commentable.rating_value }
-  #       end
-  #     else
-  #       format.json do
-  #         render json: @commentable.errors.full_messages, status: :unprocessable_entity
-  #       end
-  #     end
-  #   end
-  # end
+  def publish_comment
+    return if @comment.errors.any?
+
+    ActionCable.server.broadcast(
+      "comments/question-#{@commentable.is_a?(Question) ? @commentable.id : @commentable.question.id}",
+      comment: @comment,
+      user_email: current_user.email
+    )
+  end
 
   def commentable_name
     params[:commentable]
