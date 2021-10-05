@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  include ActiveStorage::SetCurrent
   include Voted
 
   before_action :authenticate_user!, except: %w[index show]

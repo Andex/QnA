@@ -6,7 +6,7 @@ p= question.body
     b= 'Reward: '
     = question.reward.title
     br
-    = image_tag question.reward.image, size: "50x50", alt: question.reward.title
+    = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
     - if current_user&.is_author?(question)
       = link_to 'Delete reward', reward_path(question.reward), method: :delete, class: 'hidden',
                                  remote: true, data: { confirm: 'Are you sure?' }
