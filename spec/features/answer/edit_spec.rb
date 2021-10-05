@@ -172,7 +172,7 @@ feature 'User can edit his answer', "
       end
       expect(page).to have_content 'Your link was deleted.'
     end
-    end
+  end
 
   describe 'multiple sessions', js: true do
     scenario "answer changes on another user's page" do
