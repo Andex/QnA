@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_commentable, only: %w[create @commentable]
   after_action :publish_comment, only: :create
 
   def new
@@ -8,6 +7,7 @@ class CommentsController < ApplicationController
   end
 
   def create
+    @commentable = load_commentable
     if current_user && !current_user.is_author?(@commentable)
       @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
 
@@ -27,16 +27,17 @@ class CommentsController < ApplicationController
     )
   end
 
-  def commentable_name
-    params[:commentable]
-  end
-
   def commentable_id
     "#{commentable_name}_id".to_sym
   end
 
   def load_commentable
-    @commentable = commentable_name.classify.constantize.find(params[commentable_id])
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
+    end
+    nil
   end
 
   def commentable_params
