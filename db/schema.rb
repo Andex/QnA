@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_161909) do
+ActiveRecord::Schema.define(version: 2021_10_06_194753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 2021_10_02_161909) do
   end
 
   create_table "links", force: :cascade do |t|
-    t.string "name"
-    t.string "url"
+    t.string "name", null: false
+    t.string "url", null: false
     t.string "linkable_type"
     t.bigint "linkable_id"
     t.datetime "created_at", precision: 6, null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_161909) do
   end
 
   create_table "rewards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.bigint "question_id"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_161909) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer "value"
+    t.integer "value", null: false
     t.string "votable_type"
     t.bigint "votable_id"
     t.bigint "user_id", null: false
