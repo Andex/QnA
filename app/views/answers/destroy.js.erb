@@ -2,7 +2,9 @@
   $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
   <% if @question.best_answer %>
     $('.answers').html('<%= j render 'answers/best_answer', resource: @question.best_answer %>');
-    $('.answers').append('<table><%= j render @question.other_answers %></table>');
+    $('.answers').append('<table>' +
+                         '<tr><th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=4>Actions</th></tr>' +
+                         '<%= j render @question.other_answers %></table>');
   <% else %>
     $('.answers').html('<%= j render @answer.question.answers %>');
   <% end %>
