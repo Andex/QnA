@@ -48,9 +48,9 @@ RSpec.describe AttachmentsController, type: :controller do
                               format: :js) end.to_not change(question.files, :count)
         end
 
-        it 're-renders to show view' do
+        it 'returns http status forbidden' do
           delete :destroy, params: { id: question.files.first.id }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).to have_http_status(:forbidden)
         end
 
         it 'does not delete answer files' do
@@ -58,9 +58,9 @@ RSpec.describe AttachmentsController, type: :controller do
  (delete :destroy, params: { id: answer.files.first.id }, format: :js) end.to_not change(answer.files, :count)
         end
 
-        it 're-renders to show view' do
+        it 'returns http status forbidden' do
           delete :destroy, params: { id: answer.files.first.id }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end
