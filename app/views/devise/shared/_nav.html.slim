@@ -1,7 +1,8 @@
-- if user_signed_in?
-  p= link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?'}
-  - if current_user.rewards.present? && request.fullpath != rewards_path
-    p= link_to 'My rewards', rewards_path
+.container
+  - if user_signed_in?
+    p= button_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default"
+    - if current_user.rewards.present? && request.fullpath != rewards_path
+      p= link_to 'My rewards', rewards_path
 
-- if request.fullpath != questions_path
-  = link_to 'Back to the main page', questions_path
+  - if request.fullpath != questions_path
+    = link_to 'Back to the main page', questions_path
