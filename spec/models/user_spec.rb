@@ -22,4 +22,25 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_is_author(answer)
     end
   end
+
+  describe '.find_for_oauth' do
+    let(:user) { create(:user) }
+    let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123456') }
+
+    context 'user already has authorization' do
+      it 'returns the user' do
+        user.authorizations.create(provider: 'github', uid: '123456')
+        expect(User.find_for_oauth(auth)).to eq user
+      end
+    end
+
+    context 'user has not authorization' do
+      context 'user already exist' do
+        let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123456', info: { email: user.email }) }
+        it 'does not create new user' do
+          expect(User.find_for_oauth(auth)).to_not change(User, :count)
+        end
+      end
+    end
+  end
 end
