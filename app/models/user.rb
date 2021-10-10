@@ -20,6 +20,11 @@ class User < ApplicationRecord
     votes.where(votable: obj).present?
   end
 
-  def self.find_for_oauth(oauth)
+  def self.find_for_oauth(auth)
+    FindForOauthService.new(auth).call
+  end
+
+  def create_authorization(auth)
+    self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 end
