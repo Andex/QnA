@@ -25,23 +25,13 @@ RSpec.describe User, type: :model do
   end
 
   describe '.find_for_oauth' do
-    let(:user) { create(:user) }
-    let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123456') }
+    let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
+    let(:service) { double('Services::FindForOauth') }
 
-    context 'user already has authorization' do
-      it 'returns the user' do
-        user.authorizations.create(provider: 'github', uid: '123456')
-        expect(User.find_for_oauth(auth)).to eq user
-      end
-    end
-
-    context 'user has not authorization' do
-      context 'user already exist' do
-        let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123456', info: { email: user.email }) }
-        it 'does not create new user' do
-          expect(User.find_for_oauth(auth)).to_not change(User, :count)
-        end
-      end
+    it 'calls Services::FindForOauth' do
+      expect(FindForOauthService).to receive(:new).with(auth).and_return(service)
+      expect(service).to receive(:call)
+      described_class.find_for_oauth(auth)
     end
   end
 end
