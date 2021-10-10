@@ -68,4 +68,30 @@ feature 'User can register', "
 
     expect(page).to have_content 'Email has already been taken'
   end
+
+  describe 'Register with Omniauth services' do
+    describe 'Github' do
+      it 'user sign in with correct data' do
+        visit new_user_registration_path
+        expect(page).to have_content('Sign in with GitHub')
+
+        mock_auth_hash('github', email: 'user@test.com')
+        click_link 'Sign in with GitHub'
+
+        expect(page).to have_content('Ask question')
+        expect(page).to have_button('Log out')
+        expect(page).to have_content 'Successfully authenticated from Github account.'
+      end
+
+      it 'can handle authentication error' do
+        invalid_mock('github')
+        visit new_user_registration_path
+        expect(page).to have_content('Sign in with GitHub')
+
+        click_link 'Sign in with GitHub'
+
+        expect(page).to have_content 'Could not authenticate you from GitHub because "Invalid credentials"'
+      end
+    end
+  end
 end
