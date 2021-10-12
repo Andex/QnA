@@ -54,4 +54,8 @@ RSpec.describe OauthCallbacksController, type: :controller do
   describe 'Github' do
     it_behaves_like 'Providers', 'github'
   end
+
+  describe 'VKontakte' do
+    it_behaves_like 'Providers', 'vkontakte'
+  end
 end
