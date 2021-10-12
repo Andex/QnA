@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@test.com" }
     password { '121212' }
     password_confirmation { '121212' }
+    confirmed_at { Time.zone.now }
   end
 
   trait :with_rewards do
