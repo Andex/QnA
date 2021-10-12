@@ -25,5 +25,8 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 
+  get '/email', to: 'users#email'
+  post '/set_email', to: 'users#set_email'
+
   mount ActionCable.server => '/cable'
 end
