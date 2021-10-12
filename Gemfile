@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'omniauth', "~> 1.9.1"
 gem 'omniauth-github'
+gem 'omniauth-vkontakte'
 
 # Use Active Storage variant
 gem 'active_storage_validations'
