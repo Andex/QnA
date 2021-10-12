@@ -1,6 +1,6 @@
 .div class="navbar navbar-light mb-4"
   .container.navbar-text
-    - if request.fullpath != questions_path
+    - unless request.fullpath =~ /(questions$|\/$)/
       = link_to 'Back to the main page', questions_path
 
     - if user_signed_in?
