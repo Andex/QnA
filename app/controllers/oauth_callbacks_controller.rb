@@ -14,10 +14,10 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     if @user&.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
-    elsif auth != :invalid_credential && !auth.nil?
+    elsif @user.nil? && !auth.nil?
       # Removing extra as it can overflow some session stores
       session['oauth_data'] = auth.except('extra')
-      redirect_to email_url, alert: 'Your email not found, you need register with set email.'
+      redirect_to email_path, alert: 'Your email not found, you need register with set email.'
     else
       redirect_to new_user_registration_path, alert: 'Something went wrong. Please try again later.'
     end
