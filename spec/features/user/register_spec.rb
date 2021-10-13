@@ -13,7 +13,16 @@ feature 'User can register', "
     fill_in 'Password confirmation', with: '121212'
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    open_email('user@test.com')
+    current_email.click_link 'Confirm my account'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+
+    fill_in 'Email', with: 'user@test.com'
+    fill_in 'Password', with: '121212'
+
+    click_on 'Log in'
+
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   scenario 'Unregistered user tries to register with invalid data' do
