@@ -5,7 +5,6 @@ class FindForOauthService
     @auth = auth
   end
 
-  # BO6wtC8cOZuJDYEdJVtQ
   def call
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
