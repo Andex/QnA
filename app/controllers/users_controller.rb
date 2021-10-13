@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def set_email
     password = Devise.friendly_token[0, 20]
 
-    @user = User.create!(email: email_params[:email], password: password, password_confirmation: password, confirmed_at: Time.zone.now)
+    @user = User.create!(email: email_params[:email], password: password, password_confirmation: password)
 
     @user.authorizations.create!(provider: session[:oauth_data]['provider'], uid: session[:oauth_data]['uid'])
 
