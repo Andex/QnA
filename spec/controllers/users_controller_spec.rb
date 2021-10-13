@@ -14,7 +14,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'Post #set_email' do
-    let!(:oauth_data) { {'provider' => 'provider', 'uid' => 123 } }
+    let!(:oauth_data) { { 'provider' => 'provider', 'uid' => 123 } }
 
     before { session[:oauth_data] = oauth_data }
 
