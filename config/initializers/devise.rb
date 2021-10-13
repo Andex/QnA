@@ -279,7 +279,9 @@ Devise.setup do |config|
   config.omniauth :vkontakte,
                   Rails.application.credentials[Rails.env.to_sym][:vkontakte][:app_id],
                   Rails.application.credentials[Rails.env.to_sym][:vkontakte][:app_secret],
-                  scope: 'email'
+                  scope: 'email',
+                  redirect_url: Rails.application.credentials[Rails.env.to_sym][:vkontakte][:redirect_url],
+                  provider_ignores_state: true
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
