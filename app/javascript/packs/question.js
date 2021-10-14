@@ -7,6 +7,7 @@ function editQuestion(event){
     event.preventDefault()
 
     $(this).hide()
+    $('#question_reward_attributes_title').val('');
 
     $('.question .delete-file-link').each(function(){
         $(this).removeClass('hidden')

@@ -1,4 +1,5 @@
 <% if !@reward.persisted? %>
   $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
   $('.question .reward').remove()
+  $('#question_reward_attributes_title').val('');
 <% end %>

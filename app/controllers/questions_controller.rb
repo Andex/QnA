@@ -63,7 +63,7 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url id _destroy],
-                                     reward_attributes: %i[id title image _destroy])
+                                     reward_attributes: %i[title image _destroy])
   end
 
   def attach_files(question)
