@@ -33,9 +33,7 @@ class CommentsController < ApplicationController
 
   def load_commentable
     params.each do |name, value|
-      if name =~ /(.+)_id$/
-        return $1.classify.constantize.find(value)
-      end
+      return Regexp.last_match(1).classify.constantize.find(value) if name =~ /(.+)_id$/
     end
     nil
   end
