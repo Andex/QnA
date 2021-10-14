@@ -160,7 +160,7 @@ feature 'User can edit his question', "
       click_on 'Edit question'
 
       accept_confirm do
-        click_link 'Delete reward'
+        click_link 'Delete the reward'
       end
 
       question_with_reward.reload
