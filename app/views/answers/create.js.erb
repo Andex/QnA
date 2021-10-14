@@ -2,6 +2,12 @@ $('.answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
 $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if @answer.persisted? %>
-  $('.answers table tbody').append('<%= j render @answer %>');
+  <% if @question.answers.count > 1 %>
+    $('.answers table tbody').append('<%= j render @answer %>');
+  <% else %>
+    $('.answers').html('<table><thead>' +
+                  '<tr><th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=4>Actions</th></tr><thead>' +
+                  '<tbody><%= j render @answer %></tbody></table>');
+  <% end %>
   $('.new-answer #answer_body').val('');
 <% end %>

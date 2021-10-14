@@ -6,16 +6,21 @@ h4 class="flash-messages"
 
 h3= 'Answers on question'
 .answers
-  - if @question.best_answer
-    = render 'answers/best_answer', resource: @question.best_answer
-  table
-    tr
-      th= 'Rating'
-      th= 'Answer'
-      th= 'Files and links'
-      th colspan=4
-        = 'Actions'
-    = render @question.other_answers
+  - if @question.answers.first.persisted?
+    .best
+      - if @question.best_answer
+        = render 'answers/best_answer', resource: @question.best_answer
+    table
+      thead
+        tr
+          th= 'Rating'
+          th= 'Answer'
+          th= 'Files and links'
+          th colspan=4
+            = 'Actions'
+      = render @question.other_answers
+  - else
+    h5= 'Be the first to leave an answer'
 
 .answer-errors
   = render 'shared/errors', resource: @new_answer
