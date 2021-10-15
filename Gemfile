@@ -26,6 +26,8 @@ gem 'omniauth', "~> 1.9.1"
 gem 'omniauth-github'
 gem 'omniauth-vkontakte'
 
+gem 'cancancan'
+
 # Use Active Storage variant
 gem 'active_storage_validations'
 gem 'image_processing', '~> 1.2'
