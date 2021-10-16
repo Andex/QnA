@@ -1,6 +1,6 @@
 .list
   - if resource&.comments.present?
-    h4= 'Comments'
+    h5= 'Comments'
     - resource.comments.each do |comment|
       = render comment
 

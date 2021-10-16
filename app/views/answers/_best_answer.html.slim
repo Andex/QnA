@@ -27,3 +27,6 @@ div class="answer-id-#{@question.best_answer.id}"
         = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: @question.best_answer.id }
 
       = link_to ' Delete answer', answer_path(@question.best_answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
+
+    div class="answer-#{@question.best_answer.id}-comments"
+      = render 'comments/comments', resource: @question.best_answer
