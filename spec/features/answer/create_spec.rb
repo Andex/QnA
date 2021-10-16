@@ -43,9 +43,8 @@ feature 'User can answer the question', "
 
   scenario 'Unauthenticated user tries to ask a question' do
     visit question_path(question)
-    click_on 'To answer'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to_not have_content 'To answer'
   end
 
   describe 'multiple sessions', js: true do

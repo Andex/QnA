@@ -17,14 +17,14 @@ feature 'User can comment on the answer on question', "
     end
   end
 
-  describe 'Authenticated author' do
-    scenario 'tries to comment to the question' do
-      login(answer.user)
-      visit question_path(question)
-
-      expect(page).to_not have_link 'Add comment to the answer'
-    end
-  end
+  # describe 'Authenticated author' do
+  #   scenario 'tries to comment to the question' do
+  #     login(answer.user)
+  #     visit question_path(question)
+  #
+  #     expect(page).to_not have_link 'Add comment to the answer'
+  #   end
+  # end
 
   describe 'Authenticated user', js: true do
     before do

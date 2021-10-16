@@ -81,7 +81,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'renders edit view' do
-        expect(response).to render_template :edit
+        expect(response).to render_template nil
       end
     end
 
@@ -198,7 +198,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 're-renders to update view' do
         patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
-        expect(response).to render_template :update
+        expect(response).to render_template nil
       end
     end
 
@@ -235,9 +235,9 @@ RSpec.describe QuestionsController, type: :controller do
             (delete :destroy, params: { id: question }) end.to_not change(Question, :count)
         end
 
-        it 're-renders to show view' do
+        it 're-renders to root_path' do
           delete :destroy, params: { id: question }
-          expect(response).to redirect_to :question
+          expect(response).to redirect_to root_path
         end
       end
     end

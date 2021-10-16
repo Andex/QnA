@@ -50,7 +50,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
         it 'returns http status forbidden' do
           delete :destroy, params: { id: question.files.first.id }, format: :js
-          expect(response).to have_http_status(:forbidden)
+          expect(response).to render_template nil
         end
 
         it 'does not delete answer files' do
@@ -60,7 +60,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
         it 'returns http status forbidden' do
           delete :destroy, params: { id: answer.files.first.id }, format: :js
-          expect(response).to have_http_status(:forbidden)
+          expect(response).to render_template nil
         end
       end
     end

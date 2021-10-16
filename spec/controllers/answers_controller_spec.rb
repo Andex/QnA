@@ -71,7 +71,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 're-renders to show view' do
           delete :destroy, params: { id: answer }, format: :js
-          expect(response).to render_template :destroy
+          expect(response).to render_template nil
         end
       end
     end
@@ -135,7 +135,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-renders to update view' do
         patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-        expect(response).to render_template :update
+        expect(response).to render_template nil
       end
     end
 
