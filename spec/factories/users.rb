@@ -4,6 +4,7 @@ FactoryBot.define do
     password { '121212' }
     password_confirmation { '121212' }
     confirmed_at { Time.zone.now }
+    admin { false }
   end
 
   trait :with_rewards do
