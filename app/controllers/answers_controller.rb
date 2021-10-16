@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :load_question, only: %w[create update best destroy]
   after_action :publish_question, only: :create
 
+  authorize_resource
+
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
 
@@ -13,28 +15,20 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.is_author?(@answer)
-      @answer.update(answer_params.except(:files))
-      attach_files(@answer)
-      flash.now[:notice] = 'Your answer was successfully edited.'
-    else
-      flash.now[:alert] = "You cannot edit someone else's answer."
-    end
+    @answer.update(answer_params.except(:files))
+    attach_files(@answer)
+    flash.now[:notice] = 'Your answer was successfully edited.'
   end
 
   def destroy
-    if current_user.is_author?(@answer)
-      @answer.unmark_as_best if @answer == @question.best_answer
+    @answer.unmark_as_best if @answer == @question.best_answer
 
-      @answer.destroy
-      flash.now[:notice] = 'Your answer was successfully deleted.'
-    else
-      flash.now[:alert] = "You cannot delete someone else's answer."
-    end
+    @answer.destroy
+    flash.now[:notice] = 'Your answer was successfully deleted.'
   end
 
   def best
-    @answer.mark_as_best if current_user.is_author?(@question)
+    @answer.mark_as_best
   end
 
   private

@@ -2,17 +2,17 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   after_action :publish_comment, only: :create
 
+  authorize_resource
+
   def new
     @comment = Comment.new
   end
 
   def create
     @commentable = load_commentable
-    if current_user && !current_user.is_author?(@commentable)
-      @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
+    @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
 
-      flash.now[:notice] = 'Your comment successfully created.' if @comment.save
-    end
+    flash.now[:notice] = 'Your comment successfully created.' if @comment.save
   end
 
   private

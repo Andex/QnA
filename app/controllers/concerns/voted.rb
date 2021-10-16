@@ -20,10 +20,9 @@ module Voted
   private
 
   def vote(value)
-    if current_user && !current_user.is_author?(@votable)
-      @votable.vote(value, current_user)
-      render_json
-    end
+    authorize! :vote, @votable
+    @votable.vote(value, current_user)
+    render_json
   end
 
   def render_json

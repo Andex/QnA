@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %w[show edit update destroy]
   after_action :publish_question, only: :create
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -35,24 +37,16 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if current_user.is_author?(@question)
-      @question.update(question_params.except(:files))
-      attach_files(@question)
-      flash.now[:notice] = 'Your question was successfully updated.'
-    else
-      flash.now[:alert] = "You cannot update someone else's question."
-    end
+    @question.update(question_params.except(:files))
+    attach_files(@question)
+    flash.now[:notice] = 'Your question was successfully updated.'
   end
 
   def destroy
-    if current_user.is_author?(@question)
-      @question.best_answer.unmark_as_best if @question.best_answer
+    @question.best_answer.unmark_as_best if @question.best_answer
 
-      @question.destroy
-      redirect_to questions_path, notice: 'Your question was successfully deleted.'
-    else
-      redirect_to question_path(@question), alert: "You cannot delete someone else's question."
-    end
+    @question.destroy
+    redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
   private
