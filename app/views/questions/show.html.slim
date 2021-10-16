@@ -25,4 +25,5 @@ h3= 'Answers on question'
 .answer-errors
   = render 'shared/errors', resource: @new_answer
 
-= render 'answers/form', resource: @new_answer
+- if can?(:create, Answer)
+  = render 'answers/form', resource: @new_answer

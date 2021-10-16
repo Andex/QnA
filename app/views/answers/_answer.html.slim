@@ -8,7 +8,7 @@
       div class="answer-#{answer.id}-attachments"
         = render 'shared/attachments', resource: answer
 
-    - if current_user&.is_author?(answer)
+    - if current_user && can?(:update, answer)
       td= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       td
         = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
@@ -27,7 +27,7 @@
 
       td= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true, data: { confirm: 'Are you sure?' }
 
-    - if current_user&.is_author?(answer.question)
+    - if current_user && can?(:best, answer)
       td= link_to 'Choose the best', best_answer_path(answer), method: :patch, remote: true, class: 'best-answer-link', data: { answer_id: answer.id }
   tr
     td class="answer-#{answer.id}-comments"

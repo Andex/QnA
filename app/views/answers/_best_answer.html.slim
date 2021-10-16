@@ -10,7 +10,7 @@ div class="answer-id-#{@question.best_answer.id}"
     div class="answer-#{@question.best_answer.id}-attachments"
       = render 'shared/attachments', resource: @question.best_answer
 
-    - if current_user&.is_author?(@question.best_answer)
+    - if current_user && can?(:update, @question.best_answer)
       = link_to ' Edit', '#', class: 'edit-answer-link', remote: true, data: { answer_id: @question.best_answer.id }
       p= form_with model: @question.best_answer, local: false, html: { id: "edit-answer-#{@question.best_answer.id}" }, class: 'hidden' do |f|
         p

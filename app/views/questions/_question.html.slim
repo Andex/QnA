@@ -11,7 +11,7 @@ b= 'Rating: '
 div class="question-#{question.id}-attachments"
   = render 'shared/attachments', resource: question
 
-- if current_user&.is_author?(question)
+- if current_user && can?(:update, question)
   = link_to 'Edit question', '#', class: 'edit-question-link'
 
   .question-errors
