@@ -9,7 +9,7 @@ feature 'User can add links to question', "
   given(:gist_url) { 'https://gist.github.com/Andex/adaaec3cd7d9e72b9e4d3a89465aeb34' }
   given(:invalid_url) { 'gist.github.com/Andex/adaaec3cd7d9e72b9e4d3a89465aeb34' }
 
-  before do
+  background do
     login(user)
     visit new_question_path
 

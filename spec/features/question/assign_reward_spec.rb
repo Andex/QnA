@@ -8,7 +8,7 @@ feature 'User can assign reward to question', "
   describe 'When creating a question', js: true do
     given(:user) { create(:user) }
 
-    before do
+    background do
       login(user)
       visit new_question_path
 

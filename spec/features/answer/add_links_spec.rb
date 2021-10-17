@@ -10,7 +10,7 @@ feature 'User can add links to answer', "
   given(:gist_url) { 'https://gist.github.com/Andex/adaaec3cd7d9e72b9e4d3a89465aeb34' }
   given(:invalid_url) { 'gist.github.com/Andex/adaaec3cd7d9e72b9e4d3a89465aeb34' }
 
-  before do
+  background do
     login(user)
     visit question_path(question)
 
