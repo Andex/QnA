@@ -34,9 +34,13 @@ class Ability
 
     can :best, Answer, question: { user_id: user.id }
 
-    alias_action :vote_up, :vote_down, :cancel_vote, to: :vote
+    alias_action :vote_up, :vote_down, to: :vote
     can :vote, [Question, Answer] do |votable|
       !user.is_author?(votable)
+    end
+
+    can :cancel_vote,[Question, Answer] do |votable|
+      user.voted?(votable)
     end
   end
 end

@@ -28,6 +28,11 @@ RSpec.describe Ability, type: :model do
     let(:other_question) { create(:question, :with_reward, :with_links, :with_files, user: other_user) }
     let(:other_answer) { create(:answer, :with_links, :with_files, user: other_user) }
 
+    let(:vote_question) { create(:vote, user: other_user, votable: question) }
+    let(:vote_answer) { create(:vote, user: other_user, votable: answer) }
+    let(:vote_other_question) { create(:vote, user: user, votable: other_question) }
+    let(:vote_other_answer) { create(:vote, user: user, votable: other_answer) }
+
     it { should_not be_able_to :manage, :all }
 
     it { should be_able_to :read, :all }
@@ -56,9 +61,13 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :best, create(:answer, question: other_question, user: user) }
     it { should_not be_able_to :best, create(:answer, question: other_question, user: other_user) }
 
-    it { should be_able_to %i[vote_up vote_down cancel_vote], other_question }
-    it { should be_able_to %i[vote_up vote_down cancel_vote], other_answer }
-    it { should_not be_able_to %i[vote_up vote_down cancel_vote], question }
-    it { should_not be_able_to %i[vote_up vote_down cancel_vote], answer }
+    it { should be_able_to %i[vote_up vote_down], other_question }
+    it { should be_able_to %i[vote_up vote_down], other_answer }
+    it { should be_able_to :cancel_vote, other_question, votable: vote_other_question }
+    it { should be_able_to :cancel_vote, other_answer, votable: vote_other_answer }
+    it { should_not be_able_to %i[vote_up vote_down], question }
+    it { should_not be_able_to %i[vote_up vote_down], answer }
+    it { should_not be_able_to :cancel_vote, question, votable: vote_question }
+    it { should_not be_able_to :cancel_vote, answer, votable: vote_answer }
   end
 end
