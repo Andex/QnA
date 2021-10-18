@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join('spec/controllers/concerns/voted_spec.rb')
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
