@@ -34,7 +34,7 @@ describe 'Profiles API', type: :request do
 
       it 'does not return private fields' do
         %w[password encrypted_password].each do |attr|
-          expect(json[attr]).to_not have_key(attr)
+          expect(json).to_not have_key(attr)
         end
       end
     end
