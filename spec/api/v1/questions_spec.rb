@@ -39,6 +39,11 @@ describe 'Questions API', type: :request do
         expect(question_response['user']['id']).to eq question.user.id
       end
 
+      it 'contains short title and body' do
+        expect(question_response['short_title']).to eq question.title.truncate(8)
+        expect(question_response['short_body']).to eq question.body.truncate(10)
+      end
+
       it 'returns list of questions' do
         expect(json['questions'].size).to eq questions.size
       end
