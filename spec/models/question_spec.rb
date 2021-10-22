@@ -1,6 +1,4 @@
 require 'rails_helper'
-require Rails.root.join('spec/models/concerns/votable_spec.rb')
-require Rails.root.join('spec/models/concerns/commentable_spec.rb')
 
 RSpec.describe Question, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
