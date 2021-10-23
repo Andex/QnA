@@ -13,6 +13,12 @@ FactoryBot.define do
       best_answer factory: :answer
     end
 
+    trait :with_comments do
+      after(:create) do |question|
+        create(:comment, commentable: question)
+      end
+    end
+
     trait :with_files do
       after(:create) do |question|
         question.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"), filename: 'rails_helper.rb')

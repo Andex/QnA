@@ -37,20 +37,59 @@ describe 'Questions API', type: :request do
       it 'returns list of questions' do
         expect(json['questions'].size).to eq questions.size
       end
+    end
+  end
 
-      describe 'answers' do
-        let(:answer) { answers.first }
-        let(:answer_response) { question_response['answers'].first }
+  describe 'GET /api/v1/questions/:id' do
+    let!(:question) { create(:question, :with_reward, :with_files, :with_links, :with_comments) }
 
-        it 'returns list of answers' do
-          expect(question_response['answers'].size).to eq answers.size
+    it_behaves_like 'api authorizable' do
+      let(:method) { :get }
+      let(:api_path) { "/api/v1/questions/#{question.id}" }
+    end
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token, resource_owner_id: question.id) }
+      let(:question_response) { json['question'] }
+      let(:resource) { question }
+      let(:resource_response) { json['question'] }
+
+      before { get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api_check_public_fields' do
+        let(:public_fields) { %w[id title body created_at updated_at] }
+      end
+
+      it 'contains user object' do
+        expect(question_response['user']['id']).to eq question.user.id
+      end
+
+      it 'contains reward object' do
+        expect(question_response['reward']).to eq question.reward.as_json
+      end
+
+      it_behaves_like 'api_check_size_of_resource_list' do
+        let(:resource_contents) { %w[comments files links] }
+      end
+
+      context 'question links' do
+        it_behaves_like 'api_check_public_fields' do
+          let(:resource) { question.links.first }
+          let(:resource_response) { json['question']['links'].first }
+          let(:public_fields) { %w[id name url created_at updated_at] }
         end
+      end
 
-        it 'returns all public fields' do
-          %w[id body user_id created_at updated_at].each do |attr|
-            expect(answer_response[attr]).to eq answer.send(attr).as_json
-          end
+      context 'question comments' do
+        it_behaves_like 'api_check_public_fields' do
+          let(:resource) { question.comments.first }
+          let(:resource_response) { json['question']['comments'].first }
+          let(:public_fields) { %w[id body user_id created_at updated_at] }
         end
+      end
+
+      it 'contains files url' do
+        expect(question_response['files'].first).to eq Rails.application.routes.url_helpers.rails_blob_path(question.files.first, only_path: true)
       end
     end
   end
