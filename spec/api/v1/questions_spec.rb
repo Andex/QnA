@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Questions API', type: :request do
   let(:headers) { {   "CONTENT_TYPE" => "application/json",
                       "ACCEPT" => "application/json"  }   }
+  let(:access_token) { create(:access_token) }
 
   describe 'GET /api/v1/questions' do
     it_behaves_like 'api authorizable' do
@@ -11,18 +12,16 @@ describe 'Questions API', type: :request do
     end
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
       let(:question_response) { json['questions'].first }
-      let!(:answers) { create_list(:answer, 3, question: question) }
 
       before { get '/api/v1/questions', params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
+      it_behaves_like 'api_check_public_fields' do
+        let(:public_fields) { %w[id title body created_at updated_at] }
+        let(:resource) { questions.first }
+        let(:resource_response) { json['questions'].first }
       end
 
       it 'contains user object' do
@@ -50,7 +49,6 @@ describe 'Questions API', type: :request do
 
     context 'authorized' do
       let(:access_token) { create(:access_token, resource_owner_id: question.id) }
-      let(:question_response) { json['question'] }
       let(:resource) { question }
       let(:resource_response) { json['question'] }
 
@@ -60,12 +58,8 @@ describe 'Questions API', type: :request do
         let(:public_fields) { %w[id title body created_at updated_at] }
       end
 
-      it 'contains user object' do
-        expect(question_response['user']['id']).to eq question.user.id
-      end
-
-      it 'contains reward object' do
-        expect(question_response['reward']).to eq question.reward.as_json
+      it_behaves_like 'api_check_contains_object' do
+        let(:objects) { %w[user reward] }
       end
 
       it_behaves_like 'api_check_size_of_resource_list' do
@@ -89,7 +83,7 @@ describe 'Questions API', type: :request do
       end
 
       it 'contains files url' do
-        expect(question_response['files'].first).to eq Rails.application.routes.url_helpers.rails_blob_path(question.files.first, only_path: true)
+        expect(json['question']['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(question.files.first, only_path: true)
       end
     end
   end
