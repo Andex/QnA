@@ -39,7 +39,7 @@ class Ability
       !user.is_author?(votable)
     end
 
-    can :cancel_vote,[Question, Answer] do |votable|
+    can :cancel_vote, [Question, Answer] do |votable|
       user.voted?(votable)
     end
   end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Users API', type: :request do
-  let(:headers) { {   "CONTENT_TYPE" => "application/json",
-                      "ACCEPT" => "application/json"  }   }
+  let(:headers) do {   "CONTENT_TYPE" => "application/json",
+                      "ACCEPT" => "application/json"  }   end
 
   describe 'GET /api/v1/users/me' do
     it_behaves_like 'api authorizable' do

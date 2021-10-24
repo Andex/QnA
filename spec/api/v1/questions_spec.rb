@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers) { {   "CONTENT_TYPE" => "application/json",
-                      "ACCEPT" => "application/json"  }   }
+  let(:headers) do {   "CONTENT_TYPE" => "application/json",
+                      "ACCEPT" => "application/json"  }   end
   let(:access_token) { create(:access_token) }
 
   describe 'GET /api/v1/questions' do
@@ -83,7 +83,8 @@ describe 'Questions API', type: :request do
       end
 
       it 'contains files url' do
-        expect(json['question']['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(question.files.first, only_path: true)
+        expect(json['question']['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(
+                                                             question.files.first, only_path: true)
       end
     end
   end

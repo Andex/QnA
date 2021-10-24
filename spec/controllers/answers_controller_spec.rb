@@ -43,7 +43,6 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
-
   describe 'Delete #destroy' do
     context 'Authenticated user' do
       before { login(user) }
@@ -88,7 +87,6 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-
 
   describe 'Patch #update' do
     let(:answer) { create(:answer, question: question) }

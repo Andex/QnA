@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { {   "CONTENT_TYPE" => "application/json",
-                      "ACCEPT" => "application/json"  }   }
+  let(:headers) do {   "CONTENT_TYPE" => "application/json",
+                      "ACCEPT" => "application/json"  }   end
   let(:access_token) { create(:access_token) }
 
   describe 'GET /api/v1/questions/:id/answers' do
@@ -20,7 +20,8 @@ describe 'Answers API', type: :request do
       let(:resource) { answer }
       let(:resource_response) { answer_response }
 
-      before { get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers }
+      before do
+      get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers end
 
       it_behaves_like 'api_check_public_fields' do
         let(:public_fields) { %w[id body created_at updated_at] }
@@ -81,7 +82,8 @@ describe 'Answers API', type: :request do
       end
 
       it 'contains files url' do
-        expect(answer_response['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(answer.files.first, only_path: true)
+        expect(answer_response['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(
+                                                            answer.files.first, only_path: true)
       end
     end
   end
