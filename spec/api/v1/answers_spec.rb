@@ -7,12 +7,11 @@ describe 'Answers API', type: :request do
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET /api/v1/questions/:id/answers' do
+    let(:method) { :get }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
     let!(:question) { create(:question) }
 
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
-    end
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let(:answer_response) { json['answers'].first }
@@ -21,8 +20,9 @@ describe 'Answers API', type: :request do
       let(:resource) { answer }
       let(:resource_response) { answer_response }
 
-      before do
-      get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers end
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
 
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id body created_at updated_at] }
@@ -39,20 +39,21 @@ describe 'Answers API', type: :request do
   end
 
   describe 'GET /api/v1/questions/:id/answers/:id' do
+    let(:method) { :get }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
     let!(:question) { create(:question) }
     let!(:answer) { create(:answer, :with_files, :with_links, :with_comments, question: question) }
 
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { "/api/v1/answers/#{answer.id}" }
-    end
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let(:answer_response) { json['answer'] }
       let(:resource) { answer }
       let(:resource_response) { answer_response }
 
-      before { get "/api/v1/answers/#{answer.id}", params: { access_token: access_token.token }, headers: headers }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
 
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id body created_at updated_at] }

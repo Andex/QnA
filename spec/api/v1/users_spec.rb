@@ -7,15 +7,17 @@ describe 'Users API', type: :request do
   let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
   describe 'GET /api/v1/users/me' do
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { '/api/v1/users/me' }
-    end
+    let(:method) { :get }
+    let(:api_path) { '/api/v1/users/me' }
+
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
-      before { get '/api/v1/users/me', params: { access_token: access_token.token }, headers: headers }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
 
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id email admin created_at updated_at] }
@@ -32,15 +34,17 @@ describe 'Users API', type: :request do
   end
 
   describe 'GET /api/v1/users' do
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { '/api/v1/users' }
-    end
+    let(:method) { :get }
+    let(:api_path) { '/api/v1/users' }
+
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let!(:users) { create_list(:user, 3) }
 
-      before { get '/api/v1/users', params: { access_token: access_token.token }, headers: headers }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
 
       it 'returns list of users except me' do
         expect(json['users'].size).to eq users.size

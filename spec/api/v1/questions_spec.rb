@@ -2,22 +2,24 @@ require 'rails_helper'
 
 describe 'Questions API', type: :request do
   let(:headers) do {   "CONTENT_TYPE" => "application/json",
-                      "ACCEPT" => "application/json"  }   end
+    "ACCEPT" => "application/json"  }   end
   let(:user) { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET /api/v1/questions' do
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { '/api/v1/questions' }
-    end
+    let(:method) { :get }
+    let(:api_path) { '/api/v1/questions' }
+
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
       let(:question_response) { json['questions'].first }
 
-      before { get '/api/v1/questions', params: { access_token: access_token.token }, headers: headers }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
 
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id title body created_at updated_at] }
@@ -42,17 +44,19 @@ describe 'Questions API', type: :request do
 
   describe 'GET /api/v1/questions/:id' do
     let!(:question) { create(:question, :with_reward, :with_files, :with_links, :with_comments) }
+    let(:method) { :get }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
 
-    it_behaves_like 'api authorizable' do
-      let(:method) { :get }
-      let(:api_path) { "/api/v1/questions/#{question.id}" }
-    end
+    it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
       let(:resource) { question }
       let(:resource_response) { json['question'] }
 
-      before { get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }, headers: headers }
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it_behaves_like 'api authorizable'
+
 
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id title body created_at updated_at] }
