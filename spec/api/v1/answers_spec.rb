@@ -23,11 +23,11 @@ describe 'Answers API', type: :request do
       before do
       get "/api/v1/questions/#{question.id}/answers", params: { access_token: access_token.token }, headers: headers end
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id body created_at updated_at] }
       end
 
-      it_behaves_like 'api_check_contains_object' do
+      it_behaves_like 'Checkable contains object' do
         let(:objects) { %w[user question] }
       end
 
@@ -53,20 +53,20 @@ describe 'Answers API', type: :request do
 
       before { get "/api/v1/answers/#{answer.id}", params: { access_token: access_token.token }, headers: headers }
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id body created_at updated_at] }
       end
 
-      it_behaves_like 'api_check_contains_object' do
+      it_behaves_like 'Checkable contains object' do
         let(:objects) { %w[user question] }
       end
 
-      it_behaves_like 'api_check_size_of_resource_list' do
+      it_behaves_like 'Checkable size of resource list' do
         let(:resource_contents) { %w[comments files links] }
       end
 
       context 'answer links' do
-        it_behaves_like 'api_check_public_fields' do
+        it_behaves_like 'Checkable public fields' do
           let(:resource) { answer.links.first }
           let(:resource_response) { answer_response['links'].first }
           let(:public_fields) { %w[id name url created_at updated_at] }
@@ -74,7 +74,7 @@ describe 'Answers API', type: :request do
       end
 
       context 'answer comments' do
-        it_behaves_like 'api_check_public_fields' do
+        it_behaves_like 'Checkable public fields' do
           let(:resource) { answer.comments.first }
           let(:resource_response) { answer_response['comments'].first }
           let(:public_fields) { %w[id body user_id created_at updated_at] }

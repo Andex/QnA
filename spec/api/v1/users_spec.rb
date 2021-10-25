@@ -16,7 +16,7 @@ describe 'Users API', type: :request do
 
       before { get '/api/v1/users/me', params: { access_token: access_token.token }, headers: headers }
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id email admin created_at updated_at] }
         let(:resource) { me }
         let(:resource_response) { json['user'] }
@@ -53,7 +53,7 @@ describe 'Users API', type: :request do
         end
       end
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id email admin created_at updated_at] }
         let(:resource) { users.first }
         let(:resource_response) { json['users'].first }

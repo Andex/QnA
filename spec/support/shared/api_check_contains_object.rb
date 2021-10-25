@@ -1,4 +1,4 @@
-shared_examples_for 'api_check_contains_object' do
+shared_examples_for 'Checkable contains object' do
   it 'contains object' do
     objects.each do |object|
       expect(resource_response[object]['id']).to eq resource.send(object).id

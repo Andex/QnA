@@ -18,7 +18,7 @@ describe 'Questions API', type: :request do
 
       before { get '/api/v1/questions', params: { access_token: access_token.token }, headers: headers }
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id title body created_at updated_at] }
         let(:resource) { questions.first }
         let(:resource_response) { json['questions'].first }
@@ -54,20 +54,20 @@ describe 'Questions API', type: :request do
 
       before { get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }, headers: headers }
 
-      it_behaves_like 'api_check_public_fields' do
+      it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id title body created_at updated_at] }
       end
 
-      it_behaves_like 'api_check_contains_object' do
+      it_behaves_like 'Checkable contains object' do
         let(:objects) { %w[user reward] }
       end
 
-      it_behaves_like 'api_check_size_of_resource_list' do
+      it_behaves_like 'Checkable size of resource list' do
         let(:resource_contents) { %w[comments files links] }
       end
 
       context 'question links' do
-        it_behaves_like 'api_check_public_fields' do
+        it_behaves_like 'Checkable public fields' do
           let(:resource) { question.links.first }
           let(:resource_response) { json['question']['links'].first }
           let(:public_fields) { %w[id name url created_at updated_at] }
@@ -75,7 +75,7 @@ describe 'Questions API', type: :request do
       end
 
       context 'question comments' do
-        it_behaves_like 'api_check_public_fields' do
+        it_behaves_like 'Checkable public fields' do
           let(:resource) { question.comments.first }
           let(:resource_response) { json['question']['comments'].first }
           let(:public_fields) { %w[id body user_id created_at updated_at] }
