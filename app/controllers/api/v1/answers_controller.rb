@@ -2,6 +2,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :load_answer, only: %w[show]
   before_action :load_question, only: %w[index show]
 
+  authorize_resource class: Answer
+
   def index
     @answers = @question.answers
     render json: @answers
