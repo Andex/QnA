@@ -3,6 +3,8 @@ require 'rails_helper'
 describe 'Users API', type: :request do
   let(:headers) do {   "CONTENT_TYPE" => "application/json",
                       "ACCEPT" => "application/json"  }   end
+  let(:me) { create(:user) }
+  let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
   describe 'GET /api/v1/users/me' do
     it_behaves_like 'api authorizable' do
@@ -11,7 +13,6 @@ describe 'Users API', type: :request do
     end
 
     context 'authorized' do
-      let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before { get '/api/v1/users/me', params: { access_token: access_token.token }, headers: headers }
@@ -37,8 +38,6 @@ describe 'Users API', type: :request do
     end
 
     context 'authorized' do
-      let(:access_token) { create(:access_token) }
-      let(:me) { create(:user) }
       let!(:users) { create_list(:user, 3) }
 
       before { get '/api/v1/users', params: { access_token: access_token.token }, headers: headers }

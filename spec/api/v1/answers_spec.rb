@@ -3,7 +3,8 @@ require 'rails_helper'
 describe 'Answers API', type: :request do
   let(:headers) do {   "CONTENT_TYPE" => "application/json",
                       "ACCEPT" => "application/json"  }   end
-  let(:access_token) { create(:access_token) }
+  let(:user) { create(:user) }
+  let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET /api/v1/questions/:id/answers' do
     let!(:question) { create(:question) }

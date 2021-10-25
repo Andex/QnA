@@ -3,7 +3,8 @@ require 'rails_helper'
 describe 'Questions API', type: :request do
   let(:headers) do {   "CONTENT_TYPE" => "application/json",
                       "ACCEPT" => "application/json"  }   end
-  let(:access_token) { create(:access_token) }
+  let(:user) { create(:user) }
+  let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET /api/v1/questions' do
     it_behaves_like 'api authorizable' do
@@ -48,7 +49,6 @@ describe 'Questions API', type: :request do
     end
 
     context 'authorized' do
-      let(:access_token) { create(:access_token, resource_owner_id: question.id) }
       let(:resource) { question }
       let(:resource_response) { json['question'] }
 
