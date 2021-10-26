@@ -150,4 +150,82 @@ describe 'Questions API', type: :request do
       end
     end
   end
+
+  describe 'PATCH /api/v1/questions/:id' do
+    let!(:question) { create(:question, :with_reward, :with_files, :with_links, :with_comments, user: user) }
+    let(:method) { :patch }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'author' do
+        context 'with valid attributes' do
+          let(:question_response) { json['question'] }
+
+          before do
+            patch api_path,
+                params: { access_token: access_token.token,
+                          question: { title: 'new title', body: 'new body' } },
+                headers: headers
+          end
+
+          it_behaves_like 'api authorizable'
+
+          it 'contains user object' do
+            expect(question_response['user']['id']).to eq access_token.resource_owner_id
+          end
+
+          it 'changes question attributes' do
+            question.reload
+
+            expect(question.title).to eq 'new title'
+            expect(question.body).to eq 'new body'
+          end
+        end
+
+        context 'with invalid attributes' do
+          before do
+            patch api_path,
+                params: { access_token: access_token.token,
+                          question: { title: '', body: '' } },
+                headers: headers
+          end
+
+          it 'does not change question' do
+            question.reload
+
+            expect(question.title).to eq question.title
+            expect(question.body).to eq question.body
+          end
+    
+          it 'returns status 422' do
+            expect(response.status).to eq 422
+          end
+    
+          it 'returns error' do
+            expect(json['errors']).to_not be_nil
+          end
+        end
+      end
+      
+      context 'not author' do
+        let!(:other_user)      { create(:user) }
+        let!(:other_question)  { create(:question, user: other_user) }
+        let!(:other_api_path)  { "/api/v1/questions/#{other_question.id}" }
+        let!(:other_old_title) { other_question.title }
+        let!(:other_old_body)  { other_question.body }
+
+        it 'does not update Question' do
+          patch other_api_path,
+                params: { question: { title: 'new title', body: 'new body' },
+                               access_token: access_token.token },
+                headers: headers
+
+          expect(other_question.title).to eq other_old_title
+          expect(other_question.body).to eq other_old_body
+        end
+      end
+    end
+  end
 end
