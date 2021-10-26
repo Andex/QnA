@@ -222,4 +222,51 @@ describe 'Answers API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/answers/:id' do
+    let!(:answer) { create(:answer, user: user) }
+    let(:method) { :delete }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
+
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'author' do
+        it 'deletes the answer' do
+          expect do
+            delete api_path, params: { access_token: access_token.token,
+              headers: headers }
+          end.to change(Answer, :count).by(-1)
+        end
+
+        it 'returns 200 status' do
+          delete api_path, params: { access_token: access_token.token },
+          headers: headers
+          expect(response).to be_successful
+        end
+
+        it 'returns deleted answer json' do
+          delete api_path, params: { access_token: access_token.token },
+          headers: headers
+
+          %w[id body created_at updated_at].each do |attr|
+            expect(json['answer'][attr]).to eq answer.send(attr).as_json
+          end
+        end
+      end
+
+      context 'not author' do
+        let(:other_user) { create(:user) }
+        let!(:other_answer) { create(:answer, user: other_user) }
+        let(:other_api_path) { "/api/v1/answers/#{other_answer.id}" }
+        
+        it 'does not deletes answer' do
+          expect do
+            delete other_api_path, params: { access_token: access_token.token,
+              headers: headers }
+          end.to_not change(Answer, :count)
+        end
+      end
+    end
+  end
 end
