@@ -228,4 +228,43 @@ describe 'Questions API', type: :request do
       end
     end
   end
+
+  describe 'DELETE /api/v1/questions/:id' do
+    let!(:question) { create(:question, user: user) }
+    let(:method) { :delete }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'author' do
+        it 'deletes the question' do
+          expect do
+            (delete api_path, params: { access_token: access_token.token, id: question.id })
+          end.to change(Question, :count).by(-1)
+        end
+
+        it 'returns 200 status' do
+          delete api_path, params: { access_token: access_token.token, id: question.id }
+          expect(response).to be_successful
+        end
+
+        it 'returns deleted question json' do
+          delete api_path, params: { access_token: access_token.token, id: question.id }
+
+          %w[id title body created_at updated_at].each do |attr|
+            expect(json['question'][attr]).to eq question.send(attr).as_json
+          end
+        end
+      end
+
+      context 'not author' do
+        it 'does not deletes question' do
+          expect do
+            (delete api_path, params: { access_token: access_token.token, id: question.id })
+          end.to change(Question, :count)
+        end
+      end
+    end
+  end
 end

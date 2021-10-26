@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :load_question, only: %i[show update]
+  before_action :load_question, only: %i[show update destroy]
 
   authorize_resource class: Question
 
@@ -24,6 +24,14 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def update
     if @question.update(question_params)
+      render json: @question
+    else
+      render json: { errors: @question.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @question.destroy
       render json: @question
     else
       render json: { errors: @question.errors }, status: :unprocessable_entity
