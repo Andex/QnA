@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) do {   "CONTENT_TYPE" => "application/json",
-                      "ACCEPT" => "application/json"  }   end
+  let(:headers) { { "ACCEPT" => "application/json" } }
   let(:user) { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
@@ -86,6 +85,65 @@ describe 'Answers API', type: :request do
       it 'contains files url' do
         expect(answer_response['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(
                                                             answer.files.first, only_path: true)
+      end
+    end
+  end
+
+  describe 'POST /api/v1/answers' do
+    let!(:question) { create(:question) }
+    let(:method) { :post }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+    
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'with valid attributes' do
+        let(:answer) { attributes_for(:answer, question: question) }
+        let(:answer_response) { json['answer'] }
+
+        it 'creates a new Answer' do
+          expect{ post api_path, params: { access_token: access_token.token, answer: answer },
+          headers: headers }.to change(Answer, :count).by(1)
+        end
+
+        before do
+          post api_path,
+               params: { access_token: access_token.token, answer: answer },
+               headers: headers
+        end
+
+        it_behaves_like 'api authorizable'
+    
+        it 'contains user object' do
+          expect(answer_response['user']['id']).to eq access_token.resource_owner_id
+        end
+  
+        it 'creates a answer with the correct attributes' do
+          expect(Answer.last).to have_attributes answer
+        end
+      end
+    
+      context 'with invalid attributes' do
+        let(:answer) { attributes_for(:answer, :invalid, question: question) }
+    
+        it "doesn't save answer, renders errors" do
+          expect { post api_path, params: { access_token: access_token.token, answer: answer },
+          headers: headers }.to_not change(Answer, :count)
+        end
+
+        before do
+          post api_path,
+               params: { access_token: access_token.token, answer: answer },
+               headers: headers
+        end
+
+        it 'returns status 422' do
+          expect(response.status).to eq 422
+        end
+
+        it 'returns error' do
+          expect(json['errors']).to_not be_nil
+        end
       end
     end
   end
