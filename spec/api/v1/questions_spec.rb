@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers) do {   "CONTENT_TYPE" => "application/json",
-    "ACCEPT" => "application/json"  }   end
+  let(:headers) { { "ACCEPT" => "application/json"  } }
   let(:user) { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
@@ -57,7 +56,6 @@ describe 'Questions API', type: :request do
 
       it_behaves_like 'api authorizable'
 
-
       it_behaves_like 'Checkable public fields' do
         let(:public_fields) { %w[id title body created_at updated_at] }
       end
@@ -89,6 +87,66 @@ describe 'Questions API', type: :request do
       it 'contains files url' do
         expect(json['question']['files'].first['url']).to eq Rails.application.routes.url_helpers.rails_blob_path(
                                                              question.files.first, only_path: true)
+      end
+    end
+  end
+
+  describe 'POST /api/v1/questions' do
+    let(:method) { :post }
+    let(:api_path) { '/api/v1/questions' }
+    
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'with valid attributes' do
+        let(:question) { attributes_for(:question) }
+        let(:question_response) { json['question'] }
+        let(:resource) { question }
+        let(:resource_response) { question_response }
+
+        it 'creates a new Question' do
+          expect{ post api_path, params: { access_token: access_token.token, question: question },
+          headers: headers }.to change(Question, :count).by(1)
+        end
+
+        before do
+          post api_path,
+               params: { access_token: access_token.token, question: question },
+               headers: headers
+        end
+
+        it_behaves_like 'api authorizable'
+    
+        it 'contains user object' do
+          expect(question_response['user']['id']).to eq access_token.resource_owner_id
+        end
+  
+        it 'creates a question with the correct attributes' do
+           expect(Question.last).to have_attributes question
+        end
+      end
+    
+      context 'with invalid attributes' do
+        let(:question) { attributes_for(:question, :invalid) }
+    
+        it "doesn't save question, renders errors" do
+          expect { post api_path, params: { access_token: access_token.token, question: question },
+          headers: headers }.to_not change(Question, :count)
+        end
+
+        before do
+          post api_path,
+               params: { access_token: access_token.token, question: question },
+               headers: headers
+        end
+
+        it 'returns status 422' do
+          expect(response.status).to eq 422
+        end
+
+        it 'returns error' do
+          expect(json['errors']).to_not be_nil
+        end
       end
     end
   end
