@@ -147,4 +147,79 @@ describe 'Answers API', type: :request do
       end
     end
   end
+
+  describe 'PATCH /api/v1/answers/:id' do
+    let(:question) { create(:question) }
+    let!(:answer) { create(:answer, :with_files, :with_links, user: user, question: question) }
+    let(:method) { :patch }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
+
+    it_behaves_like 'api unauthorizable'
+
+    context 'authorized' do
+      context 'author' do
+        context 'with valid attributes' do
+          let(:answer_response) { json['answer'] }
+
+          before do
+            patch api_path,
+                params: { access_token: access_token.token,
+                          answer: { body: 'new body' } },
+                headers: headers
+          end
+
+          it_behaves_like 'api authorizable'
+
+          it 'contains user object' do
+            expect(answer_response['user']['id']).to eq access_token.resource_owner_id
+          end
+
+          it 'changes answer attributes' do
+            answer.reload
+
+            expect(answer.body).to eq 'new body'
+          end
+        end
+
+        context 'with invalid attributes' do
+          before do
+            patch api_path,
+                params: { access_token: access_token.token,
+                          answer: { body: '' } },
+                headers: headers
+          end
+
+          it 'does not change answer' do
+            answer.reload
+
+            expect(answer.body).to eq answer.body
+          end
+    
+          it 'returns status 422' do
+            expect(response.status).to eq 422
+          end
+    
+          it 'returns error' do
+            expect(json['errors']).to_not be_nil
+          end
+        end
+      end
+      
+      context 'not author' do
+        let!(:other_user)      { create(:user) }
+        let!(:other_answer)  { create(:answer, user: other_user) }
+        let!(:other_api_path)  { "/api/v1/answers/#{other_answer.id}" }
+        let!(:other_old_body)  { other_answer.body }
+
+        it 'does not update Answer' do
+          patch other_api_path,
+                params: { answer: { title: 'new title', body: 'new body' },
+                               access_token: access_token.token },
+                headers: headers
+
+          expect(other_answer.body).to eq other_old_body
+        end
+      end
+    end
+  end
 end
