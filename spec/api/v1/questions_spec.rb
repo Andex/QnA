@@ -101,8 +101,8 @@ describe 'Questions API', type: :request do
       context 'with valid attributes' do
         let(:question) { attributes_for(:question) }
         let(:question_response) { json['question'] }
-        let(:resource) { question }
-        let(:resource_response) { question_response }
+        # let(:resource) { question }
+        # let(:resource_response) { question_response }
 
         it 'creates a new Question' do
           expect{ post api_path, params: { access_token: access_token.token, question: question },
@@ -122,7 +122,7 @@ describe 'Questions API', type: :request do
         end
   
         it 'creates a question with the correct attributes' do
-           expect(Question.last).to have_attributes question
+          expect(Question.last).to have_attributes question
         end
       end
     
@@ -152,7 +152,7 @@ describe 'Questions API', type: :request do
   end
 
   describe 'PATCH /api/v1/questions/:id' do
-    let!(:question) { create(:question, :with_reward, :with_files, :with_links, :with_comments, user: user) }
+    let!(:question) { create(:question, :with_reward, :with_files, :with_links, user: user) }
     let(:method) { :patch }
     let(:api_path) { "/api/v1/questions/#{question.id}" }
 
@@ -240,17 +240,20 @@ describe 'Questions API', type: :request do
       context 'author' do
         it 'deletes the question' do
           expect do
-            (delete api_path, params: { access_token: access_token.token, id: question.id })
+            delete api_path, params: { access_token: access_token.token,
+              headers: headers }
           end.to change(Question, :count).by(-1)
         end
 
         it 'returns 200 status' do
-          delete api_path, params: { access_token: access_token.token, id: question.id }
+          delete api_path, params: { access_token: access_token.token },
+          headers: headers
           expect(response).to be_successful
         end
 
         it 'returns deleted question json' do
-          delete api_path, params: { access_token: access_token.token, id: question.id }
+          delete api_path, params: { access_token: access_token.token },
+          headers: headers
 
           %w[id title body created_at updated_at].each do |attr|
             expect(json['question'][attr]).to eq question.send(attr).as_json
@@ -259,10 +262,15 @@ describe 'Questions API', type: :request do
       end
 
       context 'not author' do
+        let!(:other_user)      { create(:user) }
+        let!(:other_question)  { create(:question, user: other_user) }
+        let!(:other_api_path)  { "/api/v1/questions/#{other_question.id}" }
+
         it 'does not deletes question' do
           expect do
-            (delete api_path, params: { access_token: access_token.token, id: question.id })
-          end.to change(Question, :count)
+            delete other_api_path, params: { access_token: access_token.token,
+              headers: headers }
+          end.to_not change(Question, :count)
         end
       end
     end
