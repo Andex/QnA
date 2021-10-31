@@ -28,5 +28,7 @@ module QnA
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.autoload_paths << Rails.root.join('app')
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
