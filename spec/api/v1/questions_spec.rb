@@ -94,7 +94,7 @@ describe 'Questions API', type: :request do
   describe 'POST /api/v1/questions' do
     let(:method) { :post }
     let(:api_path) { '/api/v1/questions' }
-    
+
     it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
@@ -116,19 +116,19 @@ describe 'Questions API', type: :request do
         end
 
         it_behaves_like 'api authorizable'
-    
+
         it 'contains user object' do
           expect(question_response['user']['id']).to eq access_token.resource_owner_id
         end
-  
+
         it 'creates a question with the correct attributes' do
           expect(Question.last).to have_attributes question
         end
       end
-    
+
       context 'with invalid attributes' do
         let(:question) { attributes_for(:question, :invalid) }
-    
+
         it "doesn't save question, renders errors" do
           expect { post api_path, params: { access_token: access_token.token, question: question },
           headers: headers }.to_not change(Question, :count)
@@ -165,9 +165,9 @@ describe 'Questions API', type: :request do
 
           before do
             patch api_path,
-                params: { access_token: access_token.token,
+                  params: { access_token: access_token.token,
                           question: { title: 'new title', body: 'new body' } },
-                headers: headers
+                  headers: headers
           end
 
           it_behaves_like 'api authorizable'
@@ -187,9 +187,9 @@ describe 'Questions API', type: :request do
         context 'with invalid attributes' do
           before do
             patch api_path,
-                params: { access_token: access_token.token,
+                  params: { access_token: access_token.token,
                           question: { title: '', body: '' } },
-                headers: headers
+                  headers: headers
           end
 
           it 'does not change question' do
@@ -198,17 +198,17 @@ describe 'Questions API', type: :request do
             expect(question.title).to eq question.title
             expect(question.body).to eq question.body
           end
-    
+
           it 'returns status 422' do
             expect(response.status).to eq 422
           end
-    
+
           it 'returns error' do
             expect(json['errors']).to_not be_nil
           end
         end
       end
-      
+
       context 'not author' do
         let!(:other_user)      { create(:user) }
         let!(:other_question)  { create(:question, user: other_user) }

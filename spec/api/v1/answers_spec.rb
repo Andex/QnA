@@ -93,7 +93,7 @@ describe 'Answers API', type: :request do
     let!(:question) { create(:question) }
     let(:method) { :post }
     let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
-    
+
     it_behaves_like 'api unauthorizable'
 
     context 'authorized' do
@@ -113,19 +113,19 @@ describe 'Answers API', type: :request do
         end
 
         it_behaves_like 'api authorizable'
-    
+
         it 'contains user object' do
           expect(answer_response['user']['id']).to eq access_token.resource_owner_id
         end
-  
+
         it 'creates a answer with the correct attributes' do
           expect(Answer.last).to have_attributes answer
         end
       end
-    
+
       context 'with invalid attributes' do
         let(:answer) { attributes_for(:answer, :invalid, question: question) }
-    
+
         it "doesn't save answer, renders errors" do
           expect { post api_path, params: { access_token: access_token.token, answer: answer },
           headers: headers }.to_not change(Answer, :count)
@@ -163,9 +163,9 @@ describe 'Answers API', type: :request do
 
           before do
             patch api_path,
-                params: { access_token: access_token.token,
-                          answer: { body: 'new body' } },
-                headers: headers
+                  params: { access_token: access_token.token,
+                            answer: { body: 'new body' } },
+                  headers: headers
           end
 
           it_behaves_like 'api authorizable'
@@ -184,9 +184,9 @@ describe 'Answers API', type: :request do
         context 'with invalid attributes' do
           before do
             patch api_path,
-                params: { access_token: access_token.token,
-                          answer: { body: '' } },
-                headers: headers
+                  params: { access_token: access_token.token,
+                            answer: { body: '' } },
+                  headers: headers
           end
 
           it 'does not change answer' do
@@ -194,17 +194,17 @@ describe 'Answers API', type: :request do
 
             expect(answer.body).to eq answer.body
           end
-    
+
           it 'returns status 422' do
             expect(response.status).to eq 422
           end
-    
+
           it 'returns error' do
             expect(json['errors']).to_not be_nil
           end
         end
       end
-      
+
       context 'not author' do
         let!(:other_user)      { create(:user) }
         let!(:other_answer)  { create(:answer, user: other_user) }
@@ -259,7 +259,7 @@ describe 'Answers API', type: :request do
         let(:other_user) { create(:user) }
         let!(:other_answer) { create(:answer, user: other_user) }
         let(:other_api_path) { "/api/v1/answers/#{other_answer.id}" }
-        
+
         it 'does not deletes answer' do
           expect do
             delete other_api_path, params: { access_token: access_token.token,
