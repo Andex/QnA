@@ -37,6 +37,7 @@ gem 'cancancan'
 # Background jobs
 gem 'sidekiq'
 gem 'sinatra', require: false
+gem 'whenever', require: false
 
 # Use Active Storage variant
 gem 'active_storage_validations'
