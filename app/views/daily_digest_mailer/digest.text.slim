@@ -1,3 +1,8 @@
-' DailyDigest#digest
+' DailyDigest from QnA
 = "\r\n" * 2
-' #{@greeting}, find me in app/views/daily_digest_mailer/digest.text.slim
+' Over the past day, #{@questions.count} question(s) have been created
+- @questions.each do |question|
+  = link_to "#{question.title}", question_url(question)
+  = "\r\n"
+  ' Author: #{question.user.email}
+  = "\r\n"

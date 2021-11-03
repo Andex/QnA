@@ -1,2 +1,11 @@
-h1 DailyDigest#digest
-p = "#{@greeting}, find me in app/views/daily_digest_mailer/digest.html.slim"
+h1 Daily Digest from QnA
+p
+  = "Over the past day, #{@questions.count} question(s) have been created"
+  ul 
+    - @questions.each do |question|
+      li
+        = link_to "#{question.title}", question_url(question)
+        p 
+          | Author:
+          br
+          = question.user.email
