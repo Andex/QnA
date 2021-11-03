@@ -40,6 +40,7 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
+    it { should be_able_to :create, Subscription }
 
     it { should be_able_to :update, question }
     it { should be_able_to :update, answer }
@@ -51,11 +52,13 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :destroy, question.links.first }
     it { should be_able_to :destroy, question.files.first }
     it { should be_able_to :destroy, question.reward }
+    it { should be_able_to :destroy, create(:subscription, user: user, question: question) }
     it { should_not be_able_to :destroy, other_answer }
     it { should_not be_able_to :destroy, other_question }
     it { should_not be_able_to :destroy, other_question.links.first }
     it { should_not be_able_to :destroy, other_question.files.first }
     it { should_not be_able_to :destroy, other_question.reward }
+    it { should_not be_able_to :destroy, create(:subscription, user: other_user, question: question) }
 
     it { should be_able_to :best, create(:answer, question: question, user: other_user) }
     it { should_not be_able_to :best, create(:answer, question: other_question, user: user) }
