@@ -39,10 +39,10 @@ RSpec.describe User, type: :model do
   describe '#subscribed?' do
     let(:user) { create(:user) }
     let(:question) { create(:question) }
-    let(:subscription) { create(:subscription, user: user, question: question) }
     let(:other_question) { create(:question) }
 
     it 'subscription user' do
+      create(:subscription, user: user, question: question)
       expect(user).to be_subscribed(question)
     end
 

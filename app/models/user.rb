@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :rewards, dependent: :nullify
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
   has_many :authorizations, dependent: :destroy
 
   def is_author?(obj)
@@ -18,6 +19,10 @@ class User < ApplicationRecord
 
   def voted?(obj)
     votes.where(votable: obj).present?
+  end
+
+  def subscribed?(question)
+    subscriptions.find_by(question_id: question.id)
   end
 
   def self.find_for_oauth(auth)
