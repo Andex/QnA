@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :comments, defaults: { commentable: 'answer' }
     end
     resources :comments, defaults: { commentable: 'question' }
+    resources :subscriptions, only: %i[create destroy], shallow: true
   end
 
   resources :attachments, only: :destroy
