@@ -102,8 +102,10 @@ describe 'Answers API', type: :request do
         let(:answer_response) { json['answer'] }
 
         it 'creates a new Answer' do
-          expect{ post api_path, params: { access_token: access_token.token, answer: answer },
-          headers: headers }.to change(Answer, :count).by(1)
+          expect do
+            post api_path, params: { access_token: access_token.token, answer: answer },
+            headers: headers
+          end.to change(Answer, :count).by(1)
         end
 
         before do
@@ -127,8 +129,10 @@ describe 'Answers API', type: :request do
         let(:answer) { attributes_for(:answer, :invalid, question: question) }
 
         it "doesn't save answer, renders errors" do
-          expect { post api_path, params: { access_token: access_token.token, answer: answer },
-          headers: headers }.to_not change(Answer, :count)
+          expect do
+            post api_path, params: { access_token: access_token.token, answer: answer },
+            headers: headers
+          end.to_not change(Answer, :count)
         end
 
         before do

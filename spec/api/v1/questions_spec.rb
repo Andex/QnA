@@ -101,12 +101,12 @@ describe 'Questions API', type: :request do
       context 'with valid attributes' do
         let(:question) { attributes_for(:question) }
         let(:question_response) { json['question'] }
-        # let(:resource) { question }
-        # let(:resource_response) { question_response }
 
         it 'creates a new Question' do
-          expect{ post api_path, params: { access_token: access_token.token, question: question },
-          headers: headers }.to change(Question, :count).by(1)
+          expect do
+            post api_path, params: { access_token: access_token.token, question: question },
+            headers: headers
+          end.to change(Question, :count).by(1)
         end
 
         before do
@@ -130,8 +130,10 @@ describe 'Questions API', type: :request do
         let(:question) { attributes_for(:question, :invalid) }
 
         it "doesn't save question, renders errors" do
-          expect { post api_path, params: { access_token: access_token.token, question: question },
-          headers: headers }.to_not change(Question, :count)
+          expect do
+            post api_path, params: { access_token: access_token.token, question: question },
+            headers: headers
+          end.to_not change(Question, :count)
         end
 
         before do

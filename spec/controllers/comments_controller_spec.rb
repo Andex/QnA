@@ -5,7 +5,7 @@ RSpec.describe CommentsController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'Post #create' do
-    context 'Authenticated user is not author of resource' do
+    context 'Authenticated user' do
       before { login(user) }
       context 'with valid attributes' do
         it 'saves a new comment in the database' do

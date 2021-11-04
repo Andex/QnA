@@ -1,6 +1,5 @@
 .value
   = resource.rating_value
-/ - unless !user_signed_in? || current_user&.is_author?(resource)
 - if current_user && can?(:vote, resource)
   = link_to 'Cancel vote', polymorphic_path(resource, action: :cancel_vote),
           method: :delete,
