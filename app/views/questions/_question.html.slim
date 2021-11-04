@@ -48,5 +48,8 @@ div class="question-#{question.id}-attachments"
 
   = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: 'Are you sure?' }
 
+- if current_user && can?(:create, Subscription)
+  = render 'subscriptions/subscription', question: question
+
 div class="question-#{question.id}-comments"
   = render 'comments/comments', resource: question

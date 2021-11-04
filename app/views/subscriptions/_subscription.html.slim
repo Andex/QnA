@@ -1,0 +1,13 @@
+.subscription
+  = link_to 'Unsubscribe to updates', subscription_path(question),
+                                      method: :delete,
+                                      remote: true,
+                                      data: { type: :json },
+                                      class: 'unsubscribe-link',
+                                      style: "#{current_user&.subscribed?(question) ? '' : 'display:none;'}"
+  = link_to 'Subscribe to updates', question_subscriptions_path(question),
+                                    method: :post,
+                                    remote: true,
+                                    data: { type: :json },
+                                    class: 'subscribe-link',
+                                    style: "#{current_user&.subscribed?(question) ? 'display:none;' : ''}"

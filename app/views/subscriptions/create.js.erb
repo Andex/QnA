@@ -1,0 +1,4 @@
+<% if @subscription.persisted? %>
+  $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
+  $('.subscribe-link, .unsubscribe-link').toggle();
+<% end %>
