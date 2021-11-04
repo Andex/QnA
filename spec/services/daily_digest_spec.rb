@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-Rspec.describe DailyDigestServices do
+RSpec.describe DailyDigestService do
   let(:users){ create_list(:user, 3) }
 
   it 'sends daily digest to all users' do
