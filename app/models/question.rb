@@ -17,9 +17,17 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  after_create :subscribe_author
+
   scope :created_in_a_day, -> { where("created_at >= :today", today: DateTime.current.beginning_of_day) }
 
   def other_answers
     best_answer ? answers.where.not(id: best_answer_id) : answers
+  end
+
+  private
+
+  def subscribe_author
+    subscriptions.create!(user: user)
   end
 end
