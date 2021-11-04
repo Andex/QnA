@@ -11,7 +11,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = Subscription.find(params[:id])
+    @subscription = current_user.subscriptions&.find_by(question_id: params[:id])
     @subscription&.destroy
     flash.now.notice = 'Your subscription was removed.'
   end
