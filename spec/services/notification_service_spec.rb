@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe NotificationService do
-  let(:users){ create_list(:user, 3) }
-  let(:answer) { create(:answer) }
+  let(:user){ create(:user) }
+  let(:question) { create(:question) }
+  let(:answer) { create(:answer, question: question) }
 
   it 'sends notification of a new answer to a question' do
-    users.each { |user| expect(NotificationMailer).to receive(:subscribe_question).with(user, answer).and_call_original }
+    create(:subscription, user: user, question: question)
+
+    question.subscriptions.each do |subscription|
+      expect(NotificationMailer).to receive(:subscribe_question).with(subscription.user, answer).and_call_original
+    end
     subject.send_notification(answer)
   end
 end
