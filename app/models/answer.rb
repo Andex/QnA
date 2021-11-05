@@ -13,6 +13,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :send_notifications
+
   def mark_as_best
     transaction do
       question.update!(best_answer_id: id)
@@ -25,5 +27,11 @@ class Answer < ApplicationRecord
       question.update!(best_answer_id: nil)
       question.reward&.update!(user: nil)
     end
+  end
+
+  private
+
+  def send_notifications
+    NotificationJob.perform_later(self)
   end
 end
