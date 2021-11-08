@@ -166,7 +166,7 @@ feature 'User can edit his answer', "
       accept_confirm do
         click_link 'Delete link'
       end
-      # save_and_open_page
+
       within ".answer-id-#{answer_with_links.id}" do
         expect(page).to_not have_link link.name
       end

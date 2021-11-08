@@ -22,8 +22,4 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_path, alert: 'Something went wrong. Please try again later.'
     end
   end
-
-  # def failure
-  #   redirect_to new_user_registration_path
-  # end
 end

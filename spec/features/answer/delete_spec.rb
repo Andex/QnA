@@ -19,7 +19,6 @@ feature 'Author can delete his answer', "
         click_link 'Delete answer'
       end
 
-      # expect(page).to have_content 'Your answer was successfully deleted.'
       expect(page).to_not have_content answer.body
     end
 

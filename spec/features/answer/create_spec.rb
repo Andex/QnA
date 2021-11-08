@@ -18,7 +18,6 @@ feature 'User can answer the question', "
       fill_in 'Your answer', with: 'Answer the question'
       click_on 'To answer'
 
-      # expect(page).to have_content 'Your answer successfully created.'
       within '.answers' do
         expect(page).to have_content 'Answer the question'
       end
