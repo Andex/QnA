@@ -34,6 +34,10 @@ gem 'oj'
 
 gem 'cancancan'
 
+# Fulltext search
+gem 'mysql2', '~> 0.4'
+gem 'thinking-sphinx'
+
 # Background jobs
 gem 'sidekiq'
 gem 'sinatra', require: false
