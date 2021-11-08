@@ -29,6 +29,9 @@
 /config/master.key
 /config/database.yml
 
+config/*.sphinx.conf
+db/sphinx
+
 /public/packs
 /public/packs-test
 /node_modules
