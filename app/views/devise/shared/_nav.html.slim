@@ -1,12 +1,14 @@
 .div class="navbar navbar-light mb-4"
   .container.navbar-text
     - unless request.fullpath =~ /(questions$|\/$)/
-      = link_to 'Back to the main page', questions_path
+      = link_to 'Back to the main page', questions_path, class: 'nav-link active'
 
     - if user_signed_in?
       = "Welcome, #{current_user.email}"
       - if current_user.rewards.present? && request.fullpath != rewards_path
-        = link_to 'My rewards', rewards_path
+        = link_to 'My rewards', rewards_path, class: 'nav-link active'
       = button_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
     - elsif request.fullpath =~ /(questions$|\/$)/
       = link_to 'Log in', new_user_session_path , class: 'btn btn-default'
+.container.col-md-10
+  = render 'search/form'
