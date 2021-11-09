@@ -1,0 +1,4 @@
+= resource.body
+= resource.user.email
+- link = resource.commentable.is_a?(Question) ? resource.commentable : resource.commentable.question
+= link_to 'Show', link

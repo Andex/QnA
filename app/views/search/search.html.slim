@@ -1,0 +1,9 @@
+.container
+  h2= 'Search results'
+
+  - if result.present?
+    - result.each do |item|
+        = "#{item.class.to_s}:"
+        p= render "#{item.class.to_s.downcase}", resource: item
+  - else
+    p= 'Not found'
