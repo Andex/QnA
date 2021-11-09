@@ -86,6 +86,7 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'capybara-email'
+  gem 'database_cleaner-active_record'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 5.0'
