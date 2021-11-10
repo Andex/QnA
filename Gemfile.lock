@@ -197,7 +197,7 @@ GEM
     multipart-post (2.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    mysql2 (0.5.3)
+    mysql2 (0.4.10)
     nio4r (2.5.7)
     nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
@@ -430,7 +430,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.3)
   mini_magick
-  mysql2 (~> 0.4)
+  mysql2 (~> 0.4.10)
   oj
   omniauth (~> 1.9.1)
   omniauth-github
