@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :question do
-    sequence(:title) { |n| "MyString #{n}" }
-    sequence(:body) { |n| "MyText #{n}" }
+    sequence(:title) { |n| "My String #{n}" }
+    sequence(:body) { |n| "My Text #{n}" }
     user
     best_answer { nil }
 

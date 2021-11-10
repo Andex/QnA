@@ -2,7 +2,7 @@ require 'sphinx_helper'
 
 RSpec.describe SearchController, type: :controller do
   let!(:questions) { create_list(:question, 3) }
-
+  
   describe 'Get #search', js: true do
     context 'for one resource', sphinx: true do
       let!(:resource) { 'questions' }
@@ -39,20 +39,22 @@ RSpec.describe SearchController, type: :controller do
 
       ThinkingSphinx::Test.run do
         it 'assigns the requested resource to @resource' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:resource)).to eq resource
         end
 
         it 'assigns the requested query to @query' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:query)).to eq query
         end
 
         it 'renders search view' do
+          get :search, params: { query: query, resource: resource }
           expect(response).to render_template :search
         end
 
         it 'global search' do
-          allow(service).to receive(:model_klass).with(resource).and_return(ThinkingSphinx)
-          expect(model_klass).to receive(:search).with(query)
+          allow(ThinkingSphinx).to receive(:search).with(query)
           get :search, params: { query: query, resource: resource }
         end
 
