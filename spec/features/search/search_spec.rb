@@ -17,40 +17,43 @@ feature 'User can find information on search', "
 
         click_on 'Search'
 
-        expect(page).to have_content result
+        expect(page).to have_content(query)
       end
     end
   end
 
-  scenario 'search from questions', sphinx: true do
+  context 'search from questions', sphinx: true do
     it_behaves_like 'searchable' do
-      given!(:query) { 'My' }
+      given!(:query) { 'My String' }
       given!(:resource_name) { 'questions' }
-      given!(:result) { query.exactly(6).times }
     end
   end
 
-  scenario 'search from answers', sphinx: true do
-    given(:query) { 'MyText' }
-    given(:resource_name) { 'answers' }
-    given(:result) { query.exactly(3).times }
+  context 'search from answers', sphinx: true do
+    it_behaves_like 'searchable' do
+      given(:query) { 'Answer' }
+      given(:resource_name) { 'answers' }
+    end
   end
 
-  scenario 'search from users', sphinx: true do
-    given!(:query) { 'user' }
-    given!(:resource_name) { 'users' }
-    given!(:result) { query.exactly(3).times }
+  context 'search from users', sphinx: true do
+    it_behaves_like 'searchable' do
+      given!(:query) { 'test' }
+      given!(:resource_name) { 'users' }
+    end
   end
 
-  scenario 'search from comments', sphinx: true do
-    given!(:query) { 'MyComment' }
-    given!(:resource_name) { 'comments' }
-    given!(:result) { query.exactly(3).times }
+  context 'search from comments', sphinx: true do
+    it_behaves_like 'searchable' do
+      given!(:query) { 'Comment' }
+      given!(:resource_name) { 'comments' }
+    end
   end
 
-  scenario 'search from all', sphinx: true do
-    given!(:query) { 'My' }
-    given!(:resource_name) { 'all' }
-    given!(:result) { query.exactly(12).times }
+  context 'search from all', sphinx: true do
+    it_behaves_like 'searchable' do
+      given!(:query) { 'My' }
+      given!(:resource_name) { 'all' }
+    end
   end
 end

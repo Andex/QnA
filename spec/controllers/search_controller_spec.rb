@@ -9,23 +9,25 @@ RSpec.describe SearchController, type: :controller do
       let!(:query) { 'MyString' }
 
       ThinkingSphinx::Test.run do
-        before do
-          get :search, params: { query: query, resource: resource }
-        end
-
         it 'assigns the requested resource to @resource' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:resource)).to eq resource
         end
 
         it 'assigns the requested query to @query' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:query)).to eq query
         end
 
         it 'assigns the search result to @result' do
+          allow(resource.classify.constantize).to receive(:search).with(query).and_return(questions)
+          get :search, params: { query: query, resource: resource }
+
           expect(assigns(:result)).to match_array(questions)
         end
 
         it 'renders search view' do
+          get :search, params: { query: query, resource: resource }
           expect(response).to render_template :search
         end
       end
@@ -35,24 +37,25 @@ RSpec.describe SearchController, type: :controller do
       let!(:answer) { create(:answer) }
       let!(:query) { 'MyTextAnswer' }
       let!(:resource) { 'all' }
-      let(:service) { double('SearchController') }
 
       ThinkingSphinx::Test.run do
         it 'assigns the requested resource to @resource' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:resource)).to eq resource
         end
 
         it 'assigns the requested query to @query' do
+          get :search, params: { query: query, resource: resource }
           expect(assigns(:query)).to eq query
         end
 
         it 'renders search view' do
+          get :search, params: { query: query, resource: resource }
           expect(response).to render_template :search
         end
 
         it 'global search' do
-          allow(service).to receive(:model_klass).with(resource).and_return(ThinkingSphinx)
-          expect(model_klass).to receive(:search).with(query)
+          allow(ThinkingSphinx).to receive(:search).with(query)
           get :search, params: { query: query, resource: resource }
         end
 

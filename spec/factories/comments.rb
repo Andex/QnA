@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :comment do
-    sequence(:body) { |n| "MyComment-#{n}" }
+    sequence(:body) { |n| "My Comment-#{n}" }
     user
     commentable factory: :question
 
