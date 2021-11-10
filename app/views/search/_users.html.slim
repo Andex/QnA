@@ -1,2 +1,3 @@
-= resource.email
-= resource.admin ? 'Admin' : 'User'
+.d-inline-block.me-4.text-secondary= "#{resource.class.to_s}:"
+.d-inline-block.me-4= resource.email
+= resource.admin ? 'Admin' : 'Not admin'
