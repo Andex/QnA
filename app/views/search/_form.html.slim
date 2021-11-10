@@ -3,6 +3,6 @@
     = f.text_field :query, placeholder: 'Search...', class: 'form-control me-2'
   p
     = f.label :resource, 'Search for:'
-    = f.select :resource, ['questions', 'answers', 'comments', 'authors', 'all'], class: 'form-select'
+    = f.select :resource, ['questions', 'answers', 'comments', 'users', 'all'], class: 'form-select'
   p
     = f.submit 'Search', class: 'btn btn-outline-success btn-sm'

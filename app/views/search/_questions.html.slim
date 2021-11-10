@@ -1,3 +1,4 @@
-= resource.title
-= resource.body.truncate(20)
+.d-inline-block.me-4.text-secondary= "#{resource.class.to_s}:"
+.d-inline-block.me-4= resource.title
+.d-inline-block.me-4= resource.body.truncate(20)
 = link_to 'Show', resource

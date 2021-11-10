@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  skip_authorization_check
+
   def search
     @query = params[:query]
     @resource = params[:resource]

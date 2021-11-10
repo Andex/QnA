@@ -10,5 +10,7 @@
       = button_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
     - elsif request.fullpath =~ /(questions$|\/$)/
       = link_to 'Log in', new_user_session_path , class: 'btn btn-default'
-.container.col-md-10
-  = render 'search/form'
+
+- if request.fullpath =~ /(questions$|\/$)/
+  .container.col-md-10
+    = render 'search/form'
