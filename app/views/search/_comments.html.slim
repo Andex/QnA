@@ -2,4 +2,4 @@
 .d-inline-block.me-4= resource.body
 .d-inline-block.me-4= resource.user.email
 - link = resource.commentable.is_a?(Question) ? resource.commentable : resource.commentable.question
-= link_to 'Show', link
+= link_to 'Show', link, class: 'btn btn-warning btn-sm'

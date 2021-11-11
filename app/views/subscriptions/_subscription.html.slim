@@ -3,11 +3,11 @@
                                       method: :delete,
                                       remote: true,
                                       data: { type: :json },
-                                      class: 'unsubscribe-link',
+                                      class: 'unsubscribe-link btn btn-secondary btn-sm',
                                       style: "#{current_user&.subscribed?(question) ? '' : 'display:none;'}"
   = link_to 'Subscribe to updates', question_subscriptions_path(question),
                                     method: :post,
                                     remote: true,
                                     data: { type: :json },
-                                    class: 'subscribe-link',
+                                    class: 'subscribe-link btn btn-info btn-sm',
                                     style: "#{current_user&.subscribed?(question) ? 'display:none;' : ''}"
