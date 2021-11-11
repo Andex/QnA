@@ -2,7 +2,7 @@ require 'sphinx_helper'
 
 RSpec.describe SearchController, type: :controller do
   let!(:questions) { create_list(:question, 3) }
-
+  
   describe 'Get #search', js: true do
     context 'for one resource', sphinx: true do
       let!(:resource) { 'questions' }
