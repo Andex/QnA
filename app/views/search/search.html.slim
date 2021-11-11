@@ -1,14 +1,14 @@
-.container
-  h2= 'Search results'
-  .bg-secondary.p-2
-    .d-inline-block.me-4.text-light= 'Search expression:'
-    .d-inline-block.me-4
-      b= "#{@query}"
-    .d-inline-block.me-4.text-light= 'in category:'
-    b= "#{@resource}"
+h2= 'Search results'
+.bg-secondary.p-2
+  .d-inline-block.me-4.text-light= 'Search expression:'
+  .d-inline-block.me-4
+    b= "#{@query}"
+  .d-inline-block.me-4.text-light= 'in category:'
+  b= "#{@resource}"
 
-  - if @result.present?
-    - @result.each do |item|
-        p= render "#{item.class.to_s.downcase}s", resource: item
-  - else
+- if @result.present?
+  - @result.each do |item|
+      p= render "#{item.class.to_s.downcase}s", resource: item
+- else
+  .fs-5
     p= 'Not found'
