@@ -9,4 +9,4 @@
     = f.fields_for :links do |l|
     .add_link
       = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
-  = f.submit 'To answer'
+  = f.submit 'To answer', class: 'btn btn-primary btn-sm'

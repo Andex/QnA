@@ -1,4 +1,4 @@
-p= link_to 'Ask question', new_question_path
+p= link_to 'Ask question', new_question_path, class: 'btn btn-success btn-sm'
 
 h1= 'All questions'
 
@@ -16,4 +16,4 @@ table class='questions table text-center'
       td
         - if question.reward.present?
           = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
-      td= link_to 'Show answers', question
+      td= link_to 'Show answers', question, class: 'btn btn-warning btn-sm'
