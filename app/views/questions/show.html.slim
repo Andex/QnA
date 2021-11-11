@@ -1,30 +1,29 @@
-.container
-  h4 class="flash-messages"
-    = render 'shared/flash_messages'
+h4 class="flash-messages"
+  = render 'shared/flash_messages'
 
-  .question
-    = render @question
+.question
+  = render @question
 
-  h3= 'Answers on question'
-  .answers
-    - if @question.answers.first.persisted?
-      .best
-        - if @question.best_answer
-          = render 'answers/best_answer', resource: @question.best_answer
-      table
-        thead
-          tr
-            th= 'Rating'
-            th= 'Answer'
-            th= 'Files and links'
-            th colspan=4
-              = 'Actions'
-        = render @question.other_answers
-    - else
-      h5= 'Be the first to leave an answer'
+h3= 'Answers on question'
+.answers
+  - if @question.answers.first.persisted?
+    .best
+      - if @question.best_answer
+        = render 'answers/best_answer', resource: @question.best_answer
+    table
+      thead
+        tr
+          th= 'Rating'
+          th= 'Answer'
+          th= 'Files and links'
+          th colspan=4
+            = 'Actions'
+      = render @question.other_answers
+  - else
+    h5= 'Be the first to leave an answer'
 
-  .answer-errors
-    = render 'shared/errors', resource: @new_answer
+.answer-errors
+  = render 'shared/errors', resource: @new_answer
 
-  - if can?(:create, Answer)
-    = render 'answers/form', resource: @new_answer
+- if can?(:create, Answer)
+  = render 'answers/form', resource: @new_answer

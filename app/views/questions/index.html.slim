@@ -1,21 +1,19 @@
-.container
-  / - if can?(:create, Question)
-  p= link_to 'Ask question', new_question_path
+p= link_to 'Ask question', new_question_path
 
-  h1= 'All questions'
+h1= 'All questions'
 
-  table class='questions table text-center'
-    thead class="thead"
-      tr
-        th Title
-        th Body
-        th Reward
-        th Actions
-    - @questions.each do |question|
-      tr
-        td= question.title
-        td= question.body
-        td
-          - if question.reward.present?
-            = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
-        td= link_to 'Show answers', question
+table class='questions table text-center'
+  thead class="thead"
+    tr
+      th Title
+      th Body
+      th Reward
+      th Actions
+  - @questions.each do |question|
+    tr
+      td= question.title
+      td= question.body
+      td
+        - if question.reward.present?
+          = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
+      td= link_to 'Show answers', question
