@@ -1,5 +1,11 @@
 .container
   h2= 'Search results'
+  .bg-secondary.p-2
+    .d-inline-block.me-4.text-light= 'Search expression:'
+    .d-inline-block.me-4
+      b= "#{@query}"
+    .d-inline-block.me-4.text-light= 'in category:'
+    b= "#{@resource}"
 
   - if @result.present?
     - @result.each do |item|
