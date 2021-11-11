@@ -15,6 +15,7 @@ div class="answer-id-#{@question.best_answer.id}"
                           class: 'edit-answer-link  btn btn-outline-success btn-sm',
                           remote: true,
                           data: { answer_id: @question.best_answer.id }
+
       p= form_with model: @question.best_answer, local: false, html: { id: "edit-answer-#{@question.best_answer.id}" }, class: 'hidden' do |f|
         p
           = f.label :body, 'Your new answer'
@@ -26,8 +27,11 @@ div class="answer-id-#{@question.best_answer.id}"
           = f.fields_for :links do |link|
           .add_link
             = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
-        = f.submit 'Save'
-        = link_to 'Cancel', '#', class: 'cancel-answer-link', remote: true, data: { answer_id: @question.best_answer.id }
+        = f.submit 'Save', class: 'btn btn-success btn-sm'
+        = link_to 'Cancel', '#',
+                            class: 'cancel-answer-link btn btn-secondary btn-sm',
+                            remote: true,
+                            data: { answer_id: @question.best_answer.id }
 
       = link_to ' Delete answer', answer_path(@question.best_answer),
                                   method: :delete,
