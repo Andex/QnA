@@ -9,9 +9,6 @@
         = render 'shared/attachments', resource: answer
 
     - if current_user && can?(:update, answer)
-      td= link_to 'Edit', '#',
-                          class: 'edit-answer-link btn btn-outline-success btn-sm',
-                          data: { answer_id: answer.id }
       td
         = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
           p
@@ -29,12 +26,17 @@
                               class: 'cancel-answer-link btn btn-outline-dark btn-sm',
                               remote: true,
                               data: { answer_id: answer.id }
+      td= link_to 'Edit', '#',
+                          class: 'edit-answer-link btn btn-outline-success btn-sm',
+                          data: { answer_id: answer.id }
 
       td= link_to 'Delete answer', answer_path(answer),
                                    method: :delete,
                                    remote: true,
                                    class: 'btn btn-outline-dark btn-sm',
                                    data: { confirm: 'Are you sure?' }
+    - else
+      td colspan=3
 
     - if current_user && can?(:best, answer)
       td= link_to 'Choose the best', best_answer_path(answer),
@@ -42,6 +44,6 @@
                                      remote: true,
                                      class: 'best-answer-link btn btn-warning btn-sm',
                                      data: { answer_id: answer.id }
-  tr
+
     td class="answer-#{answer.id}-comments"
       = render 'comments/comments', resource: answer

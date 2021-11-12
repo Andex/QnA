@@ -1,4 +1,5 @@
-p
-  = comment.body
-  = ' ©'
-  = comment.user.email
+li
+  .d-inline-block.me-4
+    = comment.body
+  .d-inline-block.me-4.text-secondary
+    = " ©#{comment.user.email}"

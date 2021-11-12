@@ -10,13 +10,13 @@ h3= 'Answers on question'
     .best
       - if @question.best_answer
         = render 'answers/best_answer', resource: @question.best_answer
-    table
-      thead
+    table class='table text-center'
+      thead class='thead'
         tr
           th= 'Rating'
           th= 'Answer'
           th= 'Files and links'
-          th colspan=4
+          th colspan=5
             = 'Actions'
       = render @question.other_answers
   - else

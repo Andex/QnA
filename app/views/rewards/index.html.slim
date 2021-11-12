@@ -1,9 +1,10 @@
 h1= 'My rewards'
 
-table
-  tr
-    th Question title
-    th Reward title
-    th Image
+table class='table table-bordered text-center'
+  thead class='thead'
+    tr
+      th Question title
+      th Reward title
+      th Image
   - @rewards.each do |reward|
     = render @rewards
