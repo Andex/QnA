@@ -26,7 +26,9 @@ div class="answer-id-#{@question.best_answer.id}"
         p id="links"
           = f.fields_for :links do |link|
           .add_link
-            = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+            = link_to_add_association 'Add link', f, :links,
+                                                      partial: 'links/link_fields',
+                                                      class: 'btn btn-outline-info btn-sm'
         = f.submit 'Save', class: 'btn btn-success btn-sm'
         = link_to 'Cancel', '#',
                             class: 'cancel-answer-link btn btn-secondary btn-sm',

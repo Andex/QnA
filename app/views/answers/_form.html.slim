@@ -8,5 +8,7 @@
   p
     = f.fields_for :links do |l|
     .add_link
-      = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+      = link_to_add_association 'Add link', f, :links,
+                                                partial: 'links/link_fields',
+                                                class: 'btn btn-outline-info btn-sm'
   = f.submit 'To answer', class: 'btn btn-primary btn-sm'
