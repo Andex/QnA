@@ -56,5 +56,6 @@ div class="question-#{question.id}-attachments"
 - if current_user && can?(:create, Subscription)
   = render 'subscriptions/subscription', question: question
 
-div class="question-#{question.id}-comments"
-  = render 'comments/comments', resource: question
+- if current_user && can?(:create, Comment)
+  div class="question-#{question.id}-comments"
+    = render 'comments/comments', resource: question
