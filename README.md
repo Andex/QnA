@@ -1,24 +1,53 @@
-# README
+# Questions and Answers
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Проект является подобием сайта http://stackoverflow.com/.
 
-Things you may want to cover:
+Пользователи задают и отвечают на вопросы друг друга и могут голосовать за те или иные ответы и вопросы.
 
-* Ruby version
+## Возможности
+### Гость:
+- Может просматривать все вопросы и ответы.
 
-* System dependencies
+- Может осуществлять поиск по параметрам среди вопросов/ответов/комментариев/пользователей.
+***
+### Пользователь:
+- Может аутентифицироваться с помощью Bконтакте или Github.
 
-* Configuration
+- Может подписаться на любой вопрос/ответ, а также прокомментировать его.
 
-* Database creation
+- Может проголосовать `за` или `против` любого вопроса/ответа (кроме того, которого является автором), а также потом отменить свой голос.
 
-* Database initialization
+  **Как автор**
 
-* How to run the test suite
+- Может назначать награду за лучший ответ и выбирать его среди ответов.
 
-* Services (job queues, cache servers, search engines, etc.)
+- При создании вопроса/ответа может прикреплять ссылки и файлы. Если ссылка представляет из себя gist, то он сразу отображается.
 
-* Deployment instructions
+## Используемые инструменты и технологии
 
-* ...
+- TDD/BDD (RSpec, Capybara)
+
+- ActionCable
+
+- ActiveJob, Sidekiq
+
+- ActiveStorage (Amazon S3)
+
+- Ajax
+
+- CanCanCan
+
+- OAuth (Github, Vkontakte)
+
+- Polymorphic associations
+
+- REST API
+
+- SphinxSearch
+
+
+
+***
+***Ruby version:*** *2.7.2*
+
+***Rails version:*** *6.0*
