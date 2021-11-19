@@ -452,6 +452,7 @@ DEPENDENCIES
   doorkeeper
   factory_bot_rails
   gon
+  i18n
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
   launchy
