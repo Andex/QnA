@@ -4,8 +4,10 @@
 # You can define all roles on a single server, or split them:
 
 server '81.163.29.100', user: 'deployer', roles: %w{app db web}, primary: :true
-set :rails_env, :production
+set :stage, :production
+set :rails_env, 'production'
 
+set :bundle_env_variables, { rails_env: 'production' }
 
 # Configuration
 # =============
