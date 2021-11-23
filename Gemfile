@@ -37,6 +37,9 @@ gem 'oj'
 
 gem 'cancancan'
 
+# Generates random data
+gem 'faker'
+
 # Fulltext search
 gem 'mysql2', '~> 0.4.10'
 gem 'thinking-sphinx'
