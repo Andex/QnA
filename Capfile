@@ -7,6 +7,8 @@ require "capistrano/bundler"
 require "capistrano/rvm"
 require "capistrano/rails"
 require "capistrano/passenger"
+require 'thinking_sphinx/capistrano'
+require 'whenever/capistrano'
 
 # Load the SCM plugin appropriate to your project:
 #
