@@ -9,7 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import 'bootstrap/dist/js/bootstrap'
 import "bootstrap/dist/css/bootstrap";
-import "../../assets/stylesheets/application"
+// import "../../assets/stylesheets/application"
 
 Rails.start()
 Turbolinks.start()
@@ -26,4 +26,4 @@ require("./question.js")
 require("./direct_uploads")
 require("./votes")
 require("./comments")
-require("../../assets/stylesheets/application")
+// require("../../assets/stylesheets/application")
