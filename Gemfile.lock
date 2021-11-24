@@ -486,7 +486,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers (~> 5.0)
-  sidekiq (< 6)
+  sidekiq
   sinatra
   slim-rails
   spring

@@ -45,7 +45,7 @@ gem 'mysql2', '~> 0.4.10'
 gem 'thinking-sphinx'
 
 # Background jobs
-gem 'sidekiq', '< 6'
+gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 

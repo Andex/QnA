@@ -5,6 +5,9 @@ set :application, 'qna'
 set :repo_url, 'https://github.com/Andex/QnA.git'
 set :rvm_ruby_version, '2.7.2@qna'
 
+# For sidekiq
+set :pty, false
+
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deployer/qna'
 set :deploy_user, 'deployer'
