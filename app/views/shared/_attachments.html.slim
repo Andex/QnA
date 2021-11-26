@@ -8,7 +8,7 @@
                   attachment_path(file),
                   method: :delete,
                   remote: true,
-                  class: 'delete-file-link hidden',
+                  class: 'delete-file-link d-none',
                   data: { confirm: 'Are you sure?' }
 
 .links
@@ -21,7 +21,7 @@
                   link_path(link),
                   method: :delete,
                   remote: true,
-                  class: 'delete-link hidden',
+                  class: 'delete-link d-none',
                   data: { confirm: 'Are you sure?' }
           - if link.gist?
             = javascript_include_tag link.url + ".js"

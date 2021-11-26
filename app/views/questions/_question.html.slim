@@ -18,7 +18,7 @@ div class="question-#{question.id}-attachments"
     = render 'shared/errors', resource: question
 
   .edit-question-form
-    p= form_with model: question, local: false, html: { id: 'edit-question' }, class: 'hidden' do |f|
+    p= form_with model: question, local: false, html: { id: 'edit-question' }, class: 'd-none' do |f|
       p
         = f.label :title, 'Your question'
         = f.text_field :title

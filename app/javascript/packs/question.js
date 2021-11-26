@@ -10,13 +10,13 @@ function editQuestion(event){
     $('#question_reward_attributes_title').val('');
 
     $('.question .delete-file-link').each(function(){
-        $(this).removeClass('hidden')
+        $(this).removeClass('d-none')
     })
     $('.question .delete-link').each(function(){
-        $(this).removeClass('hidden')
+        $(this).removeClass('d-none')
     })
-    $('.reward a').removeClass('hidden')
-    $('form#edit-question').removeClass('hidden')
+    $('.reward a').removeClass('d-none')
+    $('form#edit-question').removeClass('d-none')
     $('.cancel-question-link').show()
 }
 
@@ -25,14 +25,14 @@ function cancelQuestion(event){
 
     $(this).hide()
 
-    $('form#edit-question').addClass('hidden')
+    $('form#edit-question').addClass('d-none')
     $('.edit-question-link').show()
     $('.question .delete-file-link').each(function(){
-        $(this).addClass('hidden')
+        $(this).addClass('d-none')
     })
     $('.question .delete-link').each(function(){
-        $(this).addClass('hidden')
+        $(this).addClass('d-none')
     })
-    $('.reward a').addClass('hidden')
+    $('.reward a').addClass('d-none')
     $('.question-errors').html('')
 }

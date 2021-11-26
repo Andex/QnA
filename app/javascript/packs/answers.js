@@ -10,12 +10,12 @@ function editAnswer(event){
     var answerId = $(this).data('answerId')
 
     $('.answer-id-' + answerId + ' .delete-file-link').each(function(){
-        $(this).removeClass('hidden')
+        $(this).removeClass('d-none')
     })
     $('.answer-id-' + answerId + ' .delete-link').each(function(){
-        $(this).removeClass('hidden')
+        $(this).removeClass('d-none')
     })
-    $('form#edit-answer-' + answerId).removeClass('hidden')
+    $('form#edit-answer-' + answerId).removeClass('d-none')
     $('.cancel-answer-link').show()
 }
 
@@ -26,12 +26,12 @@ function cancelAnswer(event){
     var answerId = $(this).data('answerId')
 
     $('.answer-id-' + answerId + ' .delete-file-link').each(function(){
-        $(this).addClass('hidden')
+        $(this).addClass('d-none')
     })
     $('.answer-id-' + answerId + ' .delete-link').each(function(){
-        $(this).addClass('hidden')
+        $(this).addClass('d-none')
     })
-    $('form#edit-answer-' + answerId).addClass('hidden')
+    $('form#edit-answer-' + answerId).addClass('d-none')
     $('.edit-answer-link').show()
     $('.answer-errors').html('')
 }

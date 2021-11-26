@@ -10,7 +10,7 @@
 
     - if current_user && can?(:update, answer)
       td
-        = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'hidden' do |f|
+        = form_with model: answer, local: false, html: { id: "edit-answer-#{answer.id}" }, class: 'd-none' do |f|
           p
             = f.label :body, 'Your new answer'
             = f.text_area :body
