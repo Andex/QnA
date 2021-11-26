@@ -2,12 +2,21 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create({ channel: "AnswersChannel", question_id: gon.question_id }, {
     received(data) {
+        console.log("gon.question_id", gon.question_id)
+        console.log("gon.current_user_id = ", gon.current_user_id)
+        console.log("data.answer.user_id = ", data.answer.user_id)
         if(data.answer.user_id !== gon.current_user_id){
             this.appendLine(data)
         }
     },
 
     appendLine(data) {
+        let table = $('.answers').find('table')
+        if(table.length == 0){
+            $('.answers').html('<table class="table text-center"><thead class="thead"><tr>' +
+                                   '<th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=5>Actions</th>' +
+                               '</tr><thead><tbody></tbody></table>')
+        }
         const html = this.createLine(data)
         $('.answers tbody').append(html)
     },
@@ -26,7 +35,7 @@ consumer.subscriptions.create({ channel: "AnswersChannel", question_id: gon.ques
         } else {
             result += `<td></td>`
         }
-        result += `</tr>`
+        result += `<td colspan=3></td><td class="answer-${data.answer.id}-comments"><div class="list"></div></td></tr>`
 
         return result
     }
