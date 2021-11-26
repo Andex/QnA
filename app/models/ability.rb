@@ -21,6 +21,7 @@ class Ability
     can :read, :all
     can :email, User
     can :set_email, User
+    can :search, [User, Question, Answer, Comment]
   end
 
   def user_abilities

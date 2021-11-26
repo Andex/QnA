@@ -11,6 +11,11 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :email, User }
     it { should be_able_to :set_email, User }
 
+    it { should be_able_to :search, User }
+    it { should be_able_to :search, Question }
+    it { should be_able_to :search, Answer }
+    it { should be_able_to :search, Comment }
+
     it { should_not be_able_to :manage, :all }
   end
 
