@@ -4,4 +4,5 @@
     - resource.comments.each do |comment|
       = render comment
 
-= render 'comments/form', resource: resource
+- if current_user && can?(:create, Comment)
+  = render 'comments/form', resource: resource

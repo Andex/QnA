@@ -47,6 +47,5 @@
                                      class: 'best-answer-link btn btn-warning btn-sm',
                                      data: { answer_id: answer.id }
 
-    - if current_user && can?(:create, Comment)
-      td class="answer-#{answer.id}-comments"
-        = render 'comments/comments', resource: answer
+    td class="answer-#{answer.id}-comments"
+      = render 'comments/comments', resource: answer
