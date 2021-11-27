@@ -4,7 +4,6 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: %w[update destroy best]
   before_action :load_question, only: %w[create update best destroy]
-  after_action :publish_question, only: :create
 
   authorize_resource
 
@@ -12,12 +11,14 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params.merge(user: current_user))
 
     flash.now[:notice] = 'Your answer successfully created.' if @answer.save
+    publish_question('add')
   end
 
   def update
     @answer.update(answer_params.except(:files))
     attach_files(@answer)
     flash.now[:notice] = 'Your answer was successfully edited.'
+    publish_question('update')
   end
 
   def destroy
@@ -25,6 +26,7 @@ class AnswersController < ApplicationController
 
     @answer.destroy
     flash.now[:notice] = 'Your answer was successfully deleted.'
+    publish_question('destroy')
   end
 
   def best
@@ -49,13 +51,14 @@ class AnswersController < ApplicationController
     answer.files.attach(params[:answer][:files]) if params[:answer][:files].present?
   end
 
-  def publish_question
+  def publish_question(event)
     return if @answer.errors.any?
 
     ActionCable.server.broadcast(
       "questions/#{@answer.question_id}",
       answer: @answer,
-      links: @answer.links
+      links: @answer.links,
+      event: event
     )
   end
 end
