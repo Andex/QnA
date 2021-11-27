@@ -21,7 +21,7 @@ consumer.subscriptions.create({ channel: "QuestionsChannel" }, {
         } else {
             result += `<td></td>`
         }
-        result += `<td><a href="/questions/${question.id}">Show answers</a></td>
+        result += `<td><a href="/questions/${question.id}" class="btn btn-warning btn-sm">Show answers</a></td>
                 </tr>`
 
         return result
