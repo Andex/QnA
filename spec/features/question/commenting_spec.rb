@@ -7,12 +7,17 @@ feature 'User can comment on the question', "
 " do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
+  given!(:comment) { create(:comment, question: question) }
 
   describe 'Unauthenticated user' do
-    scenario "can't to comment to the question" do
-      visit question_path(question)
+    before { visit question_path(question) }
 
+    scenario "can't to comment to the question" do
       expect(page).to_not have_link 'Add comment to the question'
+    end
+
+    scenario "can't to remove the comment on the question" do
+      expect(page).to_not have_link 'Delete comment on the question'
     end
   end
 
@@ -31,6 +36,23 @@ feature 'User can comment on the question', "
       within '.question' do
         expect(page).to have_content 'Comment text'
         expect(page).to_not have_selector 'textarea'
+      end
+    end
+
+    scenario "can't to remove someone else's comment on the question" do
+      expect(page).to_not have_link 'Delete comment on the question'
+    end
+  end
+
+  describe 'Authenticated author', js: true do
+    scenario 'removes the comment on the question' do
+      login(comment.user)
+      visit question_path(question)
+
+      click_on 'Delete comment on the question'
+
+      within '.question' do
+        expect(page).to_not have_content comment.body
       end
     end
   end
@@ -62,6 +84,31 @@ feature 'User can comment on the question', "
         within '.question' do
           expect(page).to have_content 'Comment text'
           expect(page).to_not have_selector 'textarea'
+        end
+      end
+    end
+
+    scenario "the comment to the question is deleted on another user's page" do
+      Capybara.using_session('user') do
+        login(comment.user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Delete comment on the question'
+
+        within '.question' do
+          expect(page).to_not have_content comment.body
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.question' do
+          expect(page).to_not have_content comment.body
         end
       end
     end

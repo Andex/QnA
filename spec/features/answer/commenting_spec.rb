@@ -8,12 +8,17 @@ feature 'User can comment on the answer on question', "
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
+  given!(:comment) { create(:comment, answer: answer) }
 
   describe 'Unauthenticated user' do
-    scenario "can't to comment to the answer" do
-      visit question_path(question)
+    before { visit question_path(question) }
 
+    scenario "can't to comment to the answer" do
       expect(page).to_not have_link 'Add comment to the answer'
+    end
+
+    scenario "can't to remove the comment on an answer" do
+      expect(page).to_not have_link 'Delete comment'
     end
   end
 
@@ -33,6 +38,23 @@ feature 'User can comment on the answer on question', "
         expect(page).to have_content 'Comment text'
         expect(page).to_not have_selector 'textarea'
       end
+
+      scenario "can't to remove someone else's comment on an answer" do
+        expect(page).to_not have_link 'Delete comment'
+      end
+    end
+  end
+
+  describe 'Authenticated author', js: true do
+    scenario 'removes the comment on the answer' do
+      login(comment.user)
+      visit question_path(question)
+
+      click_on 'Delete comment'
+
+      within '.answers' do
+        expect(page).to_not have_content comment.body
+      end
     end
   end
 
@@ -40,11 +62,11 @@ feature 'User can comment on the answer on question', "
     scenario "comment to the answer appears on another user's page" do
       Capybara.using_session('user') do
         login(user)
-        visit question_path(answer.question)
+        visit question_path(question)
       end
 
       Capybara.using_session('guest') do
-        visit question_path(answer.question)
+        visit question_path(question)
       end
 
       Capybara.using_session('user') do
@@ -63,6 +85,31 @@ feature 'User can comment on the answer on question', "
         within '.answers' do
           expect(page).to have_content 'Comment text'
           expect(page).to_not have_selector 'textarea'
+        end
+      end
+    end
+
+    scenario "the comment to the answer is deleted on another user's page" do
+      Capybara.using_session('user') do
+        login(comment.user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        click_on 'Delete comment'
+
+        within '.answers' do
+          expect(page).to_not have_content comment.body
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to_not have_content comment.body
         end
       end
     end
