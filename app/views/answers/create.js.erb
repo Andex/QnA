@@ -5,7 +5,7 @@ $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
   <% if @question.answers.count > 1 %>
     $('.answers table tbody').append('<%= j render @answer %>');
   <% else %>
-    $('.answers').html('<table><thead>' +
+    $('.answers').html('<table class="table text-center"><thead class="thead">' +
                   '<tr><th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=5>Actions</th></tr><thead>' +
                   '<tbody><%= j render @answer %></tbody></table>');
   <% end %>
