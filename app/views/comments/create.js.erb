@@ -2,12 +2,14 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @commentable %
 $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if @comment.persisted? %>
-  let header = $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-comments .list').find('.fs-6')
-  if(header.length == 0) {
-    $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-comments .list').append('<div class="fs-6">Comments:</div>');
+  var commentable = '.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>'
+  var header = $(commentable + '-comments .list').find('.fs-6')
+
+  if(header.length === 0) {
+    $(commentable + '-comments .list').append('<div class="fs-6">Comments:</div>');
   }
-  $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-comments .list').append('<%= j render @comment %>');
-  $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-form-comment #comment_body').val('');
-  $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-form-comment').hide();
-  $('.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-comments .comment-link').show();
+  $(commentable + '-comments .list').append('<%= j render @comment %>');
+  $(commentable + '-form-comment #comment_body').val('');
+  $(commentable + '-form-comment').hide();
+  $(commentable + '-comments .comment-link').show();
 <% end %>
