@@ -48,9 +48,10 @@ feature 'Author can delete his question', "
       end
 
       Capybara.using_session('user') do
-        click_on 'Delete question'
+        accept_confirm do
+          click_link 'Delete question'
+        end
 
-        expect(page).to have_content 'Your question was successfully deleted.'
         expect(page).to_not have_content question.title
         expect(page).to_not have_content question.body
       end

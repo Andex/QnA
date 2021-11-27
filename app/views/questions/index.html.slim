@@ -10,7 +10,7 @@ table class='questions table text-center'
       th Reward
       th Actions
   - @questions.each do |question|
-    tr
+    tr id="#{question.id}"
       td= question.title
       td= question.body
       td

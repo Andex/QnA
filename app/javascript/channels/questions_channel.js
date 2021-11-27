@@ -7,12 +7,21 @@ consumer.subscriptions.create({ channel: "QuestionsChannel" }, {
     },
 
     appendLine(data) {
-        const html = this.createLine(data.question, data.reward, data.url)
-        $('.questions tbody').append(html)
+        if(data.event === 'destroy'){
+            $('.questions tr#' + data.question.id).remove()
+        } else {
+            const html = this.createLine(data.question, data.reward, data.url)
+            if(data.event === 'add'){
+                $('.questions tbody').append(html)
+            }
+            if(data.event === 'update'){
+                $('.questions tr#' + data.question.id).replaceWith(html)
+            }
+        }
     },
     createLine(question, reward, url) {
         var result = `
-          <tr>
+          <tr id="${question.id}">
             <td>${question.title}</td>
             <td>${question.body}</td>
         `

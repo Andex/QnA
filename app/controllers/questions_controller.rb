@@ -4,7 +4,6 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %w[index show]
   before_action :load_question, only: %w[show edit update destroy]
-  after_action :publish_question, only: :create
 
   authorize_resource
 
@@ -32,6 +31,7 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
+    publish_question('add')
   end
 
   def edit; end
@@ -40,6 +40,7 @@ class QuestionsController < ApplicationController
     @question.update(question_params.except(:files))
     attach_files(@question)
     flash.now[:notice] = 'Your question was successfully updated.'
+    publish_question('update')
   end
 
   def destroy
@@ -47,6 +48,7 @@ class QuestionsController < ApplicationController
 
     @question.destroy
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
+    publish_question('destroy')
   end
 
   private
@@ -64,7 +66,7 @@ class QuestionsController < ApplicationController
     question.files.attach(params[:question][:files]) if params[:question][:files].present?
   end
 
-  def publish_question
+  def publish_question(event)
     return if @question.errors.any?
     url = @question.reward.image.url if @question.reward
 
@@ -72,7 +74,8 @@ class QuestionsController < ApplicationController
       'questions',
       question: @question,
       reward: @question.reward.as_json,
-      url: url
+      url: url,
+      event: event
     )
   end
 end

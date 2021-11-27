@@ -176,12 +176,12 @@ feature 'User can edit his question', "
   describe 'multiple sessions', js: true do
     scenario "question changes on another user's page" do
       Capybara.using_session('user') do
-        login(user)
+        login(question.user)
         visit question_path(question)
       end
 
       Capybara.using_session('guest') do
-        visit question_path(question)
+        visit questions_path
       end
 
       Capybara.using_session('user') do
