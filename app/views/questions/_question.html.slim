@@ -18,30 +18,7 @@ div class="question-#{question.id}-attachments"
     = render 'shared/errors', resource: question
 
   .edit-question-form
-    p= form_with model: question, local: false, html: { id: 'edit-question' }, class: 'd-none' do |f|
-      p
-        = f.label :title, 'Your question'
-        = f.text_field :title
-      p
-        = f.label :body, 'Details'
-        = f.text_area :body
-      p
-        = f.label :files, 'Attach files'
-        = f.file_field :files, multiple: true, direct_upload: true
-      p id='links'
-        = f.fields_for :links do |link|
-      .add_link
-        = link_to_add_association 'Add link', f, :links,
-                                                  partial: 'links/link_fields',
-                                                  class: 'btn btn-outline-info btn-sm'
-      p Assign reward:
-      - unless question.reward.present?
-        - question.build_reward
-      p
-        = render 'rewards/form', f: f
-
-      = f.submit 'Save', class: 'btn btn-success btn-sm'
-      = link_to 'Cancel', '#', class: 'cancel-question-link btn btn-secondary btn-sm', remote: true
+    p= render 'questions/edit_form', question: question
 
   p= link_to 'Delete question', question_path(question),
                               method: :delete,
