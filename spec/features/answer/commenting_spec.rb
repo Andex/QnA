@@ -8,7 +8,7 @@ feature 'User can comment on the answer on question', "
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
-  given!(:comment) { create(:comment, answer: answer) }
+  given!(:comment) { create(:comment, commentable: answer) }
 
   describe 'Unauthenticated user' do
     before { visit question_path(question) }
@@ -18,7 +18,7 @@ feature 'User can comment on the answer on question', "
     end
 
     scenario "can't to remove the comment on an answer" do
-      expect(page).to_not have_link 'Delete comment'
+      expect(page).to_not have_link 'Delete'
     end
   end
 
@@ -38,10 +38,10 @@ feature 'User can comment on the answer on question', "
         expect(page).to have_content 'Comment text'
         expect(page).to_not have_selector 'textarea'
       end
+    end
 
-      scenario "can't to remove someone else's comment on an answer" do
-        expect(page).to_not have_link 'Delete comment'
-      end
+    scenario "can't to remove someone else's comment on an answer" do
+      expect(page).to_not have_link 'Delete'
     end
   end
 
@@ -50,7 +50,9 @@ feature 'User can comment on the answer on question', "
       login(comment.user)
       visit question_path(question)
 
-      click_on 'Delete comment'
+      accept_confirm do
+        click_on 'Delete'
+      end
 
       within '.answers' do
         expect(page).to_not have_content comment.body
@@ -100,7 +102,7 @@ feature 'User can comment on the answer on question', "
       end
 
       Capybara.using_session('user') do
-        click_on 'Delete comment'
+        click_on 'Delete'
 
         within '.answers' do
           expect(page).to_not have_content comment.body

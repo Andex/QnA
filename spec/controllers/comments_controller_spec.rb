@@ -88,7 +88,7 @@ RSpec.describe CommentsController, type: :controller do
 
         it 'returns http status forbidden' do
           delete :destroy, params: { id: comment_question.id }, format: :js
-          expect(response).to render_template nil
+          expect(response).to render_template :destroy
         end
 
         it 'does not delete the comment on the answer' do
@@ -99,7 +99,7 @@ RSpec.describe CommentsController, type: :controller do
 
         it 'returns http status forbidden' do
           delete :destroy, params: { id: comment_answer.id }, format: :js
-          expect(response).to render_template nil
+          expect(response).to render_template :destroy
         end
       end
     end
