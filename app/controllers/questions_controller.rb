@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: %w[index show]
-  before_action :load_question, only: %w[show edit update destroy]
+  before_action :load_question, only: %w[show update destroy]
 
   authorize_resource
 
@@ -33,8 +33,6 @@ class QuestionsController < ApplicationController
     end
     publish_question('add')
   end
-
-  def edit; end
 
   def update
     @question.update(question_params.except(:files))

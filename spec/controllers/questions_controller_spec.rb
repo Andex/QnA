@@ -69,29 +69,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'Get #edit' do
-    context 'Authenticated user' do
-      before { login(user) }
-
-      before { get :edit, params: { id: question } }
-
-      it 'assigns the requested question to @question' do
-        expect(assigns(:question)).to eq question
-      end
-
-      it 'renders edit view' do
-        expect(response).to render_template nil
-      end
-    end
-
-    context 'Unauthenticated user' do
-      it 'redirects to sign in' do
-        get :edit, params: { id: question }
-        expect(response).to redirect_to new_user_session_path
-      end
-    end
-  end
-
   describe 'Post #create' do
     context 'Authenticated user' do
       before { login(user) }
