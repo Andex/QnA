@@ -12,21 +12,22 @@ div class="question-#{question.id}-attachments"
   = render 'shared/attachments', resource: question
 
 - if current_user && can?(:update, question)
-  = link_to 'Edit question', '#', class: 'edit-question-link btn btn-outline-success btn-sm'
-
   .question-errors
     = render 'shared/errors', resource: question
 
   .edit-question-form
     p= render 'questions/edit_form', question: question
 
-  p= link_to 'Delete question', question_path(question),
-                              method: :delete,
-                              data: { confirm: 'Are you sure?' },
-                              class: 'btn btn-outline-dark btn-sm'
+  div class='btn-group' role='group'
+    = link_to 'Edit question', '#', class: 'edit-question-link btn btn-outline-success btn-sm'
+
+    = link_to 'Delete question', question_path(question),
+                                method: :delete,
+                                data: { confirm: 'Are you sure?' },
+                                class: 'btn btn-outline-dark btn-sm'
 
 - if current_user && can?(:create, Subscription)
-  = render 'subscriptions/subscription', question: question
+  p= render 'subscriptions/subscription', question: question
 
 div class="question-#{question.id}-comments"
   = render 'comments/comments', resource: question

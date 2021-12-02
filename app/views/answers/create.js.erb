@@ -6,7 +6,7 @@ $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
     $('.answers table tbody').append('<%= j render @answer %>');
   <% else %>
     $('.answers').html('<table class="table text-center"><thead class="thead">' +
-                  '<tr><th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=5>Actions</th></tr><thead>' +
+                  '<tr><th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=4>Actions</th></tr><thead>' +
                   '<tbody><%= j render @answer %></tbody></table>');
   <% end %>
   $('.new-answer #answer_body').val('');

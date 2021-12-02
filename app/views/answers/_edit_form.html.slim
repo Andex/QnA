@@ -11,8 +11,9 @@
       = link_to_add_association 'Add link', f, :links,
               partial: 'links/link_fields',
               class: 'btn btn-outline-info btn-sm'
-  = f.submit 'Save', class: 'btn btn-success btn-sm'
-  = link_to 'Cancel', '#',
-          class: 'cancel-answer-link btn btn-outline-dark btn-sm',
-          remote: true,
-          data: { answer_id: answer.id }
+  div class='btn-group' role='group'
+    = f.submit 'Save', class: 'btn btn-success btn-sm'
+    = link_to 'Cancel', '#',
+            class: 'cancel-answer-link btn btn-outline-dark btn-sm',
+            remote: true,
+            data: { answer_id: answer.id }

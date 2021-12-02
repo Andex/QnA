@@ -20,5 +20,6 @@
   p
     = render 'rewards/form', f: f
 
-  = f.submit 'Save', class: 'btn btn-success btn-sm'
-  = link_to 'Cancel', '#', class: 'cancel-question-link btn btn-secondary btn-sm', remote: true
+  div class='btn-group' role='group'
+    = f.submit 'Save', class: 'btn btn-success btn-sm'
+    = link_to 'Cancel', '#', class: 'cancel-question-link btn btn-secondary btn-sm', remote: true

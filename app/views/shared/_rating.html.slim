@@ -7,15 +7,16 @@
           data: { type: :json },
           class: 'cancel-vote-link btn btn-dark btn-sm',
           style: "#{current_user&.voted?(resource) ? '' : 'display:none;'}"
-  = link_to 'UP', polymorphic_path(resource, action: :vote_up),
-          method: :patch,
-          remote: true,
-          data: { type: :json },
-          class: 'vote-up-link btn btn-outline-success btn-sm',
-          style: "#{current_user&.voted?(resource) ? 'display:none;' : ''}"
-  = link_to 'DOWN', polymorphic_path(resource, action: :vote_down),
-          method: :patch,
-          remote: true,
-          data: { type: :json },
-          class: 'vote-down-link btn btn-outline-danger btn-sm',
-          style: "#{current_user&.voted?(resource) ? 'display:none;' : ''}"
+  div class='btn-group' role='group'
+    = link_to 'UP', polymorphic_path(resource, action: :vote_up),
+            method: :patch,
+            remote: true,
+            data: { type: :json },
+            class: 'vote-up-link btn btn-outline-success btn-sm',
+            style: "#{current_user&.voted?(resource) ? 'display:none;' : ''}"
+    = link_to 'DOWN', polymorphic_path(resource, action: :vote_down),
+            method: :patch,
+            remote: true,
+            data: { type: :json },
+            class: 'vote-down-link btn btn-outline-danger btn-sm',
+            style: "#{current_user&.voted?(resource) ? 'display:none;' : ''}"

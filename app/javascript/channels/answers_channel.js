@@ -20,7 +20,7 @@ consumer.subscriptions.create({ channel: "AnswersChannel", question_id: gon.ques
             if(data.event === 'add'){
                 if(table.length === 0){
                     $('.answers').html('<table class="table text-center"><thead class="thead"><tr>' +
-                        '<th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=5>Actions</th>' +
+                        '<th>Rating</th><th>Answer</th><th>Files and links</th><th colspan=4>Actions</th>' +
                         '</tr><thead><tbody></tbody></table>')
                 }
                 $('.answers tbody').append(html)
