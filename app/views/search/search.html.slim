@@ -8,7 +8,7 @@ h2= 'Search results'
 
 - if @result.present?
   - @result.each do |item|
-      p= render "#{item.class.to_s.downcase}s", resource: item
+    p= render "#{item.class.to_s.downcase}s", resource: item
 - else
   .fs-5
     p= 'Not found'

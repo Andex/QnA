@@ -1,5 +1,6 @@
 .d-inline-block.me-4.text-secondary= "#{resource.class.to_s}:"
-.d-inline-block.me-4= resource.body
+.d-inline-block.me-4= resource.body.truncate(40)
 .d-inline-block.me-4= resource.user.email
 - link = resource.commentable.is_a?(Question) ? resource.commentable : resource.commentable.question
-= link_to 'Show', link, class: 'btn btn-warning btn-sm'
+.text-sm-start
+  = link_to 'Show', link, class: 'btn btn-warning btn-sm'

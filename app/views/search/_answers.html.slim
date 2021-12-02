@@ -1,3 +1,4 @@
 .d-inline-block.me-4.text-secondary= "#{resource.class.to_s}:"
-.d-inline-block.me-4= resource.body
-= link_to 'Show', resource.question, class: 'btn btn-warning btn-sm'
+.d-inline-block.me-4= resource.body.truncate(40)
+.text-sm-start
+  = link_to 'Show', resource.question, class: 'btn btn-warning btn-sm'
