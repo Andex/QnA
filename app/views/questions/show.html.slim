@@ -3,8 +3,8 @@ h4 class="flash-messages"
 
 .question
   = render @question
-
-h3= 'Answers on question'
+.text-center
+  h3= 'Answers on question'
 .answers
   - if @question.answers.first.persisted?
     .best

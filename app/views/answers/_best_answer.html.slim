@@ -1,7 +1,10 @@
+h5= 'Best answer'
 div class="answer-id-#{@question.best_answer.id}"
   p
-    = '👍'
-    = @question.best_answer.body
+    .d-inline-block.me-4
+      = '👍'
+    .d-inline-block.me-4
+      = @question.best_answer.body
 
     div class='rating'
       b= 'Rating: '
