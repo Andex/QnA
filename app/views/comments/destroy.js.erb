@@ -1,7 +1,7 @@
 <% unless @comment.persisted? %>
   $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
   <% if @comment.commentable.comments.count < 1 %>
-    $('.fs-6').remove();
+    $('.<%= @comment.commentable_type.downcase %>-<%= @comment.commentable_id %>-comments .fs-6').remove();
   <% end %>
   $('.<%= @comment.commentable_type.downcase %>-comment-<%= @comment.id %>').remove()
 <% end %>

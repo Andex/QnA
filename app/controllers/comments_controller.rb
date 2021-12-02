@@ -1,13 +1,12 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
 
-  authorize_resource
-
   def new
     @comment = Comment.new
   end
 
   def create
+    authorize! :destroy, Comment
     @commentable = load_commentable
     @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
 
@@ -17,6 +16,8 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = current_user&.comments.find_by(id: params[:id])
+    authorize! :destroy, @comment
+    @commentable = @comment&.commentable
     flash.now.notice = 'Your comment was removed.' if @comment&.destroy
     publish_comment('destroy')
   end
