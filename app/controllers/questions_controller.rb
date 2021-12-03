@@ -28,16 +28,17 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to @question
+      publish_question('add')
     else
       render :new
     end
-    publish_question('add')
   end
 
   def update
-    @question.update(question_params.except(:files))
+    return unless @question.update(question_params.except(:files))
+
     attach_files(@question)
-    flash.now[:notice] = 'Your question was successfully updated.'
+    flash[:notice] = 'Your question was successfully updated.'
     publish_question('update')
   end
 

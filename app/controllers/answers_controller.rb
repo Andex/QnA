@@ -15,7 +15,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params.except(:files))
+    return unless @answer.update(answer_params.except(:files))
+
     attach_files(@answer)
     flash.now[:notice] = 'Your answer was successfully edited.'
     publish_question('update')
