@@ -16,6 +16,6 @@ html
   body
     = render 'devise/shared/nav'
     .container
-      p.notice= notice
-      p.alert= alert
+      h6 class="flash-messages"
+        = render 'shared/flash_messages'
       = yield
