@@ -14,25 +14,7 @@ div class="answer-id-#{@question.best_answer.id}"
       = render 'shared/attachments', resource: @question.best_answer
 
     - if current_user && can?(:update, @question.best_answer)
-      p= form_with model: @question.best_answer, local: false, html: { id: "edit-answer-#{@question.best_answer.id}" }, class: 'd-none' do |f|
-        p
-          = f.label :body, 'Your new answer'
-          = f.text_area :body
-        p
-          = f.label :files, 'Attach files'
-          = f.file_field :files, multiple: true, direct_upload: true
-        p id="links"
-          = f.fields_for :links do |link|
-          .add_link
-            = link_to_add_association 'Add link', f, :links,
-                                                      partial: 'links/link_fields',
-                                                      class: 'btn btn-outline-info btn-sm'
-        div class='btn-group' role='group'
-          = f.submit 'Save', class: 'btn btn-success btn-sm'
-          = link_to 'Cancel', '#',
-                              class: 'cancel-answer-link btn btn-secondary btn-sm',
-                              remote: true,
-                              data: { answer_id: @question.best_answer.id }
+      p= render 'answers/edit_form', answer: @question.best_answer
 
       div class='btn-group' role='group'
         = link_to ' Edit', '#',
