@@ -1,5 +1,11 @@
 - if resource&.errors.present?
-  b= "#{resource.errors.count} error(s) detected: "
-  ul
-    - resource.errors.full_messages.each do |message|
-      li= message
+  .div class="card alert alert-danger" style="width: 18rem;"
+    .div class="card-body"
+      h5 class="card-title"
+        = 'Errors'
+      h6 class="card-subtitle mb-2 text-muted"
+        = "#{resource.errors.count} error(s) detected: "
+      ul class="card-text"
+        - resource.errors.full_messages.each do |message|
+          li
+            = message

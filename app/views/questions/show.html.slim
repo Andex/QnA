@@ -3,6 +3,8 @@
 .text-center
   h3= 'Answers on question'
 .answers
+  .answer-errors
+    = render 'shared/errors', resource: @new_answer
   - if @question.answers.first.persisted?
     .best
       - if @question.best_answer
@@ -19,8 +21,7 @@
   - else
     h5= 'Be the first to leave an answer'
 
-.answer-errors
-  = render 'shared/errors', resource: @new_answer
-
 - if can?(:create, Answer)
+  .new-answer-errors
+    = render 'shared/errors', resource: @new_answer
   = render 'answers/form', resource: @new_answer
