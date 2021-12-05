@@ -9,6 +9,8 @@ set :rails_env, 'production'
 
 set :bundle_env_variables, { rails_env: 'production' }
 
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
