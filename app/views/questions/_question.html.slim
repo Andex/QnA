@@ -1,15 +1,18 @@
 h1= question.title
-p= question.body
+.fs-5
+  = question.body
+p.fst-italic.text-secondary
+  = "Question by #{question.user.email}"
+
+div class="question-#{question.id}-attachments"
+  p= render 'shared/attachments', resource: question
 
 .reward
-  = render 'rewards/question_reward', question: question
+  p= render 'rewards/question_reward', question: question
 
 b= 'Rating: '
 .rating
   = render 'shared/rating', resource: question
-
-div class="question-#{question.id}-attachments"
-  = render 'shared/attachments', resource: question
 
 - if current_user && can?(:update, question)
   .question-errors
