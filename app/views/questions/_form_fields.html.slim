@@ -1,0 +1,21 @@
+p
+  .d-inline-block.me-2
+    = f.label :title, 'Your question'
+  .d-inline-block.me-2
+    = f.text_field :title
+  p
+    .d-inline-block.me-2
+      = f.label :body, 'Details'
+    .d-inline-block.me-2
+      = f.text_area :body
+  p
+    .d-inline-block.me-2
+      = f.label :files, 'Attach files'
+    .d-inline-block.me-2
+      = f.file_field :files, multiple: true, direct_upload: true
+  p id='links'
+    = f.fields_for :links do |link|
+  .add_link
+    = link_to_add_association 'Add link', f, :links,
+                                             partial: 'links/link_fields',
+                                             class: 'btn btn-outline-info btn-sm'
