@@ -1,7 +1,9 @@
 = f.fields_for :reward do |r|
-  .d-inline-block.me-4
+  .d-inline-block.me-2
     = r.label :title, 'Reward title'
-    = r.text_field :title
   .d-inline-block.me-4
+    = r.text_field :title
+  .d-inline-block.me-2
     = r.label :image, 'Image'
+  .d-inline-block.me-4
     = r.file_field :image
