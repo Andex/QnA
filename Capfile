@@ -6,10 +6,11 @@ require 'capistrano/deploy'
 require 'capistrano/bundler'
 require 'capistrano/rvm'
 require 'capistrano/rails'
-require 'capistrano/passenger'
+# require 'capistrano/passenger'
 require 'thinking_sphinx/capistrano'
 require 'whenever/capistrano'
 require 'capistrano/sidekiq'
+require 'capistrano3/unicorn'
 # Default sidekiq tasks
 install_plugin Capistrano::Sidekiq
 # Then select your service manager
