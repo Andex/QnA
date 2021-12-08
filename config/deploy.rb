@@ -20,3 +20,5 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/syst
 
 # Deletion of old releases
 set :keep_releases, 5
+
+after 'deploy:publishing', 'unicorn:restart'
