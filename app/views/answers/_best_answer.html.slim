@@ -1,33 +1,34 @@
-h5= 'Best answer'
-div class="answer-id-#{@question.best_answer.id}"
-  .d-inline-block.me-4
-    = '👍'
-  .d-inline-block.me-4
-    = @question.best_answer.body
-  .d-inline-block.me-4.text-secondary
-    = "by #{@question.best_answer.user.email}"
+- cache [current_user.present?, @question.best_answer] do
+  h5= 'Best answer'
+  div class="answer-id-#{@question.best_answer.id}"
+    .d-inline-block.me-4
+      = '👍'
+    .d-inline-block.me-4
+      = @question.best_answer.body
+    .d-inline-block.me-4.text-secondary
+      = "by #{@question.best_answer.user.email}"
 
-  div class="answer-#{@question.best_answer.id}-attachments"
-    p= render 'shared/attachments', resource: @question.best_answer
+    div class="answer-#{@question.best_answer.id}-attachments"
+      p= render 'shared/attachments', resource: @question.best_answer
 
-    div class='rating'
-      b= 'Rating: '
-      = render 'shared/rating', resource: @question.best_answer
+      div class='rating'
+        b= 'Rating: '
+        = render 'shared/rating', resource: @question.best_answer
 
-    - if current_user && can?(:update, @question.best_answer)
-      p= render 'answers/edit_form', answer: @question.best_answer
+      - if current_user && can?(:update, @question.best_answer)
+        p= render 'answers/edit_form', answer: @question.best_answer
 
-      div class='btn-group' role='group'
-        = link_to ' Edit', '#',
-                class: 'edit-answer-link  btn btn-outline-success btn-sm',
-                remote: true,
-                data: { answer_id: @question.best_answer.id }
+        div class='btn-group' role='group'
+          = link_to ' Edit', '#',
+                  class: 'edit-answer-link  btn btn-outline-success btn-sm',
+                  remote: true,
+                  data: { answer_id: @question.best_answer.id }
 
-        = link_to ' Delete answer', answer_path(@question.best_answer),
-                                    method: :delete,
-                                    class: 'btn btn-outline-dark btn-sm',
-                                    remote: true,
-                                    data: { confirm: 'Are you sure?' }
+          = link_to ' Delete answer', answer_path(@question.best_answer),
+                                      method: :delete,
+                                      class: 'btn btn-outline-dark btn-sm',
+                                      remote: true,
+                                      data: { confirm: 'Are you sure?' }
 
-    div class="answer-#{@question.best_answer.id}-comments"
-      p= render 'comments/comments', resource: @question.best_answer
+      div class="answer-#{@question.best_answer.id}-comments"
+        p= render 'comments/comments', resource: @question.best_answer
