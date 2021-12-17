@@ -22,6 +22,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# Caching
+gem 'redis-rails'
+
 # Localization
 gem 'i18n'
 
