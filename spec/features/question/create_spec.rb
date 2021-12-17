@@ -33,7 +33,7 @@ feature 'User can create question', "
     scenario 'asks a question with attached files' do
       fill_in 'Your question', with: 'Title question'
       fill_in 'Details', with: 'Text text text'
-      save_and_open_page
+
       attach_file 'Attach files', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
       click_on 'Ask'
 

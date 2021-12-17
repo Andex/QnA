@@ -12,7 +12,6 @@ feature 'User can add links to question', "
   background do
     login(user)
     visit new_question_path
-    # save_and_open_page
 
     fill_in 'Your question', with: 'Title'
     fill_in 'Details', with: 'text text'
