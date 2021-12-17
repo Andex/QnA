@@ -5,7 +5,7 @@ class LinksController < ApplicationController
 
   def destroy
     @link = Link.find(params[:id])
-    return unless current_user&.is_author?(@link.linkable)
+    return unless current_user&.is_author?(@link.linkable) || current_user&.admin?
 
     @link.destroy
     flash.now.notice = 'Your link was deleted.'
