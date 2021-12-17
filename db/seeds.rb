@@ -4,6 +4,12 @@ admin = User.create!(email: 'admin@admin.ru',
                      admin: true)
 
 users = []
+users << User.create(email: 'user1@test.com',
+                     password: 'qweqwe',
+                     confirmed_at: Time.now)
+users << User.create(email: 'user2@test.com',
+                     password: 'qweqwe',
+                     confirmed_at: Time.now)
 4.times do
   users << User.create(
     email: Faker::Internet.email,
