@@ -1,12 +1,13 @@
-li class="#{comment.commentable_type.downcase}-comment-#{comment.id}"
-  .d-inline-block.me-4
-    = comment.body
-  .d-inline-block.me-4.text-secondary
-    = " ©#{comment.user.email}"
-  .d-inline-block
-    - if current_user && can?(:destroy, comment)
-      = link_to 'Delete', polymorphic_path(comment),
-              method: :delete,
-              remote: true,
-              class: 'btn btn-outline-dark btn-sm',
-              data: { confirm: 'Are you sure?' }
+- cache [current_user.present?, comment] do
+  li class="#{comment.commentable_type.downcase}-comment-#{comment.id}"
+    .d-inline-block.me-4
+      = comment.body
+    .d-inline-block.me-4.text-secondary
+      = " ©#{comment.user.email}"
+    .d-inline-block
+      - if current_user && can?(:destroy, comment)
+        = link_to 'Delete', polymorphic_path(comment),
+                method: :delete,
+                remote: true,
+                class: 'btn btn-outline-dark btn-sm',
+                data: { confirm: 'Are you sure?' }

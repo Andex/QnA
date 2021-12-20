@@ -1,27 +1,28 @@
-.question
-  = render @question
-.text-center.p-3
-  h3= 'Answers on question'
-.answers
-  .answer-errors
-    = render 'shared/errors', resource: @new_answer
-  - if @question.answers.first.persisted?
-    .best
-      - if @question.best_answer
-        = render 'answers/best_answer', resource: @question.best_answer
-    table class='table text-center'
-      thead class='thead'
-        tr
-          th= 'Rating'
-          th= 'Answer'
-          th= 'Files and links'
-          th colspan=4
-            = 'Actions'
-      = render @question.other_answers
-  - else
-    h5= 'Be the first to leave an answer'
+- cache [current_user.present?, @question] do
+  .question
+    = render @question
+  .text-center
+    h3= 'Answers on question'
+  .answers
+    .answer-errors
+      = render 'shared/errors', resource: @new_answer
+    - if @question.answers.first.persisted?
+      .best
+        - if @question.best_answer
+          = render 'answers/best_answer', resource: @question.best_answer
+      table class='table text-center'
+        thead class='thead'
+          tr
+            th= 'Rating'
+            th= 'Answer'
+            th= 'Files and links'
+            th colspan=4
+              = 'Actions'
+        = render @question.other_answers
+    - else
+      h5= 'Be the first to leave an answer'
 
-- if can?(:create, Answer)
-  .new-answer-errors
-    = render 'shared/errors', resource: @new_answer
-  = render 'answers/form', resource: @new_answer
+  - if can?(:create, Answer)
+    .new-answer-errors
+      = render 'shared/errors', resource: @new_answer
+    = render 'answers/form', resource: @new_answer
