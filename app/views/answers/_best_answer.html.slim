@@ -1,4 +1,4 @@
-- cache [current_user.present?, @question.best_answer] do
+- cache_unless current_user&.admin?, [current_user.present?, @question.best_answer] do
   h5= 'Best answer'
   div class="answer-id-#{@question.best_answer.id}"
     .d-inline-block.me-4

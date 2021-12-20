@@ -1,4 +1,4 @@
-- cache [current_user.present?, @question] do
+- cache_unless current_user&.admin?, [current_user.present?, @question] do
   .question
     = render @question
   .text-center

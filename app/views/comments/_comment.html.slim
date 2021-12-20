@@ -1,4 +1,4 @@
-- cache [current_user.present?, comment] do
+- cache_unless current_user&.admin?, [current_user.present?, comment] do
   li class="#{comment.commentable_type.downcase}-comment-#{comment.id}"
     .d-inline-block.me-4
       = comment.body

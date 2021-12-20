@@ -1,4 +1,4 @@
-- cache [current_user.present?, answer] do
+- cache_unless current_user&.admin?, [current_user.present?, answer] do
   - if answer.persisted?
     tr class="answer-id-#{answer.id}"
       td class='rating'

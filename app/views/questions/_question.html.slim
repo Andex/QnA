@@ -1,18 +1,19 @@
-h1= question.title
-.fs-5
-  = question.body
-p.fst-italic.text-secondary
-  = "Question by #{question.user.email}"
+- cache [current_user.present?, @question] do
+  h1= question.title
+  .fs-5
+    = question.body
+  p.fst-italic.text-secondary
+    = "Question by #{question.user.email}"
 
-div class="question-#{question.id}-attachments"
-  p= render 'shared/attachments', resource: question
+  div class="question-#{question.id}-attachments"
+    p= render 'shared/attachments', resource: question
 
-.reward
-  p= render 'rewards/question_reward', question: question
+  .reward
+    p= render 'rewards/question_reward', question: question
 
-b= 'Rating: '
-.rating
-  = render 'shared/rating', resource: question
+  b= 'Rating: '
+  .rating
+    = render 'shared/rating', resource: question
 
 - if current_user && can?(:update, question)
   .question-errors
