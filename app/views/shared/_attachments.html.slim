@@ -3,25 +3,29 @@
     ul
       - resource.files.each do |file|
         li id=file.id
-          = link_to file.filename.to_s, url_for(file)
-          = link_to 'Delete file',
-                  attachment_path(file),
-                  method: :delete,
-                  remote: true,
-                  class: 'delete-file-link d-none',
-                  data: { confirm: 'Are you sure?' }
+          .d-inline-block.me-4
+            = link_to file.filename.to_s, url_for(file)
+          .d-inline-block.me-4
+            = link_to 'Delete file',
+                       attachment_path(file),
+                       method: :delete,
+                       remote: true,
+                       class: 'delete-file-link btn btn-outline-dark btn-sm d-none',
+                       data: { confirm: 'Are you sure?' }
 
 .links
   - if resource&.links.present?
     ul
       - resource.links.each do |link|
         li id=link.id
-          = link_to link.name, link.url
-          = link_to 'Delete link',
-                  link_path(link),
-                  method: :delete,
-                  remote: true,
-                  class: 'delete-link d-none',
-                  data: { confirm: 'Are you sure?' }
+          .d-inline-block.me-4
+            = link_to link.name, link.url
+          .d-inline-block.me-4
+            = link_to 'Delete link',
+                      link_path(link),
+                      method: :delete,
+                      remote: true,
+                      class: 'delete-link btn btn-outline-dark btn-sm d-none',
+                      data: { confirm: 'Are you sure?' }
           - if link.gist?
             = javascript_include_tag link.url + ".js"

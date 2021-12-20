@@ -1,21 +1,8 @@
 = render 'shared/errors', resource: @question
 
 = form_with model: @question, local: true do |f|
-  p
-    = f.label :title
-    = f.text_field :title
-  p
-    = f.label :body, 'Details'
-    = f.text_area :body
-  p
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-  p id='links'
-    = f.fields_for :links do |link|
-    .add_link
-      = link_to_add_association 'Add link', f, :links,
-                                                partial: 'links/link_fields',
-                                                class: 'btn btn-outline-info btn-sm'
+  = render 'form_fields', f: f
+
   p Assign reward:
   p= render 'rewards/form', f: f
 

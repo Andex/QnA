@@ -1,10 +1,14 @@
 - if question.reward.present?
-  b= 'Reward: '
-  = question.reward.title
-  br
-  = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
-  - if current_user&.is_author?(question)
-    = link_to 'Delete the reward', reward_path(question.reward),
-                                   method: :delete, class: 'd-none',
-                                   remote: true,
-                                   data: { confirm: 'Are you sure?' }
+  .d-inline-block.me-2
+    b= 'Reward: '
+  .d-inline-block.me-2
+    = question.reward.title
+  .d-inline-block.me-4
+    = image_tag question.reward.image.url, size: "50x50", alt: question.reward.title
+  .d-inline-block.me-4
+    - if current_user && can?(:destroy, question.reward)
+      = link_to 'Delete the reward', reward_path(question.reward),
+              method: :delete,
+              remote: true,
+              class: 'btn btn-outline-dark btn-sm d-none',
+              data: { confirm: 'Are you sure?' }

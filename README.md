@@ -51,7 +51,8 @@ http://qna-andex.club
 | Логин          | Пароль |
 |----------------|--------|
 | admin@admin.ru | 121212 |
-| test@mail.com  | 121212 |
+| user1@test.com | qweqwe |
+| user2@test.com | qweqwe |
 
 ***
 ***Ruby version:*** *2.7.2*

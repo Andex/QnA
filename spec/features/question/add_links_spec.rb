@@ -13,7 +13,7 @@ feature 'User can add links to question', "
     login(user)
     visit new_question_path
 
-    fill_in 'Title', with: 'Title'
+    fill_in 'Your question', with: 'Title'
     fill_in 'Details', with: 'text text'
 
     click_on 'Add link'
