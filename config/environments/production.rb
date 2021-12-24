@@ -17,6 +17,8 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
   config.action_controller.enable_fragment_cache_logging = true
 
+  config.cache_store = :redis_cache_store, { url: 'redis://localhost:6379/0/cache', expires_in: 90.minutes }
+
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
