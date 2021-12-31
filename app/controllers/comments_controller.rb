@@ -15,6 +15,11 @@ class CommentsController < ApplicationController
     flash.now[:notice] = 'Your comment successfully created.' if @comment.save
   end
 
+  def destroy
+    @comment = current_user&.comments.find_by(id: params[:id])
+    flash.now.notice = 'Your comment was removed.' if @comment&.destroy
+  end
+
   private
 
   def publish_comment
