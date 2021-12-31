@@ -16,14 +16,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :votable do
-    resources :answers, concerns: :votable, except: :index, shallow: true do
+  concern :commentable do
+    resources :comments, only: %i[create destroy], shallow: true
+  end
+
+  resources :questions, concerns: %i[votable commentable] do
+    resources :answers, concerns: %i[votable commentable], except: :index, shallow: true do
       member do
         patch :best
       end
-      resources :comments, defaults: { commentable: 'answer' }
     end
-    resources :comments, defaults: { commentable: 'question' }
     resources :subscriptions, only: %i[create destroy], shallow: true
   end
 
