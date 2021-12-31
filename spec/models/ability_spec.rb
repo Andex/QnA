@@ -58,12 +58,16 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :destroy, question.files.first }
     it { should be_able_to :destroy, question.reward }
     it { should be_able_to :destroy, create(:subscription, user: user, question: question) }
+    it { should be_able_to :destroy, create(:comment, user: user, commentable: question) }
+    it { should be_able_to :destroy, create(:comment, user: user, commentable: answer) }
     it { should_not be_able_to :destroy, other_answer }
     it { should_not be_able_to :destroy, other_question }
     it { should_not be_able_to :destroy, other_question.links.first }
     it { should_not be_able_to :destroy, other_question.files.first }
     it { should_not be_able_to :destroy, other_question.reward }
     it { should_not be_able_to :destroy, create(:subscription, user: other_user, question: question) }
+    it { should_not be_able_to :destroy, create(:comment, user: other_user, commentable: question) }
+    it { should_not be_able_to :destroy, create(:comment, user: other_user, commentable: answer) }
 
     it { should be_able_to :best, create(:answer, question: question, user: other_user) }
     it { should_not be_able_to :best, create(:answer, question: other_question, user: user) }
