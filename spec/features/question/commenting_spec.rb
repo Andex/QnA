@@ -101,7 +101,9 @@ feature 'User can comment on the question', "
       end
 
       Capybara.using_session('user') do
-        click_on 'Delete'
+        accept_confirm do
+          click_on 'Delete'
+        end
 
         within '.question' do
           expect(page).to_not have_content comment.body

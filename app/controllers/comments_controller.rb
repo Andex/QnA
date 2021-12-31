@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  after_action :publish_comment, only: :create
 
   authorize_resource
 
@@ -13,22 +12,25 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(commentable_params.merge(user: current_user))
 
     flash.now[:notice] = 'Your comment successfully created.' if @comment.save
+    publish_comment('create')
   end
 
   def destroy
     @comment = current_user&.comments.find_by(id: params[:id])
     flash.now.notice = 'Your comment was removed.' if @comment&.destroy
+    publish_comment('destroy')
   end
 
   private
 
-  def publish_comment
+  def publish_comment(event)
     return if @comment.errors.any?
 
     ActionCable.server.broadcast(
       "comments/question-#{@commentable.is_a?(Question) ? @commentable.id : @commentable.question.id}",
       comment: @comment,
-      user_email: current_user.email
+      user_email: current_user.email,
+      event: event
     )
   end
 
