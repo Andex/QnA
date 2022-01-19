@@ -1,6 +1,5 @@
 import consumer from "./consumer"
 
-// 1. подписка на QuestionsChannel
 consumer.subscriptions.create({ channel: "QuestionsChannel" }, {
     received(data) {
         this.appendLine(data)
