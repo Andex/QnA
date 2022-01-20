@@ -1,4 +1,4 @@
-= form_with model: [@question, @new_answer], local: false, class: 'new-answer' do |f|
+= form_with model: [@question, @new_answer], local: false do |f|
   p
     = f.label :body, 'Your answer'
     = f.text_area :body

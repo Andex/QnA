@@ -23,6 +23,7 @@
       h5= 'Be the first to leave an answer'
 
   - if can?(:create, Answer)
-    .new-answer-errors
-      = render 'shared/errors', resource: @new_answer
-    = render 'answers/form', resource: @new_answer
+    .new-answer
+      .errors
+        = render 'shared/errors', resource: @new_answer
+      = render 'answers/form', resource: @new_answer

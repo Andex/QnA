@@ -1,4 +1,4 @@
-$('.new-answer-errors').html('<%= render 'shared/errors', resource: @answer %>');
+$('.new-answer .errors').html('<%= render 'shared/errors', resource: @answer %>');
 $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if @answer.persisted? %>
