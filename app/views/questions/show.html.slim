@@ -22,6 +22,12 @@
     - else
       h5= 'Be the first to leave an answer'
 
+    - unless current_user
+      .d-inline-block.me-1.fst-italic.text-secondary
+        = 'If you want to leave your answer you must'
+      .d-inline-block.fst-italic
+        = link_to 'log in', new_user_session_path
+
   - if can?(:create, Answer)
     .new-answer
       .errors
