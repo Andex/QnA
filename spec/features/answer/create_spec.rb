@@ -38,12 +38,28 @@ feature 'User can answer the question', "
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'does not see a message about the need to sign in' do
+      expect(page).to_not have_content 'If you want to leave your answer you must log in'
+    end
   end
 
-  scenario 'Unauthenticated user tries to ask a question' do
-    visit question_path(question)
+  describe 'Unauthenticated user' do
+    background { visit question_path(question) }
 
-    expect(page).to_not have_content 'To answer'
+    scenario 'does not see the form of new answer' do
+      expect(page).to_not have_content 'To answer'
+    end
+
+    scenario 'sees a message with a link to authorization' do
+      expect(page).to have_content 'If you want to leave your answer you must log in'
+
+      click_on 'log in'
+
+      expect(page).to have_content 'Email'
+      expect(page).to have_content 'Password'
+      expect(page).to have_content 'Log in'
+    end
   end
 
   describe 'multiple sessions', js: true do
