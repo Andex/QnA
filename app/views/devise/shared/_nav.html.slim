@@ -1,6 +1,6 @@
 .div class="navbar navbar-light mb-4"
   .container.navbar-text
-    - unless request.fullpath =~ /(questions$|\/$)/
+    - if !(request.fullpath =~ /(questions$|\/$)/) || params[:action] == 'create'
       = link_to 'Back to the main page', questions_path, class: 'nav-link active'
 
     - if user_signed_in?
@@ -11,6 +11,6 @@
     - elsif request.fullpath =~ /(questions$|\/$)/
       = link_to 'Log in', new_user_session_path , class: 'btn btn-default'
 
-- if request.fullpath =~ /(questions$|\/$)/
+- if request.fullpath =~ /(questions$|\/$)/ && params[:action] != 'create'
   .container.col-md-10
     = render 'search/form'

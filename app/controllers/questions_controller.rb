@@ -30,6 +30,7 @@ class QuestionsController < ApplicationController
       redirect_to @question
       publish_question('add')
     else
+      @question.build_reward
       render :new
     end
   end
