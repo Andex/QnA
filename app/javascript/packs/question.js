@@ -25,6 +25,9 @@ function editQuestion(event){
         .on('click', '.delete-file-link', function(){
             hideForm()
         })
+        .on('click', '.delete-reward', function(){
+            hideForm()
+        })
 }
 
 function cancelQuestion(event){
