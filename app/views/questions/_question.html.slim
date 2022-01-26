@@ -6,7 +6,10 @@
     = "Question by #{question.user.email}"
 
   div class="question-#{question.id}-attachments"
-    p= render 'shared/attachments', resource: question
+    - if question.files.attached? || !question.links.count.nil?
+      .attachment-header
+        = 'Attached files and links:'
+      p= render 'shared/attachments', resource: question
 
   .reward
     p= render 'rewards/question_reward', question: question

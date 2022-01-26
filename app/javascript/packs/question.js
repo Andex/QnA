@@ -21,9 +21,11 @@ function editQuestion(event){
 
     $('.question').on('click', '.delete-link', function(){
         hideForm()
+        hideHeader()
     })
         .on('click', '.delete-file', function(){
             hideForm()
+            hideHeader()
         })
         .on('click', '.delete-reward', function(){
             hideForm()
@@ -49,4 +51,10 @@ function hideForm(){
     })
     $('.reward a').addClass('d-none')
     $('.question-errors').html('')
+}
+
+function hideHeader(){
+    if($('.question .delete-file').length + $('.question .delete-link').length === 1){
+        $('.question .attachment-header').remove()
+    }
 }
