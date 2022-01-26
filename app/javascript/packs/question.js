@@ -1,6 +1,6 @@
 $(document).on('turbolinks:load', function(){
     $('.question').on('click', '.edit-question-link', editQuestion )
-    $('.question').on('click', '.cancel-question-link', cancelQuestion )
+                  .on('click', '.cancel-question-link', cancelQuestion )
 })
 
 function editQuestion(event){
@@ -9,7 +9,7 @@ function editQuestion(event){
     $(this).hide()
     $('#question_reward_attributes_title').val('');
 
-    $('.question .delete-file-link').each(function(){
+    $('.question .delete-file').each(function(){
         $(this).removeClass('d-none')
     })
     $('.question .delete-link').each(function(){
@@ -22,7 +22,7 @@ function editQuestion(event){
     $('.question').on('click', '.delete-link', function(){
         hideForm()
     })
-        .on('click', '.delete-file-link', function(){
+        .on('click', '.delete-file', function(){
             hideForm()
         })
         .on('click', '.delete-reward', function(){
@@ -41,7 +41,7 @@ function cancelQuestion(event){
 function hideForm(){
     $('form#edit-question').addClass('d-none')
     $('.edit-question-link').show()
-    $('.question .delete-file-link').each(function(){
+    $('.question .delete-file').each(function(){
         $(this).addClass('d-none')
     })
     $('.question .delete-link').each(function(){
