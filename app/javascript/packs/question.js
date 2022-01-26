@@ -18,6 +18,13 @@ function editQuestion(event){
     $('.reward a').removeClass('d-none')
     $('form#edit-question').removeClass('d-none')
     $('.cancel-question-link').show()
+
+    $('.question').on('click', '.delete-link', function(){
+        hideForm()
+    })
+        .on('click', '.delete-file-link', function(){
+            hideForm()
+        })
 }
 
 function cancelQuestion(event){
@@ -25,6 +32,10 @@ function cancelQuestion(event){
 
     $(this).hide()
 
+    hideForm()
+}
+
+function hideForm(){
     $('form#edit-question').addClass('d-none')
     $('.edit-question-link').show()
     $('.question .delete-file-link').each(function(){

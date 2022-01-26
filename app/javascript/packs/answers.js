@@ -17,6 +17,12 @@ function editAnswer(event){
     })
     $('form#edit-answer-' + answerId).removeClass('d-none')
     $('.cancel-answer-link').show()
+    $('.answer-id-' + answerId).on('click', '.delete-link', function(){
+        hideForm(answerId)
+    })
+    $('.answer-id-' + answerId).on('click','.delete-file-link', function(){
+        hideForm(answerId)
+    })
 }
 
 function cancelAnswer(event){
@@ -25,6 +31,10 @@ function cancelAnswer(event){
     $(this).hide()
     var answerId = $(this).data('answerId')
 
+    hideForm(answerId)
+}
+
+function hideForm(answerId){
     $('.answer-id-' + answerId + ' .delete-file-link').each(function(){
         $(this).addClass('d-none')
     })
