@@ -10,4 +10,7 @@ $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
                   '<tbody><%= j render @answer %></tbody></table>');
   <% end %>
   $('.new-answer #answer_body').val('');
+  $('.new-answer .nested-fields input').each(function(){
+    $(this).val('')
+  })
 <% end %>
