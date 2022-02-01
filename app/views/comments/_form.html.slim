@@ -1,9 +1,15 @@
 = link_to "Add comment to the #{resource.class.to_s.downcase}", '#',
                            class: 'comment-link btn btn-light btn-sm',
-                           data: { form: "#{resource.class.to_s.downcase}-#{resource.id}-form-comment" }
-div class="#{resource.class.to_s.downcase}-#{resource.id}-form-comment" style='display: none;'
-  = form_with model: [resource, Comment.new], local: false do |f|
-    p
-      = f.label :body, 'Your comment'
-      = f.text_area :body
+                           data: { form: "#{resource.class.to_s.downcase}-#{resource.id}" }
+
+= form_with model: [resource, Comment.new], local: false,
+              html: { id: "#{resource.class.to_s.downcase}-#{resource.id}" }, class: 'd-none' do |f|
+  p
+    = f.label :body, 'Your comment'
+    = f.text_area :body
+  div class='btn-group' role='group'
     = f.submit 'To publish', class: 'btn btn-outline-info btn-sm'
+    = link_to 'Cancel', '#',
+                          class: 'cancel-link btn btn-secondary btn-sm',
+                          remote: true,
+                          data: { form: "#{resource.class.to_s.downcase}-#{resource.id}" }

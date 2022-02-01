@@ -2,14 +2,14 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @commentable %
 $('.flash-messages').html('<%= render 'shared/flash_messages' %>');
 
 <% if @comment.persisted? %>
-  var commentable = '.<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>'
-  var header = $(commentable + '-comments .list').find('.fs-6')
+  var commentable = '<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>'
+  var list_comments = $('.' + commentable + '-comments .list')
 
-  if(header.length === 0) {
-    $(commentable + '-comments .list').append('<div class="fs-6">Comments:</div>');
+  if(list_comments.find('.fs-6').length === 0) {
+      list_comments.append('<div class="fs-6">Comments:</div>');
   }
-  $(commentable + '-comments .list').append('<%= j render @comment %>');
-  $(commentable + '-form-comment #comment_body').val('');
-  $(commentable + '-form-comment').hide();
-  $(commentable + '-comments .comment-link').show();
+  list_comments.append('<%= j render @comment %>');
+  $('form#' + commentable + ' #comment_body').val('');
+  $('form#' + commentable).addClass('d-none')
+  $('.' + commentable + '-comments .comment-link').show();
 <% end %>
